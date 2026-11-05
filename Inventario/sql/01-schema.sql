@@ -1,5 +1,5 @@
-CREATE DATABASE IF NOT EXISTS inventario_soa CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
-USE inventario_soa;
+CREATE DATABASE IF NOT EXISTS tienda_db CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+USE tienda_db;
 
 CREATE TABLE IF NOT EXISTS categorias (
   id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,

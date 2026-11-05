@@ -1,4 +1,4 @@
-USE inventario_soa;
+USE tienda_db;
 INSERT INTO categorias (id, nombre) VALUES (1, 'Papelería'), (2, 'Electrónica')
 ON DUPLICATE KEY UPDATE nombre = VALUES(nombre);
 INSERT INTO productos (sku, nombre, categoria_id, stock, stock_minimo, precio_unitario) VALUES

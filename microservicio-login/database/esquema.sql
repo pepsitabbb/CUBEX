@@ -3,11 +3,11 @@
 -- Ejecutar con:  mysql -u root -p < database/esquema.sql
 -- =====================================================================
 
-CREATE DATABASE IF NOT EXISTS ventas_db
+CREATE DATABASE IF NOT EXISTS tienda_db
   CHARACTER SET utf8mb4
   COLLATE utf8mb4_unicode_ci;
 
-USE ventas_db;
+USE tienda_db;
 
 -- ---------------------------------------------------------------------
 -- Tabla: roles
