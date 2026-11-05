@@ -12,6 +12,7 @@ const esquemaVariables = z.object({
   DB_PASSWORD: z.string().default(''),
   DB_NAME: z.string().min(1).default('ventas_db'),
   DB_CONNECTION_LIMIT: z.coerce.number().int().positive().default(10),
+  DB_SSL_CA: z.string().default(''),
 
   JWT_SECRET: z.string().min(32, 'JWT_SECRET debe tener al menos 32 caracteres'),
   JWT_EXPIRES_IN: z.string().min(1).default('15m'),
@@ -54,7 +55,16 @@ export const dbConfig = {
   connectionLimit: variables.DB_CONNECTION_LIMIT,
   queueLimit: 0,
   charset: 'utf8mb4_unicode_ci',
-  timezone: 'Z'
+  timezone: 'Z',
+
+  ...(variables.DB_SSL_CA
+    ? {
+        ssl: {
+          ca: variables.DB_SSL_CA,
+          rejectUnauthorized: true
+        }
+      }
+    : {})
 };
 
 export const esProduccion = variables.NODE_ENV === 'production';
