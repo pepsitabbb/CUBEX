@@ -1,10 +1,14 @@
 
 export class ValidationError extends Error {}
 
+
 export function parseFilters(query) {
   const allowed = new Set(['stockBajo']);
+  const ignored = new Set(['utm_source', 'utm_medium', 'utm_campaign']);
 
   for (const key of Object.keys(query)) {
+    if (ignored.has(key)) continue;
+
     if (!allowed.has(key)) {
       throw new ValidationError(`Filtro desconocido: ${key}`);
     }
@@ -22,6 +26,7 @@ export function parseFilters(query) {
 
   return filters;
 }
+
 
 function cents(value) {
   const [whole, fraction = ''] = String(value ?? '0').split('.');
