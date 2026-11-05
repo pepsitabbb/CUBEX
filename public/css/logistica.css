@@ -1,0 +1,156 @@
+/* =====================================================================
+   CUBEX - MÓDULOS DE LOGÍSTICA Y POSTVENTA (panel administrativo)
+   Usa los componentes de comun.css con la identidad oscura de CUBEX.
+   ===================================================================== */
+
+* {
+    box-sizing: border-box;
+}
+
+html,
+body {
+    margin: 0;
+    background: var(--cx-fondo);
+    color: var(--cx-blanco);
+    font-family: Arial, Helvetica, sans-serif;
+    line-height: 1.5;
+}
+
+h1, h2, h3, p {
+    margin: 0;
+}
+
+.log-wrap {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    padding: 4px 2px 24px;
+}
+
+.log-head {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 14px;
+}
+
+.log-kicker {
+    color: var(--cx-amarillo);
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+}
+
+.log-head h1 {
+    font-size: clamp(22px, 3vw, 28px);
+}
+
+.log-sub {
+    color: var(--cx-gris);
+    font-size: 14px;
+}
+
+.log-panel {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    padding: 20px;
+    border: 1px solid var(--cx-borde);
+    border-radius: 14px;
+    background: var(--cx-tarjeta);
+}
+
+.log-panel h2 {
+    font-size: 18px;
+    color: var(--cx-blanco);
+}
+
+.log-toolbar {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 10px;
+}
+
+.log-toolbar .log-titulo {
+    flex: 1 1 260px;
+}
+
+.log-toolbar .cx-filtro {
+    width: auto;
+    flex: 0 1 230px;
+}
+
+.log-check {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    color: var(--cx-gris);
+    font-size: 14px;
+    cursor: pointer;
+}
+
+.log-insignia {
+    display: inline-block;
+    margin-top: 4px;
+    padding: 2px 8px;
+    border-radius: 999px;
+    background: rgba(239, 35, 60, 0.18);
+    color: #ff8a98;
+    font-size: 11px;
+    font-weight: 700;
+}
+
+.log-mono {
+    font-family: Consolas, Menlo, monospace;
+}
+
+.log-detalle-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 12px 18px;
+    margin: 14px 0;
+}
+
+.log-detalle-grid div span {
+    display: block;
+    color: var(--cx-gris);
+    font-size: 12px;
+}
+
+.log-detalle-grid div strong {
+    font-size: 14px;
+    overflow-wrap: anywhere;
+}
+
+.log-seccion-modal {
+    margin-top: 16px;
+    padding-top: 14px;
+    border-top: 1px solid var(--cx-borde);
+}
+
+.log-seccion-modal h4 {
+    margin: 0 0 10px;
+    color: var(--cx-amarillo);
+    font-size: 14px;
+}
+
+.log-sin-acceso {
+    padding: 40px 20px;
+    border: 1px solid var(--cx-borde);
+    border-radius: 14px;
+    background: var(--cx-tarjeta);
+    text-align: center;
+    color: var(--cx-gris);
+}
+
+@media (max-width: 640px) {
+    .log-panel {
+        padding: 16px 12px;
+    }
+
+    .log-toolbar .cx-filtro {
+        flex: 1 1 100%;
+    }
+}

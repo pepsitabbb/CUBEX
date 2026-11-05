@@ -1,0 +1,223 @@
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Selecciona tu domicilio de entrega en CUBEX.">
+
+    <title>Mis domicilios | CUBEX</title>
+
+    <link rel="stylesheet" href="../css/domicilio.css">
+</head>
+
+<body>
+
+    <main class="container">
+
+        <!-- ENCABEZADO -->
+        <section class="intro">
+            <h1>Mis domicilios</h1>
+            <p>Selecciona dónde deseas recibir tu compra.</p>
+        </section>
+
+        <!-- MENSAJES -->
+        <div
+            id="mensaje"
+            class="mensaje"
+            role="status"
+            aria-live="polite">
+        </div>
+
+        <!-- DOMICILIOS REGISTRADOS -->
+        <section class="lista-section">
+
+            <div class="lista-heading">
+                <div>
+                    <h2>Selecciona tu domicilio de entrega</h2>
+                    <p>Elige una dirección para continuar con tu compra.</p>
+                </div>
+
+                <button
+                    type="button"
+                    id="btnActualizar"
+                    class="btn btn-secondary">
+                    ↻ Actualizar
+                </button>
+            </div>
+
+            <!-- NAVEGACIÓN DE COMPRA -->
+            <div class="acciones-compra">
+
+                <button
+                    type="button"
+                    id="btnVolverCarrito"
+                    class="btn btn-secondary">
+                    ← Volver al carrito
+                </button>
+
+                <button
+    type="button"
+    id="btnContinuarPago"
+    class="btn btn-primary">
+    Confirmar pedido →
+</button>
+
+            </div>
+
+            <!-- TARJETAS DE DOMICILIOS -->
+            <div id="listaDomicilios" class="lista-domicilios">
+
+                <div class="estado-cargando">
+                    <span class="cargando-icono">⌛</span>
+                    <p>Cargando domicilios...</p>
+                </div>
+
+            </div>
+
+        </section>
+
+        <!-- FORMULARIO PARA AGREGAR DOMICILIO -->
+        <section class="panel formulario-panel">
+
+            <div class="panel-heading">
+                <div>
+                    <h2 id="tituloFormulario">Agregar domicilio</h2>
+                    <p>¿Necesitas otra dirección? Regístrala aquí.</p>
+                </div>
+
+                <div class="icono-direccion">📍</div>
+            </div>
+
+            <form id="formDomicilio">
+
+                <div class="form-grid">
+
+                    <!-- CALLE -->
+                    <div class="campo">
+                        <label for="calle">
+                            Calle <span class="requerido">*</span>
+                        </label>
+
+                        <input
+                            type="text"
+                            id="calle"
+                            name="calle"
+                            placeholder="Ej. Avenida Hidalgo"
+                            maxlength="150"
+                            required>
+                    </div>
+
+                    <!-- NÚMERO -->
+                    <div class="campo">
+                        <label for="numero_casa">
+                            Número exterior <span class="requerido">*</span>
+                        </label>
+
+                        <input
+                            type="text"
+                            id="numero_casa"
+                            name="numero_casa"
+                            placeholder="Ej. 125"
+                            maxlength="30"
+                            required>
+                    </div>
+
+                    <!-- COLONIA -->
+                    <div class="campo">
+                        <label for="colonia">
+                            Colonia <span class="requerido">*</span>
+                        </label>
+
+                        <input
+                            type="text"
+                            id="colonia"
+                            name="colonia"
+                            placeholder="Nombre de la colonia"
+                            maxlength="100"
+                            required>
+                    </div>
+
+                    <!-- CIUDAD -->
+                    <div class="campo">
+                        <label for="ciudad">
+                            Ciudad <span class="requerido">*</span>
+                        </label>
+
+                        <input
+                            type="text"
+                            id="ciudad"
+                            name="ciudad"
+                            placeholder="Ej. Los Mochis"
+                            maxlength="100"
+                            required>
+                    </div>
+
+                    <!-- CÓDIGO POSTAL -->
+                    <div class="campo">
+                        <label for="codigo_postal">
+                            Código postal <span class="requerido">*</span>
+                        </label>
+
+                        <input
+                            type="text"
+                            id="codigo_postal"
+                            name="codigo_postal"
+                            placeholder="Ej. 81200"
+                            maxlength="10"
+                            required>
+                    </div>
+
+                    <!-- REFERENCIAS -->
+                    <div class="campo campo-completo">
+                        <label for="referencias">
+                            Referencias
+                            <span class="opcional">(opcional)</span>
+                        </label>
+
+                        <textarea
+                            id="referencias"
+                            name="referencias"
+                            placeholder="Entre qué calles se encuentra, color de la casa, etc."
+                            maxlength="255"
+                            rows="3"></textarea>
+                    </div>
+
+                </div>
+
+                <!-- BOTONES DEL FORMULARIO -->
+                <div class="acciones-formulario">
+
+                    <button
+                        type="submit"
+                        id="btnGuardar"
+                        class="btn btn-primary">
+                        Guardar domicilio
+                    </button>
+
+                    <button
+                        type="button"
+                        id="btnCancelar"
+                        class="btn btn-secondary"
+                        hidden>
+                        Cancelar edición
+                    </button>
+
+                </div>
+
+                <p class="nota-formulario">
+                    Los campos marcados con * son obligatorios.
+                </p>
+
+            </form>
+
+        </section>
+
+    </main>
+
+    <!-- JAVASCRIPT -->
+    <script src="../js/config.js"></script>
+    <script src="../js/domicilio.js"></script>
+
+</body>
+</html>

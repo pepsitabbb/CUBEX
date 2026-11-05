@@ -1,0 +1,28 @@
+@baseUrl = http://localhost:3000
+
+### Salud
+GET {{baseUrl}}/health
+
+### Reporte completo
+GET {{baseUrl}}/api/v1/reportes/inventario
+
+### Categoría
+GET {{baseUrl}}/api/v1/reportes/inventario?categoriaId=1
+
+### Stock bajo
+GET {{baseUrl}}/api/v1/reportes/inventario?stockBajo=true
+
+### Filtros combinados
+GET {{baseUrl}}/api/v1/reportes/inventario?categoriaId=2&stockBajo=true
+
+### Sin coincidencias
+GET {{baseUrl}}/api/v1/reportes/inventario?categoriaId=999
+
+### Error 400
+GET {{baseUrl}}/api/v1/reportes/inventario?categoriaId=-1
+
+### Error 400 por filtro repetido
+GET {{baseUrl}}/api/v1/reportes/inventario?categoriaId=1&categoriaId=2
+
+### Error 404
+GET {{baseUrl}}/api/v1/no-existe

@@ -1,0 +1,41 @@
+services:
+  api:
+    build: .
+    environment:
+      HOST: 0.0.0.0
+      PORT: 3000
+      DB_HOST: db
+      DB_PORT: 3306
+      DB_NAME: inventario_soa
+      DB_USER: ${DB_USER:-inventario_app}
+      DB_PASSWORD: ${DB_PASSWORD:-inventario_local}
+    ports:
+      - "${PORT:-3000}:3000"
+    depends_on:
+      db:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD", "node", "-e", "fetch('http://127.0.0.1:3000/health', {signal: AbortSignal.timeout(3000)}).then(r => process.exit(r.ok ? 0 : 1)).catch(() => process.exit(1))"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+      start_period: 20s
+  db:
+    image: mysql:8.4
+    environment:
+      MYSQL_ROOT_PASSWORD: root_local_solo_desarrollo
+      MYSQL_DATABASE: inventario_soa
+      MYSQL_USER: ${DB_USER:-inventario_app}
+      MYSQL_PASSWORD: ${DB_PASSWORD:-inventario_local}
+    ports:
+      - "127.0.0.1:${DB_PORT:-3306}:3306"
+    volumes:
+      - mysql_data:/var/lib/mysql
+      - ./sql:/docker-entrypoint-initdb.d:ro
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      interval: 5s
+      timeout: 5s
+      retries: 30
+volumes:
+  mysql_data:

@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Compras a proveedores | CUBEX</title>
+    <link rel="stylesheet" href="../css/admin.css">
+</head>
+
+<body>
+
+    <main class="contenido-compras">
+
+        <header class="encabezado-seccion">
+            <div>
+                <span class="etiqueta-seccion">ABASTECIMIENTO</span>
+                <h2>Compras a proveedores</h2>
+                <p>Registra y consulta las compras realizadas a tus proveedores.</p>
+            </div>
+        </header>
+
+        <!-- RESUMEN -->
+        <section class="resumen-compras">
+            <article class="tarjeta-resumen">
+                <span>Total de compras</span>
+                <strong id="totalCompras">0</strong>
+            </article>
+
+          
+            <article class="tarjeta-resumen">
+                <span>Importe acumulado</span>
+                <strong id="importeCompras">$0.00</strong>
+            </article>
+        </section>
+
+        <!-- FORMULARIO -->
+        <section class="panel-compras">
+
+            <div class="titulo-panel">
+                <div>
+                    <h3>Registrar orden de compra</h3>
+                    <p>Completa los datos para registrar una compra a proveedor.</p>
+                </div>
+            </div>
+
+            <form id="formCompra">
+
+                <div class="formulario-grid">
+
+                    <div class="campo">
+                        <label for="proveedorCompra">Proveedor</label>
+                        <select id="proveedorCompra" required>
+                            <option value="">Cargando proveedores...</option>
+                        </select>
+                    </div>
+
+                    <div class="campo">
+                        <label for="fechaCompra">Fecha</label>
+                        <input type="date" id="fechaCompra" required>
+                    </div>
+
+                    <div class="campo">
+                        <label for="productoCompra">Producto</label>
+                        <select id="productoCompra" required>
+                            <option value="">Cargando productos...</option>
+                        </select>
+                    </div>
+
+                    <div class="campo">
+                        <label for="cantidadCompra">Cantidad</label>
+                        <input
+                            type="number"
+                            id="cantidadCompra"
+                            min="1"
+                            step="1"
+                            placeholder="Cantidad"
+                            required>
+                    </div>
+
+                    <div class="campo">
+                        <label for="costoUnitario">Costo unitario (MXN)</label>
+                        <input
+                            type="number"
+                            id="costoUnitario"
+                            min="0.01"
+                            step="0.01"
+                            placeholder="0.00"
+                            required>
+                    </div>
+
+                    <div class="campo">
+                        <label for="totalCompra">Total de la compra (MXN)</label>
+                        <input
+                            type="text"
+                            id="totalCompra"
+                            value="$0.00"
+                            readonly>
+                    </div>
+
+                </div>
+
+                <div class="acciones-formulario">
+                    <button type="button" id="btnLimpiarCompra" class="btn-secundario">
+                        Limpiar campos
+                    </button>
+
+                    <button type="submit" id="btnGuardarCompra" class="btn-guardar">
+                        Guardar compra
+                    </button>
+                </div>
+
+                <p id="mensajeCompra" class="mensaje-compra" role="status">
+                    Selecciona un proveedor y un producto para comenzar.
+                </p>
+
+            </form>
+        </section>
+
+        <!-- HISTORIAL -->
+        <section class="panel-compras panel-historial">
+
+            <div class="titulo-panel encabezado-historial">
+                <div>
+                    <h3>Historial de compras</h3>
+                    <p>Consulta las órdenes de compra registradas.</p>
+                </div>
+
+                <button type="button" id="btnActualizarCompras" class="btn-secundario">
+                    Actualizar
+                </button>
+            </div>
+
+            <div class="buscador-compras">
+                <input
+                    type="search"
+                    id="buscarCompra"
+                    placeholder="Buscar por proveedor o producto...">
+            </div>
+
+            <div class="tabla-contenedor">
+                <table class="tabla-compras">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Fecha</th>
+                            <th>Proveedor</th>
+                            <th>Producto</th>
+                            <th>Cantidad</th>
+                            <th>Costo unitario</th>
+                            <th>Total</th>
+                            <th>Estado</th>
+                        </tr>
+                    </thead>
+
+                    <tbody id="tablaCompras">
+                        <tr>
+                            <td colspan="8" class="tabla-vacia">
+                                No hay compras registradas.
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <p id="contadorCompras" class="contador-compras">
+                0 compras encontradas
+            </p>
+
+        </section>
+
+    </main>
+
+    <script src="../js/config.js"></script>
+    <script src="../js/compras.js"></script>
+</body>
+</html>

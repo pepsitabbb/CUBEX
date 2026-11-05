@@ -1,0 +1,15 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+const express_1 = require("express");
+const auth_middleware_1 = require("../middleware/auth.middleware");
+const role_middleware_1 = require("../middleware/role.middleware");
+const limiteIntentos_middleware_1 = require("../middleware/limiteIntentos.middleware");
+const asyncHandler_1 = require("../utils/asyncHandler");
+const tarjeta_controller_1 = require("../controllers/tarjeta.controller");
+const router = (0, express_1.Router)();
+router.use(auth_middleware_1.verificarAutenticacion, (0, role_middleware_1.verificarRol)("CLIENTE"));
+router.post("/verificar", limiteIntentos_middleware_1.limitarIntentosTarjeta, (0, asyncHandler_1.asyncHandler)(tarjeta_controller_1.verificarTarjeta));
+router.post("/", limiteIntentos_middleware_1.limitarIntentosTarjeta, (0, asyncHandler_1.asyncHandler)(tarjeta_controller_1.registrarTarjeta));
+router.get("/", (0, asyncHandler_1.asyncHandler)(tarjeta_controller_1.listarTarjetas));
+router.delete("/:id", (0, asyncHandler_1.asyncHandler)(tarjeta_controller_1.eliminarTarjeta));
+exports.default = router;

@@ -1,0 +1,638 @@
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CUBEX | Gestión de productos</title>
+
+    <link rel="stylesheet" href="../css/admin.css">
+
+    <style>
+        /* ======================================
+           PÁGINA DE PRODUCTOS
+        ====================================== */
+
+        * {
+            box-sizing: border-box;
+        }
+
+        html,
+        body {
+            width: 100%;
+            min-height: 100%;
+            margin: 0;
+            padding: 0;
+            overflow-x: hidden;
+        }
+
+        body {
+            background: var(--fondo, #101827);
+            color: var(--blanco, #f5f7fb);
+        }
+
+        .pagina-productos {
+            width: 100%;
+            max-width: none;
+            min-height: 100vh;
+            margin: 0;
+            padding: 30px;
+        }
+
+        /* Encabezado */
+
+        .encabezado-productos {
+            width: 100%;
+            margin: 0 0 25px;
+            padding: 10px 0 25px;
+            border-bottom: 1px solid #293548;
+        }
+
+        .encabezado-productos .sobrelinea {
+            margin: 0 0 8px;
+            color: #1683ff;
+            font-size: 12px;
+            font-weight: 700;
+            letter-spacing: 2px;
+        }
+
+        .encabezado-productos h1 {
+            margin: 0 0 10px;
+            font-size: 30px;
+        }
+
+        .encabezado-productos .texto-secundario {
+            margin: 0;
+            color: #aabbd2;
+        }
+
+        /* Secciones */
+
+        .contenido-productos {
+            width: 100%;
+            max-width: none;
+            margin: 0;
+            padding: 0;
+        }
+
+        .panel-contenido {
+            width: 100%;
+            max-width: none;
+            margin: 0 0 25px;
+            padding: 24px;
+            background: #192333;
+            border: 1px solid #2c3b50;
+            border-radius: 12px;
+        }
+
+        .barra-tabla {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 15px;
+            margin-bottom: 22px;
+        }
+
+        .barra-tabla h3 {
+            margin: 0;
+            font-size: 18px;
+        }
+
+        /* Formulario */
+
+        .formulario {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 20px 22px;
+            width: 100%;
+        }
+
+        .campo {
+            display: flex;
+            flex-direction: column;
+            min-width: 0;
+            gap: 8px;
+        }
+
+        .campo label {
+            font-weight: 600;
+            font-size: 13px;
+        }
+
+        .campo input,
+        .campo select,
+        .campo textarea {
+            width: 100%;
+            min-width: 0;
+            padding: 12px;
+            color: #f5f7fb;
+            background: #080e18;
+            border: 1px solid #34445b;
+            border-radius: 7px;
+            outline: none;
+            font: inherit;
+        }
+
+        .campo input:focus,
+        .campo select:focus,
+        .campo textarea:focus {
+            border-color: #1683ff;
+        }
+
+        .campo textarea {
+            resize: vertical;
+        }
+
+        .campo small {
+            color: #9aabc1;
+            font-size: 12px;
+        }
+
+        .campo-completo {
+            grid-column: 1 / -1;
+        }
+
+        /* Fotografía */
+
+        #contenedorVistaPrevia {
+            margin-top: 12px;
+        }
+
+        #vistaPrevia {
+            display: block;
+            width: 180px;
+            height: 180px;
+            padding: 8px;
+            object-fit: contain;
+            background: white;
+            border-radius: 10px;
+        }
+
+        /* Botones */
+
+        .formulario-acciones {
+            display: flex;
+            justify-content: flex-end;
+            flex-wrap: wrap;
+            gap: 12px;
+            margin-top: 5px;
+        }
+
+        .formulario-acciones button,
+        #btnActualizar {
+            cursor: pointer;
+        }
+
+        .nota-tabla {
+            margin: 15px 0 0;
+            color: #aabbd2;
+        }
+
+        /* Tabla */
+
+        .tabla-contenedor {
+            width: 100%;
+            overflow-x: auto;
+            border: 1px solid #2c3b50;
+            border-radius: 9px;
+        }
+
+        .tabla-contenedor table {
+            width: 100%;
+            min-width: 950px;
+            border-collapse: collapse;
+        }
+
+        .tabla-contenedor th,
+        .tabla-contenedor td {
+            padding: 13px 12px;
+            text-align: left;
+            border-bottom: 1px solid #2c3b50;
+            white-space: nowrap;
+        }
+
+        .tabla-contenedor th {
+            color: #1683ff;
+            background: #111c2b;
+            font-size: 12px;
+        }
+
+        .tabla-contenedor td {
+            font-size: 13px;
+        }
+
+        .tabla-contenedor tr:last-child td {
+            border-bottom: none;
+        }
+
+        /* Modal */
+
+        .modal-confirmacion {
+            display: none;
+        }
+
+        .modal-confirmacion.activo {
+            display: flex;
+        }
+
+        /* Adaptación a pantallas pequeñas */
+
+        @media (max-width: 700px) {
+            .pagina-productos {
+                padding: 20px 14px;
+            }
+
+            .formulario {
+                grid-template-columns: 1fr;
+            }
+
+            .campo-completo {
+                grid-column: auto;
+            }
+
+            .panel-contenido {
+                padding: 17px;
+            }
+
+            .encabezado-productos h1 {
+                font-size: 24px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <main class="pagina-productos">
+
+        <!-- ENCABEZADO -->
+        <header class="encabezado-productos">
+            <p class="sobrelinea">CATÁLOGO</p>
+
+            <h1>Gestión de productos</h1>
+
+            <p class="texto-secundario">
+                Administra los productos registrados en CUBEX.
+            </p>
+        </header>
+
+
+        <div class="contenido-productos">
+
+            <!-- REGISTRAR PRODUCTO -->
+            <section class="panel-contenido">
+
+                <div class="barra-tabla">
+                    <h3 id="tituloFormulario">Registrar producto</h3>
+                </div>
+
+                <form
+                    id="formProducto"
+                    class="formulario"
+                    enctype="multipart/form-data"
+                >
+
+                    <div class="campo">
+                        <label for="nombre">Nombre *</label>
+                        <input
+                            id="nombre"
+                            name="nombre"
+                            type="text"
+                            maxlength="150"
+                            required
+                        >
+                    </div>
+
+                    <div class="campo">
+                        <label for="costo">Costo *</label>
+                        <input
+                            id="costo"
+                            name="costo"
+                            type="number"
+                            min="0"
+                            step="0.01"
+                            required
+                        >
+                    </div>
+
+                    <div class="campo">
+                        <label for="precio">Precio de venta *</label>
+                        <input
+                            id="precio"
+                            name="precio"
+                            type="number"
+                            min="0"
+                            step="0.01"
+                            required
+                        >
+                    </div>
+
+                    <div class="campo">
+                        <label for="proveedor">Proveedor</label>
+                        <select id="proveedor" name="id_proveedor">
+                            <option value="">Sin proveedor</option>
+                        </select>
+                    </div>
+
+                    <div class="campo">
+                        <label for="lote">Lote</label>
+                        <input id="lote" name="lote" type="text">
+                    </div>
+
+                    <div class="campo">
+                        <label for="serie">Serie</label>
+                        <input id="serie" name="serie" type="text">
+                    </div>
+
+                    <div class="campo">
+                        <label for="caducidad">Caducidad (opcional)</label>
+                        <input
+                            type="date"
+                            id="caducidad"
+                            name="caducidad"
+                        >
+
+                        <small>
+                            Deja este campo vacío si el producto no tiene caducidad.
+                        </small>
+                    </div>
+
+                    <!-- FOTOGRAFÍA -->
+                    <div class="campo campo-completo">
+                        <label for="imagen">Fotografía del producto</label>
+
+                        <input
+                            type="file"
+                            id="imagen"
+                            name="imagen"
+                            accept="image/jpeg,image/png,image/webp"
+                            required
+                        >
+
+                        <small id="ayudaImagen">
+                            Formatos permitidos: JPG, PNG y WEBP.
+                            Máximo 5 MB.
+                        </small>
+
+                        <div
+                            id="contenedorVistaPrevia"
+                            style="display:none;"
+                        >
+                            <p id="textoVistaPrevia">
+                                Vista previa de la fotografía:
+                            </p>
+
+                            <img
+                                id="vistaPrevia"
+                                src=""
+                                alt="Vista previa del producto"
+                            >
+                        </div>
+                    </div>
+
+                    <!-- DESCRIPCIÓN -->
+                    <div class="campo campo-completo">
+                        <label for="descripcion">Descripción</label>
+
+                        <textarea
+                            id="descripcion"
+                            name="descripcion"
+                            rows="4"
+                        ></textarea>
+                    </div>
+
+                    <!-- BOTONES -->
+                    <div class="formulario-acciones campo-completo">
+
+                        <button
+                            type="reset"
+                            class="boton-secundario"
+                            id="btnLimpiar"
+                        >
+                            Limpiar
+                        </button>
+
+                        <button
+                            type="submit"
+                            class="boton-principal"
+                            id="btnGuardar"
+                        >
+                            Registrar producto
+                        </button>
+
+                        <button
+                            type="button"
+                            class="boton-secundario"
+                            id="btnCancelarEdicion"
+                            style="display:none;"
+                        >
+                            Cancelar edición
+                        </button>
+
+                    </div>
+
+                </form>
+
+                <p id="mensaje" class="nota-tabla"></p>
+
+            </section>
+
+
+            <!-- PRODUCTOS REGISTRADOS -->
+            <section class="panel-contenido">
+
+                <div class="barra-tabla">
+                    <h3>Productos registrados</h3>
+
+                    <button
+                        id="btnActualizar"
+                        class="boton-principal"
+                        type="button"
+                    >
+                        Actualizar lista
+                    </button>
+                </div>
+
+                <div class="tabla-contenedor">
+
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Foto</th>
+                                <th>ID</th>
+                                <th>Nombre</th>
+                                <th>Descripción</th>
+                                <th>Lote</th>
+                                <th>Serie</th>
+                                <th>Caducidad</th>
+                                <th>Proveedor</th>
+                                <th>Costo</th>
+                                <th>Precio</th>
+                                <th>Acciones</th>
+                            </tr>
+                        </thead>
+
+                        <tbody id="tablaProductos">
+                            <tr>
+                                <td colspan="11">
+                                    Cargando productos...
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                </div>
+
+            </section>
+
+        </div>
+
+    </main>
+
+
+    <!-- MODAL DE ELIMINACIÓN -->
+    <div id="modalEliminar" class="modal-confirmacion">
+
+        <div class="modal-confirmacion-contenido">
+
+            <div class="modal-icono">!</div>
+
+            <h2>Dar de baja producto</h2>
+
+            <p id="textoConfirmacionEliminar">
+                ¿Estás seguro de que deseas eliminar este producto?
+            </p>
+
+            <div class="modal-acciones">
+
+                <button
+                    type="button"
+                    id="btnCancelarEliminar"
+                    class="btn-modal-cancelar"
+                >
+                    Cancelar
+                </button>
+
+                <button
+                    type="button"
+                    id="btnConfirmarEliminar"
+                    class="btn-modal-confirmar"
+                >
+                    Sí, dar de baja
+                </button>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <script src="../js/config.js"></script>
+    <script src="../js/productos.js"></script>
+
+    <!-- Vista previa de imagen -->
+    <script>
+    // Vista previa de la imagen. Se encierra en un bloque para no chocar
+    // con la constante "formulario" que ya declara productos.js.
+    (() => {
+        const campoImagen = document.getElementById('imagen');
+        const contenedorVistaPrevia =
+            document.getElementById('contenedorVistaPrevia');
+        const vistaPrevia = document.getElementById('vistaPrevia');
+        const formulario = document.getElementById('formProducto');
+
+        let urlVistaPrevia = null;
+
+        campoImagen.addEventListener('change', function () {
+            const archivo = this.files[0];
+
+            if (!archivo) {
+                contenedorVistaPrevia.style.display = 'none';
+                vistaPrevia.src = '';
+                return;
+            }
+
+            const tiposPermitidos = [
+                'image/jpeg',
+                'image/png',
+                'image/webp'
+            ];
+
+            if (!tiposPermitidos.includes(archivo.type)) {
+                alert('Selecciona una imagen JPG, PNG o WEBP.');
+                this.value = '';
+                contenedorVistaPrevia.style.display = 'none';
+                return;
+            }
+
+            if (archivo.size > 5 * 1024 * 1024) {
+                alert('La imagen no debe superar los 5 MB.');
+                this.value = '';
+                contenedorVistaPrevia.style.display = 'none';
+                return;
+            }
+
+            if (urlVistaPrevia) {
+                URL.revokeObjectURL(urlVistaPrevia);
+            }
+
+            urlVistaPrevia = URL.createObjectURL(archivo);
+            vistaPrevia.src = urlVistaPrevia;
+            contenedorVistaPrevia.style.display = 'block';
+        });
+
+        formulario.addEventListener('reset', function () {
+            setTimeout(() => {
+                contenedorVistaPrevia.style.display = 'none';
+                vistaPrevia.src = '';
+
+                if (urlVistaPrevia) {
+                    URL.revokeObjectURL(urlVistaPrevia);
+                    urlVistaPrevia = null;
+                }
+            }, 0);
+        });
+    })();
+    </script>
+    <script>
+    function actualizarAlturaProductos() {
+        const altura = Math.max(
+            document.body.scrollHeight,
+            document.documentElement.scrollHeight
+        );
+
+        window.parent.postMessage({
+            tipo: 'altura-productos',
+            altura: altura + 30
+        }, '*');
+    }
+
+    window.addEventListener('load', actualizarAlturaProductos);
+
+    window.addEventListener('resize', actualizarAlturaProductos);
+
+    const observadorAltura = new ResizeObserver(() => {
+        actualizarAlturaProductos();
+    });
+
+    observadorAltura.observe(document.documentElement);
+
+    const observadorContenido = new MutationObserver(() => {
+        actualizarAlturaProductos();
+    });
+
+    observadorContenido.observe(document.body, {
+        childList: true,
+        subtree: true
+    });
+
+    setTimeout(actualizarAlturaProductos, 500);
+    setTimeout(actualizarAlturaProductos, 1500);
+    setTimeout(actualizarAlturaProductos, 3000);
+</script>
+
+
+</body>
+</html>

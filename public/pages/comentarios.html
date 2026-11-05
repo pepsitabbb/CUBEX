@@ -1,0 +1,481 @@
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CUBEX | Gestión de reseñas</title>
+
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background: #111827;
+            color: #f5f7fa;
+            padding: 32px;
+        }
+
+        .encabezado {
+            padding-bottom: 28px;
+            margin-bottom: 28px;
+            border-bottom: 1px solid #303b4d;
+        }
+
+        .sobrelinea {
+            color: #087cfc;
+            font-size: 13px;
+            font-weight: bold;
+            letter-spacing: 2px;
+            margin-bottom: 10px;
+        }
+
+        h1 {
+            font-size: 30px;
+            margin-bottom: 12px;
+        }
+
+        .descripcion {
+            color: #aab7c4;
+            font-size: 14px;
+            line-height: 1.6;
+        }
+
+        .panel-contenido {
+            background: #1b2638;
+            border: 1px solid #303b4d;
+            border-radius: 14px;
+            padding: 25px;
+            width: 100%;
+        }
+
+        .barra-tabla {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 15px;
+            flex-wrap: wrap;
+            margin-bottom: 25px;
+        }
+
+        .barra-tabla h2 {
+            font-size: 19px;
+        }
+
+        .acciones {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .etiqueta {
+            padding: 9px 12px;
+            border: 1px solid #303b4d;
+            border-radius: 7px;
+            color: #dbeafe;
+            font-size: 13px;
+            white-space: nowrap;
+        }
+
+        .boton-principal {
+            padding: 13px 17px;
+            border: none;
+            border-radius: 8px;
+            background: #ef233c;
+            color: white;
+            font-weight: bold;
+            cursor: pointer;
+            transition: .2s;
+        }
+
+        .boton-principal:hover {
+            background: #d91e35;
+        }
+
+        .tabla-contenedor {
+            width: 100%;
+            overflow-x: auto;
+            border: 1px solid #303b4d;
+            border-radius: 9px;
+        }
+
+        table {
+            width: 100%;
+            min-width: 750px;
+            border-collapse: collapse;
+        }
+
+        thead {
+            background: #111c2c;
+        }
+
+        th {
+            color: #087cfc;
+            text-align: left;
+            padding: 15px 12px;
+            font-size: 13px;
+        }
+
+        td {
+            padding: 17px 12px;
+            border-top: 1px solid #303b4d;
+            font-size: 14px;
+            color: #f5f7fa;
+        }
+
+        tbody tr:hover {
+            background: #202d41;
+        }
+
+        .calificacion {
+            color: #facc15;
+            white-space: nowrap;
+        }
+
+        .boton-eliminar {
+            padding: 9px 15px;
+            border: 1px solid #ef233c;
+            border-radius: 7px;
+            background: transparent;
+            color: #ff596b;
+            font-weight: bold;
+            font-size: 14px;
+            cursor: pointer;
+            transition: .2s;
+        }
+
+        .boton-eliminar:hover {
+            background: #ef233c;
+            color: white;
+        }
+
+        .mensaje {
+            margin-top: 20px;
+            color: #aab7c4;
+            font-size: 13px;
+            line-height: 1.5;
+        }
+
+        @media (max-width: 600px) {
+            body {
+                padding: 18px;
+            }
+
+            h1 {
+                font-size: 25px;
+            }
+
+            .panel-contenido {
+                padding: 16px;
+            }
+
+            .barra-tabla {
+                align-items: flex-start;
+            }
+        }
+
+        /* Vista integrada dentro del panel del empleado */
+body.modo-empleado {
+    padding: 0;
+    background: transparent;
+}
+
+body.modo-empleado .encabezado {
+    display: none;
+}
+
+body.modo-empleado .panel-contenido {
+    border: none;
+    padding: 0;
+    background: transparent;
+}
+
+body.modo-empleado .barra-tabla {
+    margin-bottom: 20px;
+}
+
+body.modo-empleado .tabla-contenedor {
+    width: 100%;
+}
+
+body.modo-empleado .mensaje {
+    margin-top: 15px;
+}
+/* BOTÓN ELIMINAR RESEÑA */
+.boton-eliminar-resena {
+    padding: 8px 13px;
+    border: 1px solid #ef233c;
+    border-radius: 7px;
+    background: transparent;
+    color: #ef233c;
+    font-weight: 600;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+.boton-eliminar-resena:hover {
+    background: #ef233c;
+    color: white;
+}
+/* MODAL DE CONFIRMACIÓN PARA ELIMINAR RESEÑAS */
+.modal-confirmacion {
+    position: fixed;
+    inset: 0;
+    z-index: 99999;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    background: rgba(0, 0, 0, 0.65);
+    backdrop-filter: blur(5px);
+}
+
+.modal-confirmacion.activo {
+    display: flex;
+}
+
+.modal-confirmacion-contenido {
+    width: 410px;
+    max-width: calc(100% - 35px);
+    padding: 27px;
+    background: #1e293b;
+    border: 1px solid #334155;
+    border-radius: 16px;
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.4);
+    animation: aparecerModal .2s ease;
+}
+
+@keyframes aparecerModal {
+    from {
+        opacity: 0;
+        transform: translateY(10px) scale(.97);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+.modal-icono-advertencia {
+    width: 43px;
+    height: 43px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 16px;
+    border-radius: 11px;
+    background: rgba(239, 35, 60, .15);
+    color: #ff6478;
+    font-size: 24px;
+    font-weight: bold;
+}
+
+.modal-confirmacion-contenido h3 {
+    font-size: 20px;
+    margin-bottom: 10px;
+    color: #f5f7fa;
+}
+
+.modal-confirmacion-contenido p {
+    color: #aab7c4;
+    font-size: 14px;
+    line-height: 1.6;
+}
+
+.modal-acciones {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+    margin-top: 24px;
+}
+
+.modal-acciones button {
+    padding: 11px 17px;
+    border-radius: 8px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: .2s;
+}
+
+.btn-cancelar-modal {
+    background: #29364a;
+    color: white;
+    border: 1px solid #475569;
+}
+
+.btn-cancelar-modal:hover {
+    background: #37465d;
+}
+
+.btn-confirmar-modal {
+    background: #ef233c;
+    color: white;
+    border: 1px solid #ef233c;
+}
+
+.btn-confirmar-modal:hover {
+    background: #d91e35;
+}
+    </style>
+</head>
+
+<body id="paginaResenas">
+
+    <!-- ENCABEZADO -->
+    <header class="encabezado">
+        <p class="sobrelinea">OPINIONES</p>
+
+        <h1>Gestión de reseñas</h1>
+
+        <p class="descripcion">
+            Consulta y administra las calificaciones y comentarios
+            realizados por los clientes de CUBEX.
+        </p>
+    </header>
+
+    <!-- TABLA DE RESEÑAS -->
+    <section class="panel-contenido">
+
+        <div class="barra-tabla">
+
+            <h2>Reseñas registradas</h2>
+
+            <div class="acciones">
+
+                <span class="etiqueta" id="totalResenas">
+                    Consultando...
+                </span>
+
+                <button
+                    type="button"
+                    class="boton-principal"
+                    id="btnActualizar">
+                    ↻ Actualizar reseñas
+                </button>
+
+            </div>
+        </div>
+
+        <div class="tabla-contenedor">
+
+            <table>
+
+                <thead>
+                    <tr>
+                        <th>Producto</th>
+                        <th>Cliente</th>
+                        <th>Calificación</th>
+                        <th>Comentario</th>
+                        <th>Fecha</th>
+                        <th id="encabezadoAcciones">Acciones</th>
+                    </tr>
+                </thead>
+
+                <tbody id="contenedorResenas">
+
+                    <tr>
+                        <td colspan="6" style="text-align:center;">
+                            Cargando reseñas...
+                        </td>
+                    </tr>
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+        <p class="mensaje" id="mensajeResenas">
+            Las reseñas se consultan desde el microservicio correspondiente.
+        </p>
+
+    </section>
+
+    <!-- MODAL ELIMINAR RESEÑA -->
+<div class="modal-confirmacion" id="modalEliminarResena">
+    <div class="modal-confirmacion-contenido">
+
+        <div class="modal-icono-advertencia">!</div>
+
+        <h3>Eliminar reseña</h3>
+
+        <p>
+            ¿Estás seguro de que deseas eliminar esta reseña?
+            Esta acción no se puede deshacer.
+        </p>
+
+        <div class="modal-acciones">
+            <button type="button"
+                    class="btn-cancelar-modal"
+                    id="cancelarEliminarResena">
+                Cancelar
+            </button>
+
+            <button type="button"
+                    class="btn-confirmar-modal"
+                    id="confirmarEliminarResena">
+                Sí, eliminar
+            </button>
+        </div>
+
+    </div>
+</div>
+<script src="../js/config.js"></script>
+<script>
+function confirmarEliminacionResena() {
+    return new Promise((resolve) => {
+        const modal = document.getElementById("modalEliminarResena");
+        const cancelar = document.getElementById("cancelarEliminarResena");
+        const confirmar = document.getElementById("confirmarEliminarResena");
+
+        modal.classList.add("activo");
+
+        function cerrar(resultado) {
+            modal.classList.remove("activo");
+
+            cancelar.removeEventListener("click", cancelarEvento);
+            confirmar.removeEventListener("click", confirmarEvento);
+
+            resolve(resultado);
+        }
+
+        function cancelarEvento() {
+            cerrar(false);
+        }
+
+        function confirmarEvento() {
+            cerrar(true);
+        }
+
+        cancelar.addEventListener("click", cancelarEvento);
+        confirmar.addEventListener("click", confirmarEvento);
+    });
+}
+</script>
+
+    <!-- JAVASCRIPT (se cargaba dos veces; ahora una sola) -->
+    <script src="../js/comentarios.js"></script>
+
+ <script>
+    {
+    const parametros = new URLSearchParams(window.location.search);
+    const modoEmpleado = parametros.get("modo") === "empleado";
+
+    if (modoEmpleado) {
+        document.body.classList.add("modo-empleado");
+
+        const encabezadoAcciones = document.getElementById("encabezadoAcciones");
+
+        if (encabezadoAcciones) {
+            encabezadoAcciones.style.display = "none";
+        }
+    }
+    }
+</script>
+
+</body>
+</html>

@@ -1,0 +1,35 @@
+{
+  "roles": [
+    {
+      "id": 1,
+      "nombre_rol": "Administrador"
+    },
+    {
+      "id": 2,
+      "nombre_rol": "Cliente"
+    }
+  ],
+
+  "usuarios": [
+    {
+      "id": 1,
+      "nombre": "Juan Pérez",
+      "correo": "juan@example.com",
+      "telefono": "6681234567",
+      "password_hash": "HASH",
+      "id_rol": 1,
+      "estado": "activo"
+    },
+    {
+      "id": 2,
+      "nombre": "María López",
+      "correo": "maria@example.com",
+      "telefono": "6689876543",
+      "password_hash": "HASH",
+      "id_rol": 2,
+      "estado": "activo"
+    }
+  ],
+
+  "tokens_recuperacion": []
+}

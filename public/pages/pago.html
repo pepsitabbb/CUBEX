@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Finaliza tu compra de forma segura en CUBEX.">
+
+    <title>Pago | CUBEX</title>
+
+    <link rel="stylesheet" href="../css/pago.css">
+
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+</head>
+
+<body>
+
+<header class="encabezado-pago">
+    <a href="index.html" class="logo-cubex">CUBEX</a>
+    <span>Pago seguro</span>
+</header>
+
+<main class="contenedor-pago">
+
+    <section class="panel-pago">
+
+        <div class="encabezado-seccion">
+            <h1>Finalizar compra</h1>
+            <p>Completa los datos para realizar tu pago.</p>
+        </div>
+
+        <div id="mensajeTarjeta" class="mensaje" role="alert"></div>
+
+        <div id="seccionTarjeta">
+
+            <h2>Datos de tu tarjeta</h2>
+            <p>Agrega una tarjeta o utiliza una registrada.</p>
+
+            <div id="contenedorTarjetas" hidden>
+                <label for="tarjetaGuardada">Mis tarjetas</label>
+
+                <div class="fila-tarjetas">
+                    <select id="tarjetaGuardada">
+                        <option value="">Selecciona una tarjeta</option>
+                    </select>
+
+                    <button type="button" id="btnNuevaTarjeta">
+                        Usar otra tarjeta
+                    </button>
+                </div>
+            </div>
+
+            <form id="formTarjeta">
+
+                <div class="campo">
+                    <label for="nombreTitular">Nombre del titular</label>
+                    <input
+                        type="text"
+                        id="nombreTitular"
+                        placeholder="Como aparece en la tarjeta"
+                        autocomplete="cc-name">
+                </div>
+
+                <div class="campo">
+                    <label for="numeroTarjeta">Número de tarjeta</label>
+                    <input
+                        type="text"
+                        id="numeroTarjeta"
+                        placeholder="0000 0000 0000 0000"
+                        maxlength="23"
+                        autocomplete="cc-number">
+                </div>
+
+                <div class="fila-campos">
+
+                    <div class="campo">
+                        <label for="mesExpiracion">Mes de expiración</label>
+                        <select id="mesExpiracion">
+                            <option value="">Mes</option>
+                            <option value="01">01</option>
+                            <option value="02">02</option>
+                            <option value="03">03</option>
+                            <option value="04">04</option>
+                            <option value="05">05</option>
+                            <option value="06">06</option>
+                            <option value="07">07</option>
+                            <option value="08">08</option>
+                            <option value="09">09</option>
+                            <option value="10">10</option>
+                            <option value="11">11</option>
+                            <option value="12">12</option>
+                        </select>
+                    </div>
+
+                    <div class="campo">
+                        <label for="anioExpiracion">Año</label>
+                        <select id="anioExpiracion">
+                            <option value="">Año</option>
+                        </select>
+                    </div>
+
+                    <div class="campo">
+                        <label for="cvv">CVV</label>
+                        <input
+                            type="password"
+                            id="cvv"
+                            placeholder="•••"
+                            maxlength="4"
+                            autocomplete="cc-csc">
+                    </div>
+
+                </div>
+
+                <div class="aviso-seguridad">
+                    <i class="fa-solid fa-shield-halved"></i>
+                    Tus datos se utilizan para validar el pago.
+                    El número completo y el CVV no se guardan en el servicio de tarjetas.
+                </div>
+
+                <label class="opcion-guardar">
+                    <input type="checkbox" id="guardarTarjeta">
+                    Guardar esta tarjeta para futuras compras
+                </label>
+
+                <button type="submit" id="btnPagar" class="btn-pagar">
+                    <i class="fa-solid fa-lock"></i>
+                    Verificar y pagar
+                </button>
+
+            </form>
+        </div>
+
+        <!-- Confirmación después de verificar el pago -->
+        <section id="resultadoPago" class="resultado-pago" hidden>
+
+            <div class="icono-exito">
+                <i class="fa-solid fa-circle-check"></i>
+            </div>
+
+            <h2>¡Pago realizado con éxito!</h2>
+            <p>Tu compra en CUBEX ha sido confirmada.</p>
+
+            <p id="folioPedido"></p>
+
+            <button type="button" id="btnDescargarTicket">
+                <i class="fa-solid fa-download"></i>
+                Descargar ticket PDF
+            </button>
+
+            <!-- NUEVO BOTÓN PARA REGRESAR AL INDEX -->
+            <a href="index.html" class="btn-regresar">
+                <i class="fa-solid fa-house"></i>
+                Regresar al inicio
+            </a>
+
+        </section>
+
+    </section>
+
+    <aside class="resumen-compra">
+
+        <h2>Resumen de compra</h2>
+
+        <div class="fila-resumen">
+            <span>Subtotal</span>
+            <strong id="subtotalCompra">$0.00</strong>
+        </div>
+
+        <div class="fila-resumen">
+            <span>Envío</span>
+            <strong id="envioCompra">Incluido en el pedido</strong>
+        </div>
+
+        <hr>
+
+        <div class="fila-resumen total">
+            <strong>Total</strong>
+            <strong id="totalCompra">$0.00</strong>
+        </div>
+
+        <p class="nota-resumen">
+            <i class="fa-solid fa-circle-info"></i>
+            El importe final se valida con la información del pedido.
+        </p>
+
+        <div class="ayuda-pago">
+            <i class="fa-solid fa-headset"></i>
+
+            <div>
+                <strong>¿Necesitas ayuda?</strong>
+                <p>Revisa tus datos antes de continuar.</p>
+            </div>
+        </div>
+
+    </aside>
+
+</main>
+
+<script src="../js/config.js"></script>
+<script src="../js/pago.js"></script>
+
+</body>
+</html>

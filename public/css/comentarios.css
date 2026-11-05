@@ -1,0 +1,16 @@
+/* BOTÓN ELIMINAR RESEÑA */
+.boton-eliminar-resena {
+    padding: 8px 13px;
+    border: 1px solid #ef233c;
+    border-radius: 7px;
+    background: transparent;
+    color: #ef233c;
+    font-weight: 600;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+.boton-eliminar-resena:hover {
+    background: #ef233c;
+    color: white;
+}

@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Probador - Verificación de Tarjeta</title>
+  <link rel="stylesheet" href="/style.css" />
+</head>
+<body>
+  <main class="contenedor">
+    <header>
+      <h1>Pagos — Verificación de Tarjeta</h1>
+      <p class="subtitulo">
+        Panel de prueba del servicio de verificación de tarjetas ·
+        Servicio independiente
+      </p>
+    </header>
+
+    <div class="aviso">
+      <strong>Solo datos de prueba.</strong> La pasarela de pagos es simulada: usa
+      únicamente los números de tarjeta de los botones de abajo. Nunca escribas aquí una
+      tarjeta real.
+    </div>
+
+    <!-- 1. Sesión -->
+    <section class="tarjeta">
+      <h2>1. Sesión</h2>
+      <div class="fila-botones">
+        <button type="button" id="btn-login-cliente">Entrar como CLIENTE demo</button>
+        <button type="button" id="btn-login-admin" class="secundario">Entrar como ADMIN demo (debe dar 403)</button>
+        <button type="button" id="btn-salir" class="gris">Cerrar sesión</button>
+      </div>
+      <p id="estado-sesion" class="estado">Sin sesión iniciada</p>
+    </section>
+
+    <!-- 2. Datos de tarjeta -->
+    <section class="tarjeta">
+      <h2>2. Datos de la tarjeta</h2>
+      <p class="ayuda">Rellena con un ejemplo de prueba:</p>
+      <div class="presets" id="presets"></div>
+      <div id="esperado" class="esperado"></div>
+
+      <form id="form-tarjeta" autocomplete="off">
+        <label>
+          Número de tarjeta
+          <input type="text" id="numero" inputmode="numeric" placeholder="4242 4242 4242 4242" autocomplete="off" />
+        </label>
+        <div class="grid-3">
+          <label>
+            Mes (MM)
+            <input type="text" id="mes" inputmode="numeric" maxlength="2" placeholder="12" autocomplete="off" />
+          </label>
+          <label>
+            Año (AAAA)
+            <input type="text" id="anio" inputmode="numeric" maxlength="4" placeholder="2030" autocomplete="off" />
+          </label>
+          <label>
+            CVV
+            <input type="password" id="cvv" inputmode="numeric" maxlength="4" placeholder="123" autocomplete="off" />
+          </label>
+        </div>
+        <div class="fila-botones">
+          <button type="button" id="btn-verificar" title="Valida formato, Luhn, marca, vencimiento y CVV. NO consulta al banco.">Solo verificar datos</button>
+          <button type="button" id="btn-registrar" class="secundario" title="Valida y además consulta al banco (pasarela simulada).">Verificar y registrar tarjeta</button>
+        </div>
+      </form>
+      <div id="checklist" class="checklist"></div>
+      <div id="nota-banco" class="nota-banco"></div>
+      <div id="resultado-tarjeta" class="resultado"></div>
+    </section>
+
+    <!-- 3. Mis tarjetas -->
+    <section class="tarjeta">
+      <h2>3. Mis tarjetas guardadas</h2>
+      <button type="button" id="btn-listar" class="gris">Actualizar lista</button>
+      <div id="lista-tarjetas" class="lista"></div>
+    </section>
+
+    <!-- 4. Verificar en el pago -->
+    <section class="tarjeta">
+      <h2>4. Verificar la tarjeta al pagar</h2>
+      <div class="fila-botones">
+        <button type="button" id="btn-pedidos" class="gris">Ver mis pedidos pendientes</button>
+      </div>
+      <div id="lista-pedidos" class="lista"></div>
+
+      <div class="grid-3">
+        <label>
+          Tarjeta
+          <select id="sel-tarjeta"><option value="">— registra una tarjeta primero —</option></select>
+        </label>
+        <label>
+          CVV
+          <input type="password" id="cvv-pago" inputmode="numeric" maxlength="4" placeholder="123" autocomplete="off" />
+        </label>
+        <label>
+          Pedido (opcional)
+          <input type="text" id="id-pedido" inputmode="numeric" placeholder="id del pedido" autocomplete="off" />
+        </label>
+      </div>
+      <button type="button" id="btn-pagar">Verificar tarjeta para este pago</button>
+      <div id="resultado-pago" class="resultado"></div>
+    </section>
+  </main>
+
+  <script src="/tarjetas.js"></script>
+</body>
+</html>

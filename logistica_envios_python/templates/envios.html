@@ -1,0 +1,91 @@
+{% extends "base.html" %}
+{% block content %}
+
+<div class="d-flex justify-content-between align-items-center mb-3">
+    <div>
+        <h1 class="mb-1">Control de envíos</h1>
+        <p class="text-muted mb-0">Consulta, actualiza y valida las entregas.</p>
+    </div>
+    <a href="{{ url_for('nuevo_envio') }}" class="btn btn-primary">+ Nuevo envío</a>
+</div>
+
+<form action="{{ url_for('buscar_envio') }}" method="get" class="row g-2 mb-4">
+    <div class="col-md-8">
+        <label for="guia" class="visually-hidden">Número de guía</label>
+        <input id="guia" class="form-control" name="guia" value="{{ busqueda or '' }}"
+               maxlength="100" placeholder="Buscar por número de guía">
+    </div>
+    <div class="col-md-4 d-flex gap-2">
+        <button type="submit" class="btn btn-secondary flex-grow-1">Buscar</button>
+        {% if busqueda %}
+            <a href="{{ url_for('envios') }}" class="btn btn-outline-secondary">Limpiar</a>
+        {% endif %}
+    </div>
+</form>
+
+<div class="table-responsive">
+<table class="table table-bordered table-striped align-middle bg-white">
+    <thead class="table-dark">
+        <tr>
+            <th>ID</th>
+            <th>Venta</th>
+            <th>Guía</th>
+            <th>Dirección</th>
+            <th>Estado</th>
+            <th>Acciones</th>
+        </tr>
+    </thead>
+    <tbody>
+    {% for e in envios %}
+        <tr>
+            <td>{{ e.id }}</td>
+            <td>{{ e.id_venta }}</td>
+            <td><strong>{{ e.num_guia }}</strong></td>
+            <td>
+                {{ e.direccion or '' }}<br>
+                {{ e.colonia or '' }}{% if e.codigo_postal %} C.P. {{ e.codigo_postal }}{% endif %}
+            </td>
+            <td>
+                {% set badge = {
+                    'pendiente': 'secondary',
+                    'preparando': 'info',
+                    'enviado': 'primary',
+                    'en_transito': 'warning',
+                    'entregado': 'success',
+                    'cancelado': 'danger'
+                }.get(e.estado, 'secondary') %}
+                <span class="badge text-bg-{{ badge }}">{{ e.estado }}</span>
+            </td>
+            <td>
+                {% if e.estado != 'entregado' and e.estado != 'cancelado' %}
+                <form action="{{ url_for('actualizar_estado', id=e.id) }}" method="post" class="mb-2">
+                    <label for="estado-{{ e.id }}" class="visually-hidden">Nuevo estado</label>
+                    <select id="estado-{{ e.id }}" name="estado" class="form-select form-select-sm mb-1">
+                        {% for estado in allowed_states %}
+                            <option value="{{ estado }}" {% if estado == e.estado %}selected{% endif %}>{{ estado }}</option>
+                        {% endfor %}
+                    </select>
+                    <button type="submit" class="btn btn-sm btn-outline-primary">Actualizar</button>
+                </form>
+
+                <form action="{{ url_for('validar_entrega', id=e.id) }}" method="post">
+                    <button type="submit" class="btn btn-sm btn-success"
+                            onclick="return confirm('¿Confirmar entrega de este envío?')">
+                        Validar entrega
+                    </button>
+                </form>
+                {% elif e.estado == 'entregado' %}
+                    <span class="text-success">Entrega validada</span>
+                {% else %}
+                    <span class="text-danger">Envío cancelado</span>
+                {% endif %}
+            </td>
+        </tr>
+    {% else %}
+        <tr><td colspan="6" class="text-center">No hay envíos registrados.</td></tr>
+    {% endfor %}
+    </tbody>
+</table>
+</div>
+
+{% endblock %}

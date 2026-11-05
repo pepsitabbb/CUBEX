@@ -1,0 +1,64 @@
+
+# ==========================================
+# DEPENDENCIAS DE NODE.JS
+# ==========================================
+node_modules/
+**/node_modules/
+
+# ==========================================
+# VARIABLES DE ENTORNO Y CREDENCIALES
+# ==========================================
+.env
+.ENV
+.env.*
+!.env.example
+
+# ==========================================
+# PYTHON
+# ==========================================
+__pycache__/
+*.pyc
+*.pyo
+venv/
+.venv/
+env/
+
+# ==========================================
+# BASES DE DATOS LOCALES
+# ==========================================
+*.sqlite
+*.sqlite3
+*.db
+
+# ==========================================
+# ARCHIVOS DE SUBIDA Y EVIDENCIAS
+# ==========================================
+logistica_envios_python/uploads/postventa/*
+!logistica_envios_python/uploads/postventa/.gitkeep
+
+# ==========================================
+# VISUAL STUDIO Y VISUAL STUDIO CODE
+# ==========================================
+.vs/
+.vscode/
+bin/
+obj/
+*.csproj.user
+
+# ==========================================
+# RESPALDOS
+# ==========================================
+_respaldo_original/
+
+# ==========================================
+# ARCHIVOS DEL SISTEMA
+# ==========================================
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# ==========================================
+# LOGS
+# ==========================================
+*.log
+npm-debug.log*

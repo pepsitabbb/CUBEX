@@ -1,0 +1,459 @@
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CUBEX | Panel del empleado</title>
+    <link rel="stylesheet" href="../css/empleado.css">
+</head>
+<body>
+
+    <!-- BARRA LATERAL -->
+    <aside class="barra-lateral">
+
+        <a href="index.html" class="marca">
+            <span class="marca-logo">CUBEX</span>
+            <span class="marca-eslogan">Gira, piensa y conquista</span>
+        </a>
+
+        <!-- PERFIL CLICABLE -->
+<!-- PERFIL CLICABLE -->
+        <button type="button" class="perfil-admin" id="abrirPerfil">
+            <span class="avatar-vacio" id="inicialEmpleado">E</span>
+
+            <span class="datos-perfil">
+                <h3 id="nombreEmpleado">Empleado</h3>
+                <p id="usuarioEmpleado">Personal de tienda</p>
+            </span>
+        </button>
+
+        <!-- NAVEGACIÓN -->
+        <nav class="navegacion">
+            <p class="titulo-menu">MENÚ PRINCIPAL</p>
+
+            <a href="#resumen" class="enlace-menu activo" data-seccion="resumen">
+                <span class="icono">▦</span>
+                <span>Resumen</span>
+            </a>
+
+            <a href="#pedidos" class="enlace-menu" data-seccion="pedidos">
+                <span class="icono">▣</span>
+                <span>Pedidos</span>
+            </a>
+
+            <a href="#resenas" class="enlace-menu" data-seccion="resenas">
+                <span class="icono">☆</span>
+                <span>Comentarios y reseñas</span>
+            </a>
+
+            <p class="titulo-menu">LOGÍSTICA Y POSTVENTA</p>
+
+            <a href="#inventario" class="enlace-menu" data-seccion="inventario">
+                <span class="icono">▤</span>
+                <span>Inventario</span>
+            </a>
+
+            <a href="#envios" class="enlace-menu" data-seccion="envios">
+                <span class="icono">➜</span>
+                <span>Envíos y rastreo</span>
+            </a>
+
+            <a href="#entregas" class="enlace-menu" data-seccion="entregas">
+                <span class="icono">✓</span>
+                <span>Validación de entregas</span>
+            </a>
+
+            <a href="#garantias" class="enlace-menu" data-seccion="garantias">
+                <span class="icono">◇</span>
+                <span>Garantías</span>
+            </a>
+
+            <a href="#devoluciones" class="enlace-menu" data-seccion="devoluciones">
+                <span class="icono">↩</span>
+                <span>Devoluciones</span>
+            </a>
+        </nav>
+
+        <!-- ESPACIO INFERIOR -->
+        <div class="barra-inferior"></div>
+
+    </aside>
+
+    <!-- CONTENIDO PRINCIPAL -->
+    <main class="contenido">
+
+        <!-- ENCABEZADO -->
+        <header class="encabezado-pagina">
+
+            <div>
+                <span class="etiqueta">ÁREA DE TRABAJO</span>
+                <h1>Panel del empleado</h1>
+                <p>Administra los pedidos y consulta las opiniones de los clientes.</p>
+            </div>
+
+            <div class="acciones-encabezado">
+
+                <div class="estado-empleado">
+                    <span class="indicador"></span>
+                    Panel de empleado
+                </div>
+
+                <button type="button" class="boton-cerrar-sesion"
+                        id="cerrarSesion">
+                    ↪ Cerrar sesión
+                </button>
+
+            </div>
+
+        </header>
+
+        <!-- RESUMEN -->
+        <section class="ventana" id="resumen">
+
+            <div class="bienvenida">
+                <div>
+                    <h2>¡Bienvenido a CUBEX!</h2>
+                    <p>
+                        Desde aquí puedes dar seguimiento a los pedidos
+                        y consultar los comentarios de nuestros clientes.
+                    </p>
+                </div>
+
+                <div class="bienvenida-icono">📦</div>
+            </div>
+
+            <!-- ESTADÍSTICAS -->
+            <div class="estadisticas">
+
+                <article class="tarjeta-estadistica">
+                    <div class="estadistica-icono azul">▣</div>
+                    <div>
+                        <p>Pedidos pendientes</p>
+                        <h3>—</h3>
+                        <span>Dato por conectar al servicio</span>
+                    </div>
+                </article>
+
+                <article class="tarjeta-estadistica">
+                    <div class="estadistica-icono amarillo">◷</div>
+                    <div>
+                        <p>En preparación</p>
+                        <h3>—</h3>
+                        <span>Dato por conectar al servicio</span>
+                    </div>
+                </article>
+
+                <article class="tarjeta-estadistica">
+                    <div class="estadistica-icono verde">✓</div>
+                    <div>
+                        <p>Pedidos entregados</p>
+                        <h3>—</h3>
+                        <span>Dato por conectar al servicio</span>
+                    </div>
+                </article>
+
+                <article class="tarjeta-estadistica">
+                    <div class="estadistica-icono morado">☆</div>
+                    <div>
+                        <p>Reseñas recibidas</p>
+                        <h3>—</h3>
+                        <span>Dato por conectar al servicio</span>
+                    </div>
+                </article>
+
+            </div>
+
+            <!-- FUNCIONES -->
+            <section class="panel">
+
+                <div class="panel-titulo">
+                    <div>
+                        <h2>Funciones del empleado</h2>
+                        <p>Accesos disponibles según tu puesto.</p>
+                    </div>
+                </div>
+
+                <div class="funciones-grid">
+
+                    <a href="#pedidos" class="funcion">
+                        <span class="funcion-icono">📦</span>
+                        <h3>Gestionar pedidos</h3>
+                        <p>Consultar pedidos y actualizar su estado.</p>
+                        <span class="funcion-enlace">Ir a pedidos →</span>
+                    </a>
+
+                    <a href="#resenas" class="funcion">
+                        <span class="funcion-icono">💬</span>
+                        <h3>Ver comentarios</h3>
+                        <p>Consultar las opiniones de los clientes.</p>
+                        <span class="funcion-enlace">Ver reseñas →</span>
+                    </a>
+
+                    <button type="button" class="funcion funcion-boton"
+                            id="abrirPerfilTarjeta">
+                        <span class="funcion-icono">👤</span>
+                        <h3>Mi perfil</h3>
+                        <p>Consultar la información de tu cuenta.</p>
+                        <span class="funcion-enlace">Ver perfil →</span>
+                    </button>
+
+                </div>
+            </section>
+
+        </section>
+
+        <!-- PEDIDOS -->
+        <!-- PEDIDOS -->
+<section class="ventana" id="pedidos">
+
+    <div class="titulo-seccion">
+        <span class="etiqueta">OPERACIÓN</span>
+        <h2>Pedidos</h2>
+        <p>Consulta los pedidos y da seguimiento a su preparación.</p>
+    </div>
+
+    <section class="panel">
+
+        <div class="panel-titulo">
+            <div>
+                <h2>Listado de pedidos</h2>
+                <p>Pedidos registrados en CUBEX.</p>
+            </div>
+            <button type="button" id="actualizarPedidos" class="boton-actualizar">
+                ↻ Actualizar
+            </button>
+        </div>
+
+        <div class="filtros-pedidos">
+            <input
+                type="text"
+                id="buscarPedidoEmpleado"
+                placeholder="Buscar por número de pedido o cliente..."
+            >
+
+            <select id="filtroEstadoEmpleado">
+                <option value="">Todos los estados</option>
+                <option value="Pendiente">Pendiente</option>
+                <option value="Confirmado">Confirmado</option>
+                <option value="Cancelado">Cancelado</option>
+            </select>
+        </div>
+
+        <div class="tabla-contenedor">
+            <table>
+                <thead>
+                    <tr>
+                        <th>N.º de pedido</th>
+                        <th>Cliente</th>
+                        <th>Fecha</th>
+                        <th>Estado</th>
+                        <th>Acción</th>
+                    </tr>
+                </thead>
+
+                <tbody id="tablaPedidosEmpleado">
+                    <tr>
+                        <td colspan="5" class="tabla-vacia">
+                            Cargando pedidos...
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <p id="mensajePedidosEmpleado" class="nota"></p>
+
+        <div class="nota">
+            <strong>Permisos:</strong>
+            el empleado puede consultar los pedidos y actualizar su estado.
+        </div>
+
+    </section>
+</section>
+
+        <!-- COMENTARIOS Y RESEÑAS -->
+       
+<!-- COMENTARIOS Y RESEÑAS -->
+<section class="ventana" id="resenas">
+
+    <div class="titulo-seccion">
+        <span class="etiqueta">OPINIONES DE CLIENTES</span>
+        <h2>Comentarios y reseñas</h2>
+        <p>Consulta las valoraciones y opiniones de los compradores.</p>
+    </div>
+
+    <section class="panel">
+
+        <div class="panel-titulo">
+            <div>
+                <h2>Reseñas de los clientes</h2>
+                <p>Opiniones compartidas por los compradores de CUBEX.</p>
+            </div>
+
+            <span class="etiqueta" id="totalResenas">
+                Consultando...
+            </span>
+        </div>
+
+        <div class="tabla-contenedor">
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>Producto</th>
+                        <th>Cliente</th>
+                        <th>Calificación</th>
+                        <th>Comentario</th>
+                        <th>Fecha</th>
+                    </tr>
+                </thead>
+
+                <tbody id="contenedorResenas">
+                    <tr>
+                        <td colspan="5" class="tabla-vacia">
+                            Cargando reseñas...
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+
+        </div>
+
+        <p id="mensajeResenas" class="nota"></p>
+
+    </section>
+
+</section>
+
+
+        <footer class="pie-pagina">
+            <p>© 2026 CUBEX · Panel del empleado</p>
+            <p>Gira, piensa y conquista.</p>
+        </footer>
+
+
+<!-- INVENTARIO -->
+<section class="ventana" id="inventario">
+    <iframe src="inventario.html" title="Inventario" class="iframe-modulo" loading="lazy"></iframe>
+</section>
+
+<!-- ENVÍOS Y RASTREO -->
+<section class="ventana" id="envios">
+    <iframe src="envios.html" title="Envíos y rastreo" class="iframe-modulo" loading="lazy"></iframe>
+</section>
+
+<!-- VALIDACIÓN DE ENTREGAS -->
+<section class="ventana" id="entregas">
+    <iframe src="entregas.html" title="Validación de entregas" class="iframe-modulo" loading="lazy"></iframe>
+</section>
+
+<!-- GARANTÍAS -->
+<section class="ventana" id="garantias">
+    <iframe src="garantias.html" title="Garantías" class="iframe-modulo" loading="lazy"></iframe>
+</section>
+
+<!-- DEVOLUCIONES -->
+<section class="ventana" id="devoluciones">
+    <iframe src="devoluciones.html" title="Devoluciones" class="iframe-modulo" loading="lazy"></iframe>
+</section>
+
+    </main>
+
+   <!-- VENTANA DE INFORMACIÓN DEL PERFIL -->
+<div class="modal-perfil" id="modalPerfil">
+
+    <div class="contenido-modal-perfil">
+
+        <button type="button" class="cerrar-modal"
+                id="cerrarModal" aria-label="Cerrar">
+            &times;
+        </button>
+
+        <div class="perfil-modal-avatar" id="inicialModal">E</div>
+
+        <h2 id="modalNombre">Empleado</h2>
+        <p class="subtitulo-modal">Información de la cuenta</p>
+
+        <div class="dato-modal">
+            <span>Nombre completo</span>
+            <strong id="modalNombreCompleto">--</strong>
+        </div>
+
+        <div class="dato-modal">
+            <span>Nombre de usuario</span>
+            <strong id="modalUsuario">--</strong>
+        </div>
+
+        <div class="dato-modal">
+            <span>Correo electrónico</span>
+            <strong id="modalCorreo">--</strong>
+        </div>
+
+        <div class="dato-modal">
+            <span>Rol de usuario</span>
+            <strong id="modalRol">VENDEDOR</strong>
+        </div>
+
+        <button type="button" class="boton-modal-cerrar"
+                id="botonCerrarModal">
+            Cerrar
+        </button>
+
+    </div>
+</div>
+
+    <!-- MODAL CERRAR SESIÓN -->
+   <!-- MODAL CERRAR SESIÓN -->
+<div class="modal-perfil" id="modalCerrarSesion">
+
+    <div class="contenido-modal-perfil">
+
+        <div class="perfil-modal-avatar">↪</div>
+
+        <h2>¿Cerrar sesión?</h2>
+
+        <p class="subtitulo-modal">
+            ¿Estás seguro de que deseas salir de tu cuenta?
+        </p>
+
+        <div class="modal-acciones">
+
+            <button type="button" class="boton-modal-cerrar"
+                    id="confirmarCerrarSesion">
+                Sí, cerrar sesión
+            </button>
+
+            <button type="button" class="btn-secundario"
+                    id="cancelarCerrarSesion">
+                Cancelar
+            </button>
+
+        </div>
+
+    </div>
+</div>
+
+    <!-- NOTIFICACIONES -->
+    <div class="contenedor-notificaciones"
+         id="contenedorNotificaciones"
+         aria-live="polite"></div>
+
+    <script src="../js/config.js"></script>
+    <script src="../js/empleado.js"></script>
+<script>
+/* Altura automática de los módulos en iframe */
+window.addEventListener("message", function (evento) {
+    if (evento.origin !== window.location.origin || !evento.data || evento.data.tipo !== "cubex-altura") return;
+
+    document.querySelectorAll("iframe").forEach(function (iframe) {
+        if (iframe.contentWindow === evento.source) {
+            iframe.style.height = Math.max(600, Number(evento.data.altura) + 24) + "px";
+        }
+    });
+});
+</script>
+    <script src="../js/comentarios.js"></script>
+
+</body>
+</html>

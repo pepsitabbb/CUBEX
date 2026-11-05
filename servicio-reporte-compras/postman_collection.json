@@ -1,0 +1,105 @@
+{
+  "info": {
+    "name": "SOA - Servicio Reporte de Compras",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "http://127.0.0.1:3000"
+    }
+  ],
+  "item": [
+    {
+      "name": "01 Salud",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Accept",
+            "value": "application/json"
+          }
+        ],
+        "url": "{{baseUrl}}/api/v1/salud"
+      }
+    },
+    {
+      "name": "02 Lista septiembre",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Accept",
+            "value": "application/json"
+          }
+        ],
+        "url": "{{baseUrl}}/api/v1/reportes/compras?desde=2026-09-01&hasta=2026-09-30&limite=2"
+      }
+    },
+    {
+      "name": "03 Resumen septiembre",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Accept",
+            "value": "application/json"
+          }
+        ],
+        "url": "{{baseUrl}}/api/v1/reportes/compras/resumen?desde=2026-09-01&hasta=2026-09-30"
+      }
+    },
+    {
+      "name": "04 Proveedor 1",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Accept",
+            "value": "application/json"
+          }
+        ],
+        "url": "{{baseUrl}}/api/v1/reportes/compras/resumen?desde=2026-09-01&hasta=2026-09-30&proveedorId=1"
+      }
+    },
+    {
+      "name": "05 Detalle compra 1",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Accept",
+            "value": "application/json"
+          }
+        ],
+        "url": "{{baseUrl}}/api/v1/reportes/compras/1"
+      }
+    },
+    {
+      "name": "06 Fecha inválida (400)",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Accept",
+            "value": "application/json"
+          }
+        ],
+        "url": "{{baseUrl}}/api/v1/reportes/compras?desde=2026-02-30"
+      }
+    },
+    {
+      "name": "07 No encontrada (404)",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Accept",
+            "value": "application/json"
+          }
+        ],
+        "url": "{{baseUrl}}/api/v1/reportes/compras/999999"
+      }
+    }
+  ]
+}

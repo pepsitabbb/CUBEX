@@ -1,0 +1,81 @@
+@import url("login.css");
+
+
+/* Campo oculto para detectar bots */
+.campo-trampa {
+    position: absolute;
+    left: -10000px;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+}
+
+/* Tarjeta de verificación de seguridad */
+.verificacion-seguridad {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 14px;
+    margin: 15px 0;
+    background: #101c29;
+    border: 1px solid #34465a;
+    border-radius: 10px;
+}
+
+.verificacion-icono {
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #1d3448;
+    border-radius: 50%;
+    font-size: 21px;
+}
+
+.verificacion-texto {
+    flex: 1;
+}
+
+.verificacion-texto strong {
+    display: block;
+    color: #ffffff;
+    font-size: 13px;
+}
+
+.verificacion-texto p {
+    margin: 5px 0 0;
+    color: #aab9c9;
+    font-size: 12px;
+}
+
+.verificacion-indicador {
+    display: flex;
+    align-items: center;
+}
+
+.indicador-pendiente,
+.indicador-correcto,
+.indicador-error {
+    width: 11px;
+    height: 11px;
+    border-radius: 50%;
+}
+
+.indicador-pendiente {
+    background: #e0ad38;
+}
+
+.indicador-correcto {
+    background: #25c77a;
+    box-shadow: 0 0 8px #25c77a;
+}
+
+.indicador-error {
+    background: #ef5350;
+}
+
+#btnRegistro:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}

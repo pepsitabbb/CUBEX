@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CUBEX | Garantías</title>
+    <link rel="stylesheet" href="../css/comun.css">
+    <link rel="stylesheet" href="../css/logistica.css">
+</head>
+<body data-module="garantias">
+<main class="log-wrap">
+    <header class="log-head">
+        <div>
+            <p class="log-kicker">POSTVENTA CUBEX</p>
+            <h1>Garantías</h1>
+            <p class="log-sub">Revisa las solicitudes de los clientes, aprueba o rechaza y registra la resolución.</p>
+        </div>
+        <button type="button" class="cx-btn cx-btn-secundario" id="btnRecargar">↻ Actualizar</button>
+    </header>
+
+    <section class="cx-resumen" aria-label="Resumen de garantías">
+        <div class="cx-resumen-item atencion"><strong id="statPendiente">—</strong><span>Pendientes</span></div>
+        <div class="cx-resumen-item"><strong id="statRevision">—</strong><span>En revisión</span></div>
+        <div class="cx-resumen-item ok"><strong id="statAprobada">—</strong><span>Aprobadas</span></div>
+        <div class="cx-resumen-item alerta"><strong id="statRechazada">—</strong><span>Rechazadas</span></div>
+        <div class="cx-resumen-item ok"><strong id="statResuelta">—</strong><span>Resueltas</span></div>
+    </section>
+
+    <section class="log-panel">
+        <div class="log-toolbar">
+            <div class="log-titulo">
+                <h2>Solicitudes de garantía</h2>
+                <p class="log-sub">Busca por folio, pedido, cliente o producto.</p>
+            </div>
+            <label class="cx-oculto" for="buscar">Buscar</label>
+            <input type="search" id="buscar" class="cx-filtro" placeholder="Folio, pedido, cliente...">
+            <label class="cx-oculto" for="filtroEstado">Estado</label>
+            <select id="filtroEstado" class="cx-filtro">
+                <option value="">Todos los estados</option>
+                <option value="pendiente">Pendiente</option>
+                <option value="en_revision">En revisión</option>
+                <option value="aprobada">Aprobada</option>
+                <option value="rechazada">Rechazada</option>
+                <option value="resuelta">Resuelta</option>
+            </select>
+        </div>
+        <div id="tablaSolicitudes"><div class="cx-cargando">Cargando solicitudes...</div></div>
+    </section>
+</main>
+
+<script src="../js/config.js"></script>
+<script src="../js/comun.js"></script>
+<script src="../js/logistica.js"></script>
+</body>
+</html>

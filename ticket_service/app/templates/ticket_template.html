@@ -1,0 +1,273 @@
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+
+<style>
+    @page {
+        size: A4;
+        margin: 22mm;
+    }
+
+    body {
+        font-family: Helvetica, Arial, sans-serif;
+        font-size: 10px;
+        color: #222;
+    }
+
+    .header {
+        text-align: center;
+        border-bottom: 3px solid #d6a900;
+        padding-bottom: 15px;
+        margin-bottom: 20px;
+    }
+
+    .brand {
+        font-size: 30px;
+        letter-spacing: 6px;
+        font-weight: bold;
+        color: #111;
+        margin: 0;
+    }
+
+    .tagline {
+        color: #a88300;
+        font-size: 10px;
+        margin: 5px 0 12px;
+    }
+
+    .subtitle {
+        font-size: 15px;
+        font-weight: bold;
+        margin: 5px 0;
+    }
+
+    .folio {
+        background: #f5f1df;
+        border: 1px solid #e5d99f;
+        padding: 10px;
+        margin-top: 12px;
+        font-size: 11px;
+    }
+
+    .section-title {
+        font-size: 12px;
+        font-weight: bold;
+        border-bottom: 1px solid #d6a900;
+        padding-bottom: 6px;
+        margin-bottom: 10px;
+    }
+
+    .info {
+        margin: 18px 0;
+        line-height: 1.9;
+    }
+
+    .info-table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 10px;
+    }
+
+    .info-table td {
+        padding: 5px;
+        border: none;
+        vertical-align: top;
+    }
+
+    table.products {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 15px;
+    }
+
+    .products th {
+        background: #222;
+        color: #fff;
+        padding: 10px 7px;
+        text-align: left;
+    }
+
+    .products td {
+        padding: 10px 7px;
+        border-bottom: 1px solid #ddd;
+    }
+
+    .right {
+        text-align: right;
+    }
+
+    .center {
+        text-align: center;
+    }
+
+    .totals {
+        width: 100%;
+        margin-top: 20px;
+    }
+
+    .totals td {
+        padding: 7px;
+        border: none;
+    }
+
+    .total {
+        text-align: right;
+        font-size: 17px;
+        font-weight: bold;
+        color: #111;
+        border-top: 2px solid #d6a900;
+        padding-top: 12px;
+        margin-top: 12px;
+    }
+
+    .approved {
+        text-align: center;
+        color: #238451;
+        font-weight: bold;
+        font-size: 13px;
+        border: 1px solid #b8dfc9;
+        background: #effaf3;
+        padding: 10px;
+        margin-top: 20px;
+    }
+
+    .footer {
+        text-align: center;
+        margin-top: 35px;
+        color: #666;
+        font-size: 9px;
+        line-height: 1.7;
+    }
+
+    .muted {
+        color: #666;
+    }
+</style>
+</head>
+
+<body>
+
+    <!-- ENCABEZADO -->
+    <div class="header">
+        <p class="brand">CUBEX</p>
+        <p class="tagline">Gira, piensa y conquista</p>
+        <p class="subtitle">COMPROBANTE DE COMPRA</p>
+
+        <div class="folio">
+            <strong>Folio:</strong> {{ folio }}
+        </div>
+    </div>
+
+    <!-- INFORMACIÓN DEL PEDIDO -->
+    <div class="info">
+
+        <p class="section-title">INFORMACIÓN DEL PEDIDO</p>
+
+        <table class="info-table">
+            <tr>
+                <td>
+                    <strong>Número de pedido:</strong>
+                    #{{ pedido_id }}
+                </td>
+
+                <td>
+                    <strong>Fecha:</strong>
+                    {{ fecha }}
+                </td>
+            </tr>
+
+            <tr>
+                <td>
+                    <strong>Estado:</strong>
+                    CONFIRMADO
+                </td>
+
+                <td>
+                    <strong>Cliente:</strong>
+                    {{ cliente_nombre }}
+                </td>
+            </tr>
+
+            <tr>
+                <td colspan="2">
+                    <strong>Correo electrónico:</strong>
+                    {{ cliente_correo or "No disponible" }}
+                </td>
+            </tr>
+        </table>
+
+    </div>
+
+    <!-- PRODUCTOS -->
+    <p class="section-title">DETALLE DE LA COMPRA</p>
+
+    <table class="products">
+
+        <thead>
+            <tr>
+                <th class="center">Cant.</th>
+                <th>Producto</th>
+                <th class="right">P. unitario</th>
+                <th class="right">Importe</th>
+            </tr>
+        </thead>
+
+        <tbody>
+
+            {% for item in items %}
+
+            <tr>
+                <td class="center">
+                    {{ item.cantidad }}
+                </td>
+
+                <td>
+                    {{ item.producto }}
+                </td>
+
+                <td class="right">
+                    ${{ "%.2f"|format(item.precio_unitario) }}
+                </td>
+
+                <td class="right">
+                    ${{ "%.2f"|format(item.importe) }}
+                </td>
+            </tr>
+
+            {% endfor %}
+
+        </tbody>
+
+    </table>
+
+    <!-- TOTAL -->
+    <div class="total">
+        TOTAL PAGADO: ${{ "%.2f"|format(total) }} MXN
+    </div>
+
+    <!-- CONFIRMACIÓN -->
+    <div class="approved">
+        PAGO CONFIRMADO
+    </div>
+
+    <!-- PIE DE PÁGINA -->
+    <div class="footer">
+
+        <strong>¡Gracias por comprar en CUBEX!</strong>
+
+        <br>
+
+        Conserva este comprobante para cualquier aclaración.
+
+        <br>
+
+        <span class="muted">
+            Este documento es un comprobante de compra y no sustituye una factura fiscal.
+        </span>
+
+    </div>
+
+</body>
+</html>

@@ -1,0 +1,15 @@
+{
+  "name": "servicio-reporte-inventario",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Servicio REST de reportes de inventario para SOA",
+  "engines": { "node": ">=22" },
+  "scripts": {
+    "start": "node --env-file=.env src/server.js",
+    "dev": "node --watch --env-file=.env src/server.js",
+    "test": "node --test test/report.test.js",
+    "test:integration": "node --env-file=.env --test test/mysql.integration.js"
+  },
+  "dependencies": { "express": "^5.1.0", "mysql2": "^3.14.0" }
+}

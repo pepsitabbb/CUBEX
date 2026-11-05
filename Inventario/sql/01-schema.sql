@@ -1,0 +1,19 @@
+CREATE DATABASE IF NOT EXISTS inventario_soa CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+USE inventario_soa;
+
+CREATE TABLE IF NOT EXISTS categorias (
+  id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+  nombre VARCHAR(100) NOT NULL UNIQUE
+);
+
+CREATE TABLE IF NOT EXISTS productos (
+  id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+  sku VARCHAR(40) NOT NULL UNIQUE,
+  nombre VARCHAR(150) NOT NULL,
+  categoria_id INT UNSIGNED NOT NULL,
+  stock INT NOT NULL DEFAULT 0 CHECK (stock >= 0),
+  stock_minimo INT NOT NULL DEFAULT 0 CHECK (stock_minimo >= 0),
+  precio_unitario DECIMAL(12,2) NOT NULL CHECK (precio_unitario >= 0),
+  actualizado_en TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  CONSTRAINT fk_producto_categoria FOREIGN KEY (categoria_id) REFERENCES categorias(id)
+);

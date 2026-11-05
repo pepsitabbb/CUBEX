@@ -1,0 +1,15 @@
+node_modules/
+.env
+.env.local
+*.log
+npm-debug.log*
+coverage/
+certs/
+*.pem
+*.key
+*.crt
+dist/
+.idea/
+.vscode/
+.DS_Store
+Thumbs.db

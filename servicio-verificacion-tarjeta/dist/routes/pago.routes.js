@@ -1,0 +1,13 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+const express_1 = require("express");
+const auth_middleware_1 = require("../middleware/auth.middleware");
+const role_middleware_1 = require("../middleware/role.middleware");
+const limiteIntentos_middleware_1 = require("../middleware/limiteIntentos.middleware");
+const asyncHandler_1 = require("../utils/asyncHandler");
+const pago_controller_1 = require("../controllers/pago.controller");
+const router = (0, express_1.Router)();
+router.use(auth_middleware_1.verificarAutenticacion, (0, role_middleware_1.verificarRol)("CLIENTE"));
+router.get("/pedidos-pendientes", (0, asyncHandler_1.asyncHandler)(pago_controller_1.pedidosPendientes));
+router.post("/verificar-tarjeta", limiteIntentos_middleware_1.limitarIntentosTarjeta, (0, asyncHandler_1.asyncHandler)(pago_controller_1.verificarTarjetaPago));
+exports.default = router;

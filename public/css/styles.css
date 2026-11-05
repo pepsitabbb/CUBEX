@@ -1,0 +1,3295 @@
+
+:root {
+    --fondo: #111827;
+    --fondo-oscuro: #080d16;
+    --tarjeta: #171f2e;
+    --borde: #303b4d;
+    --cian: #087CFC;
+    --rojo: #EF233C;
+    --amarillo: #FFD21F;
+    --blanco: #f5f7fa;
+    --gris: #aab7c4;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+    scroll-padding-top: 150px;
+}
+
+body {
+    font-family: Arial, Helvetica, sans-serif;
+    background: var(--fondo);
+    color: var(--blanco);
+    line-height: 1.6;
+}
+
+a {
+    text-decoration: none;
+    color: inherit;
+}
+
+button,
+input {
+    font: inherit;
+}
+
+/* ENCABEZADO FIJO */
+
+.encabezado {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    min-height: 90px;
+    padding: 18px 6%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 25px;
+    background: var(--fondo-oscuro);
+    border-bottom: 1px solid var(--borde);
+    z-index: 1000;
+}
+
+.logo {
+    display: flex;
+    flex-direction: column;
+    flex-shrink: 0;
+    line-height: 1.2;
+}
+
+.logo-nombre {
+    color: var(--amarillo);
+    font-size: 30px;
+    font-weight: 900;
+    letter-spacing: 3px;
+}
+
+.eslogan {
+    color: var(--gris);
+    font-size: 11px;
+    letter-spacing: 0.5px;
+}
+
+/* BUSCADOR */
+
+.buscador {
+    display: flex;
+    align-items: center;
+    width: 35%;
+    max-width: 430px;
+    min-width: 180px;
+    border: 1px solid var(--borde);
+    border-radius: 9px;
+    overflow: hidden;
+    background: var(--tarjeta);
+}
+
+.buscador input {
+    width: 100%;
+    min-width: 0;
+    padding: 12px 14px;
+    border: none;
+    outline: none;
+    background: transparent;
+    color: var(--blanco);
+}
+
+.buscador input::placeholder {
+    color: var(--gris);
+}
+
+.buscador button {
+    padding: 8px 14px;
+    border: none;
+    background: var(--cian);
+    color: white;
+    cursor: pointer;
+    font-size: 22px;
+}
+
+/* CUENTA Y CARRITO */
+
+.cuenta {
+    display: flex;
+    align-items: center;
+    gap: 18px;
+    flex-shrink: 0;
+}
+
+.cuenta a {
+    font-size: 14px;
+    transition: color 0.2s;
+}
+
+.cuenta a:hover {
+    color: var(--amarillo);
+}
+
+.btn-registro {
+    display: inline-block;
+    padding: 10px 15px;
+    border-radius: 7px;
+    background: var(--amarillo);
+    color: var(--fondo-oscuro) !important;
+    font-weight: bold;
+}
+
+.btn-registro:hover {
+    background: #ffe36b;
+}
+
+#opcionesInvitado,
+#opcionesUsuario {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+}
+
+#opcionesUsuario[hidden],
+#opcionesInvitado[hidden] {
+    display: none;
+}
+
+.nombre-usuario {
+    max-width: 150px;
+    overflow: hidden;
+    color: var(--blanco);
+    font-size: 14px;
+    font-weight: bold;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.btn-mi-cuenta {
+    display: inline-block;
+    padding: 10px 14px;
+    border: 1px solid var(--amarillo);
+    border-radius: 8px;
+    color: var(--amarillo) !important;
+    white-space: nowrap;
+    transition: 0.2s;
+}
+
+.btn-mi-cuenta:hover {
+    background: var(--amarillo);
+    color: var(--fondo-oscuro) !important;
+}
+
+.btn-carrito {
+    padding: 8px 12px;
+    border: 1px solid var(--borde);
+    border-radius: 8px;
+    background: var(--tarjeta);
+    color: var(--blanco);
+    cursor: pointer;
+    white-space: nowrap;
+}
+
+#contadorCarrito {
+    display: inline-flex;
+    min-width: 20px;
+    height: 20px;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    background: var(--rojo);
+    color: white;
+    font-size: 12px;
+    font-weight: bold;
+}
+
+/* MENÚ FIJO DEBAJO DEL ENCABEZADO */
+
+.menu {
+    position: fixed;
+    top: 90px;
+    left: 0;
+    width: 100%;
+    min-height: 57px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 50px;
+    padding: 15px 20px;
+    background: #101725;
+    border-bottom: 1px solid var(--borde);
+    z-index: 999;
+}
+
+.menu a {
+    color: var(--gris);
+    font-size: 17px;
+    font-weight: 500;
+    transition: color 0.2s;
+}
+
+.menu a:hover,
+.menu a.activo {
+    color: var(--amarillo);
+}
+
+/* ESPACIO PARA QUE EL CONTENIDO NO QUEDE DEBAJO DEL MENÚ */
+
+.hero {
+    margin-top: 147px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    min-height: 440px;
+    padding: 65px 7% 65px 10%;
+    overflow: hidden;
+    background:
+        radial-gradient(circle at 80% 45%, #173e69 0%, transparent 35%),
+        linear-gradient(120deg, #080d16, #111d31);
+}
+
+/* TEXTO PRINCIPAL */
+
+.hero-contenido {
+    flex: 1;
+    max-width: none;
+    min-width: 0;
+    padding-right: 20px;
+}
+
+.etiqueta {
+    display: inline-block;
+    margin-bottom: 15px;
+    color: var(--amarillo);
+    font-size: 12px;
+    font-weight: bold;
+    letter-spacing: 2px;
+}
+
+.hero h1 {
+    margin-bottom: 20px;
+    font-size: clamp(40px, 4.5vw, 62px);
+    line-height: 1.12;
+}
+
+.hero h1 span {
+    color: var(--amarillo);
+}
+
+.hero p {
+    max-width: 700px;
+    margin-bottom: 28px;
+    color: var(--gris);
+    font-size: 17px;
+    line-height: 1.7;
+}
+
+.btn-principal {
+    display: inline-block;
+    padding: 13px 22px;
+    border-radius: 8px;
+    background: var(--amarillo);
+    color: var(--fondo-oscuro);
+    font-weight: bold;
+    transition: transform 0.2s, background 0.2s;
+}
+
+.btn-principal:hover {
+    transform: translateY(-2px);
+    background: #ffe36b;
+}
+
+/* CUBO */
+
+.hero-figura {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex: 0 0 280px;
+    min-width: 0;
+    position: relative;
+    left: 0;
+}
+
+.cubo {
+    display: grid;
+    grid-template-columns: repeat(3, 65px);
+    gap: 5px;
+    padding: 10px;
+    border: 3px solid #34465e;
+    border-radius: 12px;
+    background: #0b1220;
+    box-shadow: 0 20px 60px #0008;
+    transform: rotate(-10deg);
+}
+
+.cubo span {
+    width: 65px;
+    height: 65px;
+    border: 3px solid #111827;
+    border-radius: 8px;
+    background: var(--rojo);
+}
+
+.cubo span:nth-child(2),
+.cubo span:nth-child(4),
+.cubo span:nth-child(8) {
+    background: var(--amarillo);
+}
+
+.cubo span:nth-child(3),
+.cubo span:nth-child(5),
+.cubo span:nth-child(7) {
+    background: var(--cian);
+}
+
+.cubo span:nth-child(6) {
+    background: #32d583;
+}
+
+/* PRODUCTOS */
+
+.productos {
+    padding: 75px 7%;
+}
+
+.titulo-seccion {
+    margin-bottom: 35px;
+    text-align: center;
+}
+
+.titulo-seccion .etiqueta {
+    margin-bottom: 5px;
+}
+
+.titulo-seccion h2 {
+    margin-bottom: 8px;
+    font-size: clamp(25px, 3vw, 36px);
+}
+
+.titulo-seccion p {
+    color: var(--gris);
+}
+
+.productos-grid {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 22px;
+}
+
+.producto {
+    overflow: hidden;
+    border: 1px solid var(--borde);
+    border-radius: 13px;
+    background: var(--tarjeta);
+    transition: transform 0.25s, border-color 0.25s;
+}
+
+.producto:hover {
+    transform: translateY(-5px);
+    border-color: var(--cian);
+}
+
+.producto-imagen {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 190px;
+}
+
+.imagen-rojo {
+    background: linear-gradient(135deg, #4a1826, #1c2335);
+}
+
+.imagen-azul {
+    background: linear-gradient(135deg, #103c68, #1c2335);
+}
+
+.imagen-amarillo {
+    background: linear-gradient(135deg, #51431b, #1c2335);
+}
+
+.imagen-verde {
+    background: linear-gradient(135deg, #154638, #1c2335);
+}
+
+.producto-icono {
+    font-size: 75px;
+    filter: drop-shadow(0 8px 10px #0006);
+}
+
+.producto-info {
+    padding: 20px;
+}
+
+.categoria {
+    color: var(--cian);
+    font-size: 10px;
+    font-weight: bold;
+    letter-spacing: 1.5px;
+}
+
+.producto-info h3 {
+    margin: 7px 0;
+    font-size: 17px;
+}
+
+.producto-info p {
+    min-height: 48px;
+    color: var(--gris);
+    font-size: 13px;
+}
+
+.producto-pie {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    margin-top: 20px;
+}
+
+.precio {
+    color: var(--amarillo);
+    font-size: 17px;
+    font-weight: bold;
+    white-space: nowrap;
+}
+
+.btn-agregar {
+    padding: 9px 12px;
+    border: none;
+    border-radius: 7px;
+    background: #0756ad;
+    color: white;
+    font-size: 12px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+
+.btn-agregar:hover {
+    background: var(--cian);
+}
+
+/* PIE DE PÁGINA */
+
+.footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 25px;
+    padding: 35px 7%;
+    border-top: 1px solid var(--borde);
+    background: var(--fondo-oscuro);
+}
+
+.footer h2 {
+    color: var(--amarillo);
+    letter-spacing: 3px;
+}
+
+.footer p {
+    color: var(--gris);
+    font-size: 13px;
+}
+
+.footer-info {
+    text-align: right;
+}
+
+/* TABLET */
+
+@media (max-width: 1000px) {
+    .encabezado {
+        flex-wrap: wrap;
+        gap: 15px;
+        padding: 15px 4%;
+    }
+
+    .buscador {
+        order: 3;
+        width: 100%;
+        max-width: none;
+    }
+
+    .menu {
+        top: 145px;
+        gap: 35px;
+    }
+
+    .hero {
+        margin-top: 202px;
+        padding: 55px 7%;
+    }
+
+    .hero-contenido {
+        flex: 1;
+    }
+
+    .hero h1 {
+        font-size: clamp(36px, 5vw, 52px);
+    }
+
+    .hero-figura {
+        flex-basis: 240px;
+    }
+
+    .productos-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+}
+
+/* CELULAR */
+
+@media (max-width: 600px) {
+    .encabezado {
+        gap: 12px;
+        padding: 12px 5%;
+    }
+
+    .logo-nombre {
+        font-size: 25px;
+    }
+
+    .eslogan {
+        font-size: 10px;
+    }
+
+    .cuenta {
+        gap: 8px;
+    }
+
+    .cuenta a {
+        font-size: 12px;
+    }
+
+    #opcionesInvitado,
+    #opcionesUsuario {
+        gap: 8px;
+    }
+
+    .btn-registro,
+    .btn-mi-cuenta {
+        padding: 8px 9px;
+    }
+
+    .nombre-usuario {
+        max-width: 80px;
+        font-size: 12px;
+    }
+
+    .buscador {
+        order: 3;
+        width: 100%;
+    }
+
+    .menu {
+        top: 130px;
+        gap: 25px;
+        padding: 14px 10px;
+        min-height: 52px;
+    }
+
+    .menu a {
+        font-size: 16px;
+    }
+
+    .hero {
+        margin-top: 182px;
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 25px;
+        padding: 45px 7%;
+    }
+
+    .hero-contenido {
+        width: 100%;
+        max-width: none;
+        padding-right: 0;
+    }
+
+    .hero h1 {
+        font-size: clamp(36px, 9vw, 48px);
+    }
+
+    .hero p {
+        max-width: 100%;
+        font-size: 15px;
+    }
+
+    .hero-figura {
+        align-self: center;
+        flex-basis: auto;
+        min-width: 0;
+        left: 0;
+        padding: 15px 0;
+    }
+
+    .cubo {
+        grid-template-columns: repeat(3, 65px);
+    }
+
+    .cubo span {
+        width: 65px;
+        height: 65px;
+    }
+
+    .productos {
+        padding: 50px 5%;
+    }
+
+    .productos-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .producto-imagen {
+        height: 170px;
+    }
+
+    .footer {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .footer-info {
+        text-align: left;
+    }
+}
+
+
+/* =========================================
+   CATÁLOGO CUBEX - TARJETAS DE PRODUCTOS
+========================================= */
+
+.productos {
+    width: 100%;
+    padding: 65px 7%;
+    box-sizing: border-box;
+}
+
+.titulo-seccion {
+    text-align: center;
+    margin: 0 auto 40px;
+}
+
+.titulo-seccion .etiqueta {
+    color: #ffcc00;
+    font-size: 13px;
+    font-weight: 800;
+    letter-spacing: 2px;
+}
+
+.titulo-seccion h2 {
+    color: #f5f7fb;
+    font-size: 34px;
+    margin: 14px 0;
+}
+
+.titulo-seccion p {
+    color: #aebbd0;
+    font-size: 16px;
+}
+
+/* Cuadrícula */
+
+.productos-grid {
+    width: 100%;
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 25px;
+    align-items: stretch;
+}
+
+/* Tarjeta */
+
+.producto-card {
+    min-width: 0;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    background: #182233;
+    border: 1px solid #29384e;
+    border-radius: 16px;
+    transition: transform .25s ease, border-color .25s ease,
+                box-shadow .25s ease;
+}
+
+.producto-card:hover {
+    transform: translateY(-6px);
+    border-color: #087fff;
+    box-shadow: 0 12px 30px rgba(0, 0, 0, .25);
+}
+
+/* Fotografía */
+
+.producto-imagen-contenedor {
+    width: 100%;
+    height: 225px;
+    padding: 18px;
+    box-sizing: border-box;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: #202c3e;
+    overflow: hidden;
+}
+
+.producto-imagen {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    transition: transform .3s ease;
+}
+
+.producto-card:hover .producto-imagen {
+    transform: scale(1.05);
+}
+
+.producto-imagen-contenedor.sin-fotografia {
+    color: #9aa9bd;
+    font-size: 14px;
+}
+
+/* Información */
+
+.producto-informacion {
+    flex: 1;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+.producto-etiqueta {
+    color: #1688ff;
+    font-size: 11px;
+    font-weight: 800;
+    letter-spacing: 1.5px;
+    margin-bottom: 10px;
+}
+
+.producto-nombre {
+    color: #f5f7fb;
+    font-size: 19px;
+    font-weight: 700;
+    margin: 0 0 10px;
+}
+
+.producto-descripcion {
+    color: #aebbd0;
+    font-size: 14px;
+    line-height: 1.6;
+    margin: 0 0 18px;
+
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+
+    min-height: 44px;
+}
+
+.producto-precio {
+    color: #ffcc00;
+    font-size: 21px;
+    font-weight: 800;
+    margin: auto 0 18px;
+}
+
+/* Botón */
+
+.btn-ver-producto {
+    width: 100%;
+    min-height: 43px;
+    border: none;
+    border-radius: 8px;
+    background: #087fff;
+    color: #fff;
+    font-size: 14px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: background .2s ease, transform .2s ease;
+}
+
+.btn-ver-producto:hover {
+    background: #0065d1;
+    transform: translateY(-2px);
+}
+
+.mensaje-catalogo {
+    grid-column: 1 / -1;
+    text-align: center;
+    color: #b7c4d8;
+    padding: 35px 15px;
+    font-size: 16px;
+}
+
+/* =========================================
+   DETALLE INDIVIDUAL DEL PRODUCTO
+========================================= */
+
+#detalleProducto {
+    width: min(1100px, 90%);
+    margin: 45px auto;
+    padding: 35px;
+    box-sizing: border-box;
+    background: #182233;
+    border: 1px solid #29384e;
+    border-radius: 18px;
+    color: #f5f7fb;
+}
+
+#detalleProducto .detalle-imagen {
+    display: block;
+    width: 100%;
+    max-width: 450px;
+    height: 390px;
+    margin: 0 auto 25px;
+    object-fit: contain;
+    background: #202c3e;
+    border-radius: 14px;
+    padding: 15px;
+    box-sizing: border-box;
+}
+
+#detalleNombre {
+    color: #f5f7fb;
+    font-size: 30px;
+    margin: 15px 0;
+}
+
+#detalleDescripcion {
+    color: #b7c4d8;
+    font-size: 16px;
+    line-height: 1.7;
+}
+
+#detallePrecio {
+    color: #ffcc00;
+    font-size: 28px;
+    font-weight: 800;
+    margin: 20px 0;
+}
+
+#btnRegresarCatalogo,
+#btnAgregarDetalle {
+    border: none;
+    border-radius: 8px;
+    padding: 13px 22px;
+    margin: 8px 8px 8px 0;
+    font-weight: 700;
+    cursor: pointer;
+}
+
+#btnRegresarCatalogo {
+    color: #e8edf5;
+    background: #29384e;
+}
+
+#btnAgregarDetalle {
+    color: #fff;
+    background: #087fff;
+}
+
+#btnRegresarCatalogo:hover {
+    background: #354761;
+}
+
+#btnAgregarDetalle:hover {
+    background: #0065d1;
+}
+
+/* Reseñas */
+
+#listaResenas {
+    margin-top: 20px;
+    padding: 20px;
+    border-radius: 12px;
+    background: #202c3e;
+    color: #b7c4d8;
+}
+
+#formularioResena {
+    margin-top: 25px;
+}
+
+#formularioResena input,
+#formularioResena textarea,
+#formularioResena select {
+    width: 100%;
+    padding: 12px;
+    margin: 8px 0 15px;
+    box-sizing: border-box;
+    color: #f5f7fb;
+    background: #0d1522;
+    border: 1px solid #354761;
+    border-radius: 8px;
+}
+
+#formularioResena button {
+    padding: 12px 20px;
+    border: none;
+    border-radius: 8px;
+    background: #087fff;
+    color: white;
+    font-weight: 700;
+    cursor: pointer;
+}
+
+/* =========================================
+   ADAPTACIÓN A PANTALLAS
+========================================= */
+
+@media (max-width: 1100px) {
+    .productos-grid {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+}
+
+@media (max-width: 760px) {
+    .productos {
+        padding: 45px 5%;
+    }
+
+    .productos-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 15px;
+    }
+
+    .producto-imagen-contenedor {
+        height: 180px;
+    }
+
+    .producto-informacion {
+        padding: 15px;
+    }
+
+    .producto-nombre {
+        font-size: 16px;
+    }
+
+    .titulo-seccion h2 {
+        font-size: 27px;
+    }
+
+    #detalleProducto {
+        padding: 20px;
+    }
+
+    #detalleProducto .detalle-imagen {
+        height: 280px;
+    }
+}
+
+@media (max-width: 480px) {
+    .productos-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .producto-imagen-contenedor {
+        height: 230px;
+    }
+}
+
+.detalle-producto {
+    display: grid;
+    grid-template-columns: 380px 1fr;
+    align-items: center;
+    gap: 45px;
+    max-width: 1100px;
+    margin: 30px auto;
+    padding: 35px;
+    background: #182334;
+    border: 1px solid #29384d;
+    border-radius: 18px;
+}
+
+.detalle-producto img {
+    width: 100%;
+    max-width: 300px;
+    height: 300px;
+    object-fit: contain;
+    display: block;
+    margin: auto;
+    background: #fff;
+    border-radius: 12px;
+}
+
+.info-producto {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    gap: 16px;
+}
+
+.resenas-producto {
+    grid-column: 1 / -1;
+    width: 100%;
+    margin-top: 25px;
+}
+
+@media (max-width: 700px) {
+    .detalle-producto {
+        grid-template-columns: 1fr;
+        padding: 20px;
+    }
+
+    .detalle-producto img {
+        max-width: 250px;
+        height: 250px;
+    }
+}
+
+/* Ocultar completamente el detalle mientras no se seleccione un producto */
+#detalleProducto[hidden] {
+    display: none !important;
+}
+
+/* ========================================
+   CATÁLOGO CUBEX - TARJETAS COMPACTAS
+======================================== */
+
+#catalogoProductos {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 28px;
+    width: 100%;
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 25px 30px;
+    align-items: stretch;
+}
+
+/* Tarjeta */
+.producto-card {
+    background: #192538;
+    border: 1px solid #26364d;
+    border-radius: 16px;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+    transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+.producto-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 22px rgba(0, 0, 0, 0.25);
+}
+
+/* Imagen */
+.producto-card-imagen {
+    width: 100%;
+    height: 190px;
+    background: #ffffff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 12px;
+    overflow: hidden;
+}
+
+.producto-card-imagen img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+}
+
+/* Información */
+.producto-card-info {
+    padding: 16px;
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    gap: 9px;
+}
+
+.producto-card-info h3 {
+    color: #ffffff;
+    font-size: 18px;
+    margin: 0;
+}
+
+.producto-card-info p {
+    color: #c5d0df;
+    font-size: 14px;
+    margin: 0;
+    line-height: 1.5;
+}
+
+.producto-precio {
+    color: #ffcc00;
+    font-size: 21px;
+    font-weight: bold;
+    margin-top: auto;
+}
+
+/* Botón */
+.btn-ver-producto {
+    width: 100%;
+    padding: 12px;
+    background: #087df5;
+    color: #ffffff;
+    border: none;
+    border-radius: 9px;
+    font-weight: bold;
+    cursor: pointer;
+    margin-top: 5px;
+}
+
+.btn-ver-producto:hover {
+    background: #0066d6;
+}
+
+/* Adaptación a pantallas */
+@media (max-width: 1100px) {
+    #catalogoProductos {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+}
+
+@media (max-width: 750px) {
+    #catalogoProductos {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        padding: 15px;
+        gap: 15px;
+    }
+}
+
+@media (max-width: 480px) {
+    #catalogoProductos {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* ========================================
+   DETALLE DEL PRODUCTO Y RESEÑAS
+======================================== */
+
+#detalleProducto {
+    width: 100%;
+    max-width: 1400px;
+    margin: 25px auto;
+    padding: 30px;
+    background: #192538;
+    border: 1px solid #26364d;
+    border-radius: 18px;
+    box-sizing: border-box;
+}
+
+#detalleProducto[hidden] {
+    display: none !important;
+}
+
+/* Distribución en dos columnas */
+.detalle-producto {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 35px;
+    align-items: start;
+}
+
+/* Columna del producto */
+.detalle-producto-principal {
+    display: grid;
+    grid-template-columns: 40% 60%;
+    align-items: center;
+    gap: 20px;
+    min-width: 0;
+}
+
+.detalle-producto-imagen {
+    width: 100%;
+    max-width: 260px;
+    height: 280px;
+    background: #ffffff;
+    border-radius: 14px;
+    padding: 12px;
+    box-sizing: border-box;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.detalle-producto-imagen img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+}
+
+.detalle-producto-info {
+    min-width: 0;
+}
+
+.detalle-producto-info h2 {
+    color: #ffffff;
+    font-size: 27px;
+}
+
+.detalle-descripcion {
+    color: #c5d0df;
+    line-height: 1.6;
+}
+
+.detalle-precio {
+    display: block;
+    color: #ffcc00;
+    font-size: 26px;
+    margin: 18px 0;
+}
+
+/* Botón regresar */
+.btn-regresar-catalogo {
+    grid-column: 1 / -1;
+    padding: 12px 20px;
+    background: #293b53;
+    color: white;
+    border: none;
+    border-radius: 9px;
+    cursor: pointer;
+    width: fit-content;
+}
+
+/* Columna de reseñas */
+.seccion-resenas {
+    min-width: 0;
+    padding: 20px;
+    background: #202e42;
+    border-radius: 14px;
+}
+
+.seccion-resenas h2 {
+    color: #ffffff;
+}
+
+.seccion-resenas p {
+    color: #c5d0df;
+}
+
+.contenedor-resenas {
+    margin: 20px 0;
+}
+
+#formularioResena {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+#formularioResena input,
+#formularioResena select,
+#formularioResena textarea {
+    width: 100%;
+    box-sizing: border-box;
+    padding: 12px;
+    background: #101a29;
+    color: white;
+    border: 1px solid #35465e;
+    border-radius: 8px;
+}
+
+#formularioResena button {
+    padding: 13px;
+    background: #087df5;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+/* Pantallas pequeñas */
+@media (max-width: 900px) {
+    .detalle-producto {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 600px) {
+    .detalle-producto-principal {
+        grid-template-columns: 1fr;
+    }
+
+    .detalle-producto-imagen {
+        margin: auto;
+        max-width: 300px;
+    }
+
+    #detalleProducto {
+        padding: 15px;
+    }
+}
+
+/* =====================================
+   DETALLE DEL PRODUCTO Y RESEÑAS
+===================================== */
+
+#detalleProducto[hidden] {
+    display: none !important;
+}
+
+.detalle-producto {
+    width: 92%;
+    max-width: 1450px;
+    margin: 30px auto;
+    padding: 25px 30px;
+    background: #192638;
+    border: 1px solid #29394e;
+    border-radius: 20px;
+}
+
+/* BOTÓN REGRESAR */
+
+.btn-regresar-catalogo {
+    display: block;
+    width: auto;
+    padding: 9px 18px;
+    margin-bottom: 25px;
+    background: #29394e;
+    color: white;
+    border: none;
+    border-radius: 7px;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+.btn-regresar-catalogo:hover {
+    background: #087cf0;
+}
+
+/* DOS COLUMNAS */
+
+.detalle-contenido {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 35px;
+    align-items: start;
+}
+
+/* RESEÑAS A LA IZQUIERDA */
+
+.seccion-resenas {
+    grid-column: 1;
+    grid-row: 1;
+    padding: 10px;
+}
+
+.titulo-seccion h2 {
+    color: white;
+    font-size: 25px;
+    margin-bottom: 8px;
+}
+
+.titulo-seccion p {
+    color: #c5d2e2;
+    margin-bottom: 22px;
+}
+
+.contenedor-resenas {
+    background: #202f43;
+    border-radius: 12px;
+    padding: 20px;
+    min-height: 130px;
+    margin-bottom: 25px;
+}
+
+#formularioResena {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+#formularioResena h3 {
+    color: white;
+    margin-bottom: 5px;
+}
+
+#formularioResena label {
+    color: #e0e8f2;
+}
+
+#formularioResena select,
+#formularioResena textarea {
+    width: 100%;
+    padding: 13px;
+    border-radius: 8px;
+    border: 1px solid #34465e;
+    background: #101a29;
+    color: white;
+    font-size: 14px;
+}
+
+#formularioResena textarea {
+    min-height: 110px;
+    resize: vertical;
+}
+
+.btn-enviar-resena {
+    padding: 13px;
+    border: none;
+    border-radius: 8px;
+    background: #087cf0;
+    color: white;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+/* PRODUCTO A LA DERECHA */
+
+.detalle-producto-principal {
+    grid-column: 2;
+    grid-row: 1;
+    padding: 15px;
+    text-align: center;
+}
+
+.detalle-producto-imagen {
+    width: 100%;
+    max-width: 430px;
+    height: 370px;
+    margin: 0 auto 25px;
+    padding: 15px;
+    background: #202f43;
+    border-radius: 15px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.detalle-producto-imagen img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    background: white;
+    border-radius: 8px;
+}
+
+.detalle-producto-info h2 {
+    color: white;
+    font-size: 30px;
+    margin-bottom: 15px;
+}
+
+.detalle-producto-info p {
+    color: #c5d2e2;
+    line-height: 1.6;
+}
+
+.detalle-precio {
+    display: block;
+    color: #ffcf19;
+    font-size: 28px;
+    margin: 20px 0;
+}
+
+#btnAgregarDetalle {
+    width: 100%;
+    max-width: 300px;
+    padding: 14px;
+    border: none;
+    border-radius: 9px;
+    background: #ffcf19;
+    color: #101010;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+/* ADAPTACIÓN A PANTALLAS PEQUEÑAS */
+
+@media (max-width: 850px) {
+    .detalle-contenido {
+        grid-template-columns: 1fr;
+    }
+
+    .seccion-resenas,
+    .detalle-producto-principal {
+        grid-column: 1;
+        grid-row: auto;
+    }
+
+    .detalle-producto-imagen {
+        height: 300px;
+    }
+}
+
+/* =====================================
+   DETALLE DEL PRODUCTO CUBEX
+===================================== */
+
+#detalleProducto {
+    width: 92%;
+    max-width: 1450px;
+    margin: 35px auto;
+    padding: 30px;
+    background: #182538;
+    border: 1px solid #293b52;
+    border-radius: 20px;
+
+    display: grid;
+    grid-template-columns: 1.15fr 0.85fr;
+    grid-template-areas:
+        "volver volver"
+        "producto resenas";
+
+    gap: 30px;
+    align-items: start;
+}
+
+/* Botón regresar */
+
+#btnRegresarCatalogo {
+    grid-area: volver;
+    width: fit-content;
+    min-width: 190px;
+    padding: 11px 20px;
+    margin: 0;
+    border: none;
+    border-radius: 8px;
+    background: #293b52;
+    color: white;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+#btnRegresarCatalogo:hover {
+    background: #354b67;
+}
+
+/* Producto: lado izquierdo */
+
+.detalle-producto-principal {
+    grid-area: producto;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    gap: 30px;
+    min-width: 0;
+    padding: 20px 10px;
+}
+
+/* Imagen cuadrada */
+
+.detalle-producto-imagen {
+    width: 300px;
+    height: 300px;
+    min-width: 300px;
+    background: white;
+    border-radius: 15px;
+    padding: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+}
+
+.detalle-producto-imagen img,
+#detalleImagen {
+    width: 100%;
+    height: 100%;
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain;
+    display: block;
+}
+
+/* Información del producto */
+
+.detalle-producto-info {
+    flex: 1;
+    min-width: 0;
+    text-align: left;
+}
+
+.detalle-producto-info h2 {
+    font-size: 30px;
+    margin: 15px 0;
+    color: #ffffff;
+}
+
+.detalle-descripcion {
+    color: #cbd5e1;
+    line-height: 1.7;
+}
+
+.detalle-precio {
+    display: block;
+    color: #ffcc00;
+    font-size: 30px;
+    margin: 20px 0;
+}
+
+/* Reseñas: lado derecho */
+
+.seccion-resenas {
+    grid-area: resenas;
+    width: 100%;
+    min-width: 0;
+    padding: 25px;
+    background: #202f43;
+    border-radius: 15px;
+}
+
+.seccion-resenas h2 {
+    color: white;
+    font-size: 25px;
+    margin-bottom: 10px;
+}
+
+.seccion-resenas p {
+    color: #cbd5e1;
+}
+
+.contenedor-resenas {
+    margin: 20px 0;
+    width: 100%;
+}
+
+/* Formulario de reseñas */
+
+#formularioResena {
+    width: 100%;
+}
+
+#formularioResena input,
+#formularioResena select,
+#formularioResena textarea {
+    width: 100%;
+    box-sizing: border-box;
+}
+
+/* Adaptación para pantallas pequeñas */
+
+@media (max-width: 900px) {
+    #detalleProducto {
+        grid-template-columns: 1fr;
+        grid-template-areas:
+            "volver"
+            "producto"
+            "resenas";
+    }
+
+    .detalle-producto-principal {
+        flex-direction: column;
+    }
+
+    .detalle-producto-imagen {
+        width: 260px;
+        height: 260px;
+        min-width: 260px;
+    }
+
+    .detalle-producto-info {
+        text-align: center;
+    }
+}
+
+[hidden] {
+    display: none !important;
+}
+
+
+
+/* ========================================
+   DETALLE DEL PRODUCTO CUBEX
+======================================== */
+
+#detalleProducto[hidden],
+#productos[hidden],
+.hero[hidden] {
+    display: none !important;
+}
+
+#detalleProducto {
+    width: min(95%, 1450px);
+    margin: 35px auto;
+    padding: 30px;
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    grid-template-areas:
+        "regresar regresar"
+        "producto resenas";
+    gap: 25px;
+    align-items: start;
+}
+
+/* Botón pequeño para regresar */
+
+#btnRegresarCatalogo {
+    grid-area: regresar;
+    width: fit-content;
+    min-width: auto;
+    padding: 9px 17px;
+    margin-bottom: 5px;
+    border: none;
+    border-radius: 8px;
+    background: #293b52;
+    color: white;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+#btnRegresarCatalogo:hover {
+    background: #344b68;
+}
+
+/* Producto: imagen y datos */
+
+.detalle-producto-principal {
+    grid-area: producto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 22px;
+    min-width: 0;
+    padding: 20px;
+    background: #1e2c40;
+    border-radius: 16px;
+}
+
+.detalle-producto-imagen {
+    width: 100%;
+    max-width: 390px;
+    height: 310px;
+    padding: 12px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: white;
+    border-radius: 14px;
+    overflow: hidden;
+}
+
+.detalle-producto-imagen img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+}
+
+.detalle-producto-info {
+    width: 100%;
+    text-align: center;
+}
+
+.detalle-producto-info h2 {
+    font-size: 30px;
+    margin: 12px 0;
+}
+
+.detalle-descripcion {
+    margin: 15px 0;
+    color: #cbd5e1;
+}
+
+.detalle-precio {
+    display: block;
+    margin: 20px 0;
+    color: #ffcc18;
+    font-size: 30px;
+}
+
+/* Reseñas a la derecha */
+
+.seccion-resenas {
+    grid-area: resenas;
+    min-width: 0;
+    padding: 25px;
+    background: #1e2c40;
+    border-radius: 16px;
+}
+
+.seccion-resenas h2 {
+    margin-top: 0;
+}
+
+.contenedor-resenas {
+    min-height: 130px;
+    padding: 20px;
+    margin: 20px 0;
+    background: #192638;
+    border-radius: 12px;
+}
+
+/* Formulario de reseñas */
+
+#formularioResena {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+}
+
+#formularioResena input,
+#formularioResena select,
+#formularioResena textarea {
+    width: 100%;
+    padding: 13px;
+    border: 1px solid #34445b;
+    border-radius: 8px;
+    background: #101b2b;
+    color: white;
+}
+
+#formularioResena textarea {
+    min-height: 110px;
+    resize: vertical;
+}
+
+/* Adaptación a pantallas pequeñas */
+
+@media (max-width: 800px) {
+    #detalleProducto {
+        grid-template-columns: 1fr;
+        grid-template-areas:
+            "regresar"
+            "producto"
+            "resenas";
+        padding: 15px;
+    }
+
+    .detalle-producto-imagen {
+        height: 250px;
+    }
+}
+
+/* ========================================
+   DETALLE DEL PRODUCTO A PANTALLA COMPLETA
+======================================== */
+
+#detalleProducto {
+    width: 100%;
+    max-width: none;
+    min-height: calc(100vh - 160px);
+    padding: 35px 4%;
+    margin: 0;
+    box-sizing: border-box;
+}
+
+#detalleProducto[hidden] {
+    display: none !important;
+}
+
+/* Contenedor de las dos columnas */
+.detalle-contenido {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    gap: 35px;
+    width: 100%;
+    max-width: 1600px;
+    margin: 25px auto 0;
+    align-items: start;
+}
+
+/* ========================================
+   COLUMNA IZQUIERDA: PRODUCTO
+======================================== */
+
+.detalle-producto-principal {
+    grid-column: 1;
+    grid-row: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 25px;
+
+    width: 100%;
+    min-width: 0;
+    min-height: 600px;
+    padding: 35px;
+    box-sizing: border-box;
+
+    background: var(--tarjeta, #1f2f45);
+    border: 1px solid var(--borde, #303b4d);
+    border-radius: 18px;
+}
+
+.detalle-producto-imagen {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.detalle-producto-imagen img {
+    display: block;
+    width: 100%;
+    max-width: 390px;
+    height: 350px;
+    object-fit: contain;
+    padding: 15px;
+    background: #fff;
+    border-radius: 16px;
+}
+
+.detalle-producto-info {
+    width: 100%;
+    text-align: center;
+}
+
+.detalle-producto-info h2 {
+    font-size: 32px;
+    margin-bottom: 15px;
+}
+
+.detalle-producto-info p {
+    font-size: 17px;
+    line-height: 1.7;
+    margin-bottom: 20px;
+}
+
+.detalle-precio {
+    display: block;
+    color: var(--amarillo, #ffd21f);
+    font-size: 32px;
+    margin: 20px 0;
+}
+
+#btnAgregarDetalle {
+    padding: 16px 30px;
+    border: none;
+    border-radius: 10px;
+    background: var(--amarillo, #ffd21f);
+    color: #080d16;
+    font-size: 17px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+/* ========================================
+   COLUMNA DERECHA: RESEÑAS
+======================================== */
+
+.seccion-resenas {
+    grid-column: 2;
+    grid-row: 1;
+
+    width: 100%;
+    min-width: 0;
+    padding: 30px;
+    box-sizing: border-box;
+
+    background: var(--tarjeta, #1f2f45);
+    border: 1px solid var(--borde, #303b4d);
+    border-radius: 18px;
+}
+
+.seccion-resenas .titulo-seccion {
+    text-align: center;
+    margin-bottom: 25px;
+}
+
+.contenedor-resenas {
+    width: 100%;
+    min-height: 120px;
+    margin-bottom: 30px;
+}
+
+#formularioResena {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    width: 100%;
+}
+
+#formularioResena h3 {
+    font-size: 22px;
+    margin-bottom: 5px;
+}
+
+#formularioResena label {
+    font-weight: bold;
+}
+
+#calificacionResena,
+#comentarioResena {
+    width: 100%;
+    padding: 14px;
+    box-sizing: border-box;
+    border: 1px solid var(--borde, #303b4d);
+    border-radius: 9px;
+    background: #101a29;
+    color: white;
+    font-family: inherit;
+    font-size: 15px;
+}
+
+#comentarioResena {
+    min-height: 130px;
+    resize: vertical;
+}
+
+.btn-enviar-resena {
+    padding: 14px;
+    border: none;
+    border-radius: 9px;
+    background: var(--amarillo, #ffd21f);
+    color: #080d16;
+    font-weight: bold;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+/* ========================================
+   BOTÓN REGRESAR
+======================================== */
+
+.btn-regresar-catalogo {
+    display: inline-block;
+    padding: 13px 22px;
+    border: none;
+    border-radius: 9px;
+    background: #293d56;
+    color: white;
+    font-size: 15px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+/* ========================================
+   RESPONSIVE
+======================================== */
+
+@media (max-width: 850px) {
+    #detalleProducto {
+        padding: 20px;
+    }
+
+    .detalle-contenido {
+        grid-template-columns: 1fr;
+        gap: 20px;
+    }
+
+    .detalle-producto-principal,
+    .seccion-resenas {
+        grid-column: 1;
+        grid-row: auto;
+    }
+
+    .detalle-producto-principal {
+        min-height: auto;
+    }
+
+    .detalle-producto-imagen img {
+        max-width: 300px;
+        height: 280px;
+    }
+}
+
+/* ==========================================
+   DETALLE: OCUPAR TODO EL ANCHO DE PANTALLA
+========================================== */
+
+#detalleProducto {
+    display: block;
+    position: relative;
+
+    /* Romper cualquier límite del contenedor anterior */
+    width: 100vw !important;
+    max-width: none !important;
+    min-width: 100vw;
+
+    margin-left: calc(50% - 50vw) !important;
+    margin-right: 0 !important;
+
+    padding: 30px 4vw !important;
+    box-sizing: border-box;
+}
+
+#detalleProducto[hidden] {
+    display: none !important;
+}
+
+/* Contenedor de producto y reseñas */
+#detalleProducto .detalle-contenido {
+    display: grid !important;
+
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) !important;
+
+    gap: 35px;
+
+    width: 100% !important;
+    max-width: none !important;
+    margin: 25px 0 0 !important;
+
+    box-sizing: border-box;
+    align-items: stretch;
+}
+
+/* Producto: mitad izquierda */
+#detalleProducto .detalle-producto-principal {
+    grid-column: 1 !important;
+    grid-row: 1 !important;
+
+    width: 100% !important;
+    max-width: none !important;
+    min-width: 0;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    padding: 35px;
+    box-sizing: border-box;
+}
+
+/* Imagen */
+#detalleProducto .detalle-producto-imagen {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+
+#detalleProducto .detalle-producto-imagen img {
+    width: 100%;
+    max-width: 420px;
+    height: 350px;
+    object-fit: contain;
+
+    background: white;
+    border-radius: 16px;
+    padding: 12px;
+    box-sizing: border-box;
+}
+
+/* Información del producto */
+#detalleProducto .detalle-producto-info {
+    width: 100%;
+    text-align: center;
+}
+
+/* Reseñas: mitad derecha */
+#detalleProducto .seccion-resenas {
+    grid-column: 2 !important;
+    grid-row: 1 !important;
+
+    width: 100% !important;
+    max-width: none !important;
+    min-width: 0;
+
+    padding: 35px;
+    box-sizing: border-box;
+}
+
+/* Formulario */
+#detalleProducto #formularioResena {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+#detalleProducto #calificacionResena,
+#detalleProducto #comentarioResena {
+    width: 100%;
+    box-sizing: border-box;
+}
+
+/* Pantallas pequeñas */
+@media (max-width: 850px) {
+    #detalleProducto {
+        padding: 20px !important;
+    }
+
+    #detalleProducto .detalle-contenido {
+        grid-template-columns: 1fr !important;
+    }
+
+    #detalleProducto .detalle-producto-principal,
+    #detalleProducto .seccion-resenas {
+        grid-column: 1 !important;
+        grid-row: auto !important;
+    }
+}
+
+/* ==========================================
+   CORREGIR POSICIÓN DEL DETALLE Y REGRESAR
+========================================== */
+
+/* Evitar que el detalle quede debajo del menú */
+#detalleProducto {
+    position: relative;
+    top: auto;
+
+    width: 100vw !important;
+    max-width: none !important;
+
+    margin-left: calc(50% - 50vw) !important;
+    margin-top: 0 !important;
+
+    padding: 30px 4vw 50px !important;
+
+    box-sizing: border-box;
+    overflow: visible !important;
+}
+
+/* Botón regresar siempre arriba y visible */
+#btnRegresarCatalogo {
+    display: inline-flex !important;
+    align-items: center;
+    justify-content: center;
+
+    position: relative;
+    z-index: 10;
+
+    margin: 10px 0 20px 0 !important;
+    padding: 14px 24px;
+
+    min-height: 45px;
+
+    background: #293d56;
+    color: #ffffff;
+
+    border: none;
+    border-radius: 9px;
+
+    font-size: 15px;
+    font-weight: bold;
+
+    cursor: pointer;
+}
+
+/* Separar el contenido del botón */
+#detalleProducto .detalle-contenido {
+    margin-top: 10px !important;
+    width: 100% !important;
+}
+
+/* Evitar que los paneles recorten contenido */
+#detalleProducto .detalle-producto-principal,
+#detalleProducto .seccion-resenas {
+    overflow: visible !important;
+    min-height: 600px;
+}
+
+/* Evitar que el encabezado tape el contenido */
+.encabezado,
+.menu {
+    position: relative;
+    z-index: 20;
+}
+
+/* Ajuste para pantallas pequeñas */
+@media (max-width: 850px) {
+    #detalleProducto {
+        padding: 20px !important;
+    }
+
+    #btnRegresarCatalogo {
+        margin-bottom: 15px !important;
+    }
+}
+
+/* =========================================
+   CORRECCIÓN DEL NAVBAR
+========================================= */
+
+/* Navbar normal en la página principal */
+.menu {
+    position: relative;
+    top: auto;
+    margin-top: 0;
+    width: 100%;
+    min-height: 62px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 10;
+}
+
+/* Eliminar espacios innecesarios del inicio */
+.hero {
+    margin-top: 0;
+}
+
+/* =========================================
+   NAVBAR OCULTO EN EL DETALLE
+========================================= */
+
+body:has(#detalleProducto:not([hidden])) .menu {
+    display: none !important;
+}
+
+/* =========================================
+   DISTRIBUCIÓN DEL DETALLE
+========================================= */
+
+#detalleProducto {
+    width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
+    padding: 30px 4%;
+    margin: 0 auto;
+    overflow: visible;
+}
+
+#detalleProducto .detalle-contenido {
+    width: 100%;
+    display: grid;
+    grid-template-columns: minmax(280px, 35%) minmax(0, 65%);
+    gap: 25px;
+    align-items: stretch;
+}
+
+/* =========================================
+   PRODUCTO - COLUMNA IZQUIERDA
+========================================= */
+
+#detalleProducto .detalle-producto-principal {
+    width: 100%;
+    min-width: 0;
+    padding: 25px;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    text-align: center;
+}
+
+#detalleProducto .detalle-producto-imagen {
+    width: 100%;
+    max-width: 320px;
+    margin: 0 auto 20px;
+}
+
+#detalleProducto .detalle-producto-imagen img {
+    width: 100%;
+    max-height: 320px;
+    object-fit: contain;
+    border-radius: 15px;
+}
+
+/* =========================================
+   RESEÑAS - COLUMNA DERECHA
+========================================= */
+
+#detalleProducto .seccion-resenas {
+    width: 100%;
+    min-width: 0;
+    box-sizing: border-box;
+    padding: 35px;
+}
+
+#detalleProducto .contenedor-resenas {
+    width: 100%;
+    box-sizing: border-box;
+    min-height: 140px;
+}
+
+#detalleProducto #formularioResena {
+    width: 100%;
+    box-sizing: border-box;
+}
+
+#detalleProducto #formularioResena textarea,
+#detalleProducto #formularioResena select {
+    width: 100%;
+    box-sizing: border-box;
+}
+
+/* =========================================
+   BOTÓN REGRESAR
+========================================= */
+
+#btnRegresarCatalogo {
+    display: inline-block;
+    margin-bottom: 25px;
+    position: relative;
+    z-index: 5;
+}
+
+/* =========================================
+   ADAPTACIÓN A PANTALLAS PEQUEÑAS
+=/* Ajustar proporción entre producto y reseñas */
+#detalleProducto .detalle-contenido {
+    display: grid;
+    grid-template-columns: minmax(0, 25fr) minmax(0, 75fr);
+    gap: 25px;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+/* Producto más compacto */
+#detalleProducto .detalle-producto-principal {
+    padding: 20px;
+    min-width: 0;
+}
+
+#detalleProducto .detalle-producto-imagen {
+    max-width: 250px;
+    margin: 0 auto;
+}
+
+#detalleProducto .detalle-producto-imagen img {
+    width: 100%;
+    max-height: 250px;
+    object-fit: contain;
+}
+
+/* Reseñas más amplias */
+#detalleProducto .seccion-resenas {
+    width: 100%;
+    min-width: 0;
+    padding: 35px;
+    box-sizing: border-box;
+}
+
+/* Adaptación para celulares */
+@media (max-width: 800px) {
+    #detalleProducto .detalle-contenido {
+        grid-template-columns: 1fr;
+    }
+
+    #detalleProducto .detalle-producto-principal,
+    #detalleProducto .seccion-resenas {
+        padding: 20px;
+    }
+}
+
+/* DISTRIBUCIÓN DEL DETALLE DEL PRODUCTO */
+#detalleProducto {
+    width: 100% !important;
+    max-width: 100% !important;
+    box-sizing: border-box;
+}
+
+#detalleProducto .detalle-contenido {
+    display: grid !important;
+    grid-template-columns: minmax(0, 28fr) minmax(0, 72fr) !important;
+    gap: 25px !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    box-sizing: border-box;
+}
+
+/* COLUMNA DEL PRODUCTO */
+#detalleProducto .detalle-producto-principal {
+    width: 100% !important;
+    min-width: 0 !important;
+    padding: 20px !important;
+    box-sizing: border-box;
+}
+
+#detalleProducto .detalle-producto-imagen {
+    max-width: 230px !important;
+    margin: 0 auto 20px;
+}
+
+#detalleProducto .detalle-producto-imagen img {
+    width: 100%;
+    max-height: 230px;
+    object-fit: contain;
+}
+
+/* COLUMNA DE RESEÑAS */
+#detalleProducto .seccion-resenas {
+    width: 100% !important;
+    min-width: 0 !important;
+    padding: 35px !important;
+    box-sizing: border-box;
+}
+
+/* RESPONSIVE */
+@media (max-width: 800px) {
+    #detalleProducto .detalle-contenido {
+        grid-template-columns: 1fr !important;
+    }
+}
+
+/* Mensajes personalizados de reseñas */
+.mensaje-resena {
+    display: none;
+    padding: 14px 18px;
+    margin: 15px 0;
+    border-radius: 10px;
+    font-size: 14px;
+    font-weight: 500;
+    animation: aparecerMensaje 0.3s ease;
+}
+
+.mensaje-resena.exito {
+    display: block;
+    color: #d1fae5;
+    background: #123b2b;
+    border: 1px solid #238653;
+}
+
+.mensaje-resena.error {
+    display: block;
+    color: #fee2e2;
+    background: #482126;
+    border: 1px solid #b94b55;
+}
+
+.mensaje-resena.advertencia {
+    display: block;
+    color: #fef3c7;
+    background: #493713;
+    border: 1px solid #b58a24;
+}
+
+.mensaje-resena.info {
+    display: block;
+    color: #dbeafe;
+    background: #172f4a;
+    border: 1px solid #3478b9;
+}
+
+@keyframes aparecerMensaje {
+    from {
+        opacity: 0;
+        transform: translateY(-8px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+
+/* CARRUSEL DE RESEÑAS */
+.carrusel-resenas {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    width: 100%;
+}
+
+.carrusel-resenas .resena-item {
+    flex: 1;
+    min-width: 0;
+    background: #223044;
+    padding: 25px;
+    border-radius: 15px;
+    min-height: 180px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.flecha-resena {
+    background: #ffcc00;
+    color: #111;
+    border: none;
+    width: 42px;
+    height: 42px;
+    min-width: 42px;
+    border-radius: 50%;
+    font-size: 20px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: 0.2s ease;
+}
+
+.flecha-resena:hover:not(:disabled) {
+    background: #ffe066;
+    transform: scale(1.08);
+}
+
+.flecha-resena:disabled {
+    opacity: 0.35;
+    cursor: default;
+}
+
+.contador-resenas {
+    text-align: center;
+    color: #b8c4d6;
+    font-size: 13px;
+    margin-top: 12px;
+}
+
+.resena-estrellas {
+    color: #ffcc00;
+    font-size: 20px;
+    letter-spacing: 2px;
+    margin: 8px 0;
+}
+
+
+/* ACCIONES DE LAS RESEÑAS */
+.acciones-resena {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 20px;
+}
+
+.btn-editar-resena,
+.btn-eliminar-resena {
+    padding: 9px 16px;
+    border-radius: 8px;
+    border: none;
+    cursor: pointer;
+    font-weight: 600;
+    transition: 0.2s ease;
+}
+
+.btn-editar-resena {
+    background: #ffcc00;
+    color: #111;
+}
+
+.btn-editar-resena:hover {
+    background: #ffe066;
+}
+
+.btn-eliminar-resena {
+    background: #482126;
+    color: #fee2e2;
+    border: 1px solid #b94b55;
+}
+
+.btn-eliminar-resena:hover {
+    background: #682b33;
+}
+
+.resena-item textarea,
+.resena-item select {
+    width: 100%;
+    padding: 12px;
+    margin: 8px 0 15px;
+    border-radius: 8px;
+    border: 1px solid #40516a;
+    background: #172033;
+    color: #fff;
+    font-family: inherit;
+}
+
+.resena-item textarea {
+    resize: vertical;
+}
+
+.resena-item label {
+    display: block;
+    margin-top: 10px;
+    font-weight: 600;
+}
+
+.acciones-resena button:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+
+/* VENTANA PERSONALIZADA PARA ELIMINAR RESEÑAS */
+.modal-confirmacion-resena {
+    position: fixed;
+    inset: 0;
+    z-index: 99999;
+    background: rgba(0, 0, 0, 0.78);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+    animation: aparecerModal 0.2s ease;
+}
+
+.modal-resena-contenido {
+    width: 100%;
+    max-width: 400px;
+    padding: 30px;
+    border-radius: 18px;
+    background: #1e293b;
+    border: 1px solid #34445d;
+    text-align: center;
+    box-shadow: 0 15px 45px rgba(0, 0, 0, 0.45);
+}
+
+.icono-eliminar-resena {
+    width: 55px;
+    height: 55px;
+    margin: 0 auto 18px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(255, 204, 0, 0.12);
+    border: 1px solid #ffcc00;
+    color: #ffcc00;
+    font-size: 28px;
+    font-weight: bold;
+}
+
+.modal-resena-contenido h3 {
+    color: #fff;
+    margin-bottom: 12px;
+    font-size: 22px;
+}
+
+.modal-resena-contenido p {
+    color: #cbd5e1;
+    line-height: 1.6;
+    font-size: 14px;
+}
+
+.modal-resena-acciones {
+    display: flex;
+    gap: 12px;
+    margin-top: 25px;
+}
+
+.modal-resena-acciones button {
+    flex: 1;
+    padding: 12px 10px;
+    border-radius: 9px;
+    border: none;
+    cursor: pointer;
+    font-weight: 600;
+    transition: 0.2s;
+}
+
+#cancelarEliminar {
+    background: #334155;
+    color: #fff;
+}
+
+#cancelarEliminar:hover {
+    background: #475569;
+}
+
+#confirmarEliminar {
+    background: #ffcc00;
+    color: #111;
+}
+
+#confirmarEliminar:hover {
+    background: #ffe066;
+}
+
+#confirmarEliminar:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
+@keyframes aparecerModal {
+    from {
+        opacity: 0;
+        transform: scale(0.97);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+
+/* MODAL CERRAR SESIÓN CUBEX */
+.modal-cerrar-sesion {
+    position: fixed;
+    inset: 0;
+    z-index: 99999;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+    background: rgba(0, 0, 0, 0.78);
+    animation: aparecerCerrarSesion 0.2s ease;
+}
+
+.contenido-cerrar-sesion {
+    width: 100%;
+    max-width: 400px;
+    padding: 32px;
+    border-radius: 18px;
+    background: #1e293b;
+    border: 1px solid #34445d;
+    text-align: center;
+    box-shadow: 0 15px 45px rgba(0, 0, 0, 0.45);
+}
+
+.icono-cerrar-sesion {
+    width: 58px;
+    height: 58px;
+    margin: 0 auto 18px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 50%;
+    background: rgba(255, 204, 0, 0.12);
+    border: 1px solid #ffcc00;
+    color: #ffcc00;
+    font-size: 30px;
+}
+
+.contenido-cerrar-sesion h2 {
+    color: #fff;
+    margin-bottom: 12px;
+}
+
+.contenido-cerrar-sesion p {
+    color: #cbd5e1;
+    line-height: 1.6;
+}
+
+.acciones-cerrar-sesion {
+    display: flex;
+    gap: 12px;
+    margin-top: 25px;
+}
+
+.acciones-cerrar-sesion button {
+    flex: 1;
+    padding: 12px 10px;
+    border: none;
+    border-radius: 9px;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+#cancelarCerrarSesion {
+    background: #334155;
+    color: white;
+}
+
+#confirmarCerrarSesion {
+    background: #ffcc00;
+    color: #111;
+}
+
+#confirmarCerrarSesion:hover {
+    background: #ffe066;
+}
+
+@keyframes aparecerCerrarSesion {
+    from {
+        opacity: 0;
+        transform: scale(0.97);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+
+/* BOTÓN CERRAR SESIÓN CUBEX */
+#cerrarSesion {
+    background: transparent;
+    color: #ffcc00;
+    border: 1.5px solid #ffcc00;
+    border-radius: 9px;
+    padding: 11px 17px;
+    font-size: 15px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.25s ease;
+}
+
+#cerrarSesion:hover {
+    background: #ffcc00;
+    color: #111827;
+    box-shadow: 0 0 14px rgba(255, 204, 0, 0.25);
+    transform: translateY(-2px);
+}
+
+#cerrarSesion:active {
+    transform: scale(0.97);
+}
+
+.producto-precio-oferta {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 5px;
+    margin: 12px 0;
+}
+
+.precio-anterior {
+    color: #999;
+    text-decoration: line-through;
+    font-size: 0.9rem;
+}
+
+.precio-descuento {
+    color: #00d99a;
+    font-size: 1.35rem;
+    font-weight: 800;
+}
+
+.etiqueta-descuento {
+    background: #00d99a;
+    color: #101827;
+    font-size: 0.75rem;
+    font-weight: 800;
+    padding: 4px 9px;
+    border-radius: 5px;
+}
+
+
+/* =====================================
+   ENCABEZADO Y NAVBAR FIJOS
+===================================== */
+
+:root {
+    --alto-encabezado: 96px;
+    --alto-menu: 66px;
+}
+
+html {
+    scroll-padding-top: calc(
+        var(--alto-encabezado) + var(--alto-menu) + 15px
+    );
+}
+
+.encabezado {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: var(--alto-encabezado);
+    z-index: 1000;
+    box-sizing: border-box;
+}
+
+.menu {
+    position: fixed;
+    top: var(--alto-encabezado);
+    left: 0;
+    width: 100%;
+    height: var(--alto-menu);
+    z-index: 999;
+    box-sizing: border-box;
+}
+
+/* Evita que el contenido quede debajo de las barras */
+body {
+    padding-top: calc(
+        var(--alto-encabezado) + var(--alto-menu)
+    );
+}
+
+/* Ajuste de navegación hacia las secciones */
+#productos,
+#contacto,
+#detalleProducto {
+    scroll-margin-top: calc(
+        var(--alto-encabezado) + var(--alto-menu) + 15px
+    );
+}
+
+/* Adaptación para pantallas pequeñas */
+@media (max-width: 768px) {
+    :root {
+        --alto-encabezado: 145px;
+        --alto-menu: 58px;
+    }
+
+    .encabezado {
+        height: var(--alto-encabezado);
+        flex-wrap: wrap;
+    }
+}
+
+.contacto-item a {
+    color: #ffcc00;
+    text-decoration: none;
+    font-weight: 600;
+    transition: color 0.3s ease;
+}
+
+.contacto-item a:hover {
+    color: #ffffff;
+    text-decoration: underline;
+}
+
+/* ==============================
+   SECCIÓN DE CONTACTO CUBEX
+============================== */
+
+.contacto-section {
+    background: #111827;
+    padding: 85px 7%;
+    color: #f3f4f6;
+    scroll-margin-top: 150px;
+}
+
+.contacto-container {
+    max-width: 1200px;
+    margin: auto;
+}
+
+.contacto-encabezado {
+    text-align: center;
+    margin-bottom: 55px;
+}
+
+.contacto-etiqueta {
+    color: #ffcc00;
+    font-size: 13px;
+    font-weight: 800;
+    letter-spacing: 3px;
+}
+
+.contacto-encabezado h2 {
+    font-size: 38px;
+    margin: 15px 0;
+    color: #ffffff;
+}
+
+.contacto-encabezado p {
+    color: #b9c7dc;
+    font-size: 17px;
+}
+
+.contacto-contenido {
+    display: grid;
+    grid-template-columns: 1fr 1.15fr;
+    gap: 35px;
+    align-items: stretch;
+}
+
+.contacto-info,
+.contacto-formulario {
+    background: #1a2639;
+    border: 1px solid #2b3b53;
+    border-radius: 18px;
+    padding: 38px;
+}
+
+.contacto-info h3,
+.contacto-formulario h3 {
+    font-size: 24px;
+    color: #ffffff;
+    margin: 0 0 15px;
+}
+
+.contacto-info > p,
+.contacto-formulario > p {
+    color: #bdcbe0;
+    line-height: 1.8;
+    margin-bottom: 30px;
+}
+
+.contacto-dato {
+    display: flex;
+    align-items: center;
+    gap: 17px;
+    margin: 28px 0;
+}
+
+.contacto-icono {
+    width: 48px;
+    height: 48px;
+    min-width: 48px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(255, 204, 0, 0.12);
+    color: #ffcc00;
+    border-radius: 12px;
+    font-size: 22px;
+}
+
+.contacto-dato h4 {
+    color: #ffffff;
+    margin: 0 0 7px;
+}
+
+.contacto-dato p,
+.contacto-dato a {
+    color: #bdcbe0;
+    margin: 0;
+    text-decoration: none;
+    overflow-wrap: anywhere;
+}
+
+.contacto-dato a:hover {
+    color: #ffcc00;
+}
+
+.contacto-mensaje {
+    margin-top: 35px;
+    padding: 20px;
+    border-left: 4px solid #ffcc00;
+    background: #111d30;
+    border-radius: 8px;
+}
+
+.contacto-mensaje span {
+    color: #ffcc00;
+    font-weight: 700;
+}
+
+.contacto-mensaje p {
+    color: #bdcbe0;
+    margin: 8px 0 0;
+}
+
+.contacto-formulario form {
+    display: flex;
+    flex-direction: column;
+    gap: 19px;
+}
+
+.campo-contacto {
+    display: flex;
+    flex-direction: column;
+    gap: 9px;
+}
+
+.campo-contacto label {
+    color: #ffffff;
+    font-size: 14px;
+    font-weight: 600;
+}
+
+.campo-contacto input,
+.campo-contacto textarea {
+    width: 100%;
+    box-sizing: border-box;
+    padding: 14px 16px;
+    border: 1px solid #34445e;
+    border-radius: 9px;
+    outline: none;
+    background: #111827;
+    color: #ffffff;
+    font-family: inherit;
+    font-size: 15px;
+    transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.campo-contacto input {
+    height: 49px;
+}
+
+.campo-contacto textarea {
+    resize: vertical;
+    min-height: 130px;
+}
+
+.campo-contacto input::placeholder,
+.campo-contacto textarea::placeholder {
+    color: #8997aa;
+}
+
+.campo-contacto input:focus,
+.campo-contacto textarea:focus {
+    border-color: #0785f9;
+    box-shadow: 0 0 0 3px rgba(7, 133, 249, 0.15);
+}
+
+.btn-contacto {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 12px;
+    width: 100%;
+    padding: 16px;
+    border: none;
+    border-radius: 9px;
+    background: #ffcc00;
+    color: #101827;
+    font-size: 16px;
+    font-weight: 800;
+    cursor: pointer;
+    transition: 0.25s;
+}
+
+.btn-contacto:hover {
+    background: #ffdb4d;
+    transform: translateY(-2px);
+}
+
+.contacto-nota {
+    color: #8997aa;
+    font-size: 12px;
+    text-align: center;
+    margin: 0;
+}
+
+/* Adaptación para celulares */
+@media (max-width: 850px) {
+    .contacto-section {
+        padding: 60px 5%;
+    }
+
+    .contacto-contenido {
+        grid-template-columns: 1fr;
+    }
+
+    .contacto-encabezado h2 {
+        font-size: 30px;
+    }
+
+    .contacto-info,
+    .contacto-formulario {
+        padding: 25px;
+    }
+}
+
+@media (max-width: 480px) {
+    .contacto-encabezado h2 {
+        font-size: 27px;
+    }
+
+    .contacto-info,
+    .contacto-formulario {
+        padding: 20px;
+    }
+}
+
+.mensaje-confirmacion {
+    display: none;
+    margin-top: 18px;
+    padding: 14px 18px;
+    border-radius: 10px;
+    font-size: 14px;
+    font-weight: 600;
+    text-align: center;
+}
+
+.mensaje-confirmacion.exito {
+    display: block;
+    color: #22c55e;
+    background: rgba(34, 197, 94, 0.12);
+    border: 1px solid rgba(34, 197, 94, 0.35);
+}
+
+.mensaje-confirmacion.error {
+    display: block;
+    color: #ef4444;
+    background: rgba(239, 68, 68, 0.12);
+    border: 1px solid rgba(239, 68, 68, 0.35);
+}
+/* =====================================================
+   EXISTENCIAS EN EL CATÁLOGO
+===================================================== */
+
+.producto-existencias {
+    margin: 6px 0 10px;
+    font-size: 13px;
+    color: var(--gris);
+}
+
+.producto-existencias.pocas {
+    color: var(--amarillo);
+    font-weight: 700;
+}
+
+.producto-existencias.agotado {
+    color: #ff8a98;
+    font-weight: 700;
+}
+
+.aviso-no-disponible {
+    grid-column: 1 / -1;
+    border: 1px dashed rgba(255, 210, 31, 0.5);
+    border-radius: 10px;
+    padding: 12px 16px;
+}
+
+#btnAgregarDetalle:disabled {
+    opacity: 0.55;
+    cursor: not-allowed;
+}

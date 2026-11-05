@@ -1,0 +1,386 @@
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    background: #111827;
+    color: #e0e0e0;
+    font-family: Arial, sans-serif;
+}
+
+.inventario-container {
+    padding: 28px;
+}
+
+.encabezado {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 28px;
+    gap: 15px;
+}
+
+.subtitulo {
+    color: #00aaff;
+    font-size: 12px;
+    font-weight: bold;
+    letter-spacing: 2px;
+}
+
+h1 {
+    font-size: 28px;
+    margin: 8px 0;
+}
+
+.encabezado p,
+.panel-titulo p {
+    color: #aab7ca;
+    font-size: 14px;
+}
+
+button {
+    cursor: pointer;
+    border: none;
+    border-radius: 7px;
+    padding: 11px 16px;
+    font-weight: bold;
+}
+
+.btn-actualizar {
+    background: #142b45;
+    color: #00aaff;
+    border: 1px solid #087ac0;
+}
+
+.resumen {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 15px;
+    margin-bottom: 25px;
+}
+
+.tarjeta,
+.panel-inventario {
+    background: #192334;
+    border: 1px solid #303c50;
+    border-radius: 10px;
+    padding: 20px;
+}
+
+.tarjeta span {
+    display: block;
+    color: #aab7ca;
+    font-size: 13px;
+    margin-bottom: 12px;
+}
+
+.tarjeta strong {
+    font-size: 27px;
+    color: #00bfff;
+}
+
+.panel-titulo {
+    margin-bottom: 22px;
+}
+
+.panel-titulo h2 {
+    font-size: 19px;
+    margin-bottom: 8px;
+}
+
+.tabla-contenedor {
+    width: 100%;
+    overflow-x: auto;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    min-width: 700px;
+}
+
+th {
+    background: #111827;
+    color: #aab7ca;
+    text-align: left;
+    padding: 14px;
+    font-size: 12px;
+}
+
+td {
+    padding: 16px 14px;
+    border-bottom: 1px solid #303c50;
+    font-size: 13px;
+}
+
+.mensaje-tabla {
+    text-align: center;
+    color: #aab7ca;
+    padding: 30px;
+}
+
+.estado {
+    padding: 6px 10px;
+    border-radius: 6px;
+    font-size: 11px;
+    font-weight: bold;
+}
+
+.estado-bajo {
+    background: #482329;
+    color: #ff8585;
+}
+
+.estado-normal {
+    background: #173d32;
+    color: #62dfaa;
+}
+
+.estado-exceso {
+    background: #493c20;
+    color: #ffd166;
+}
+
+.btn-editar {
+    background: #103b61;
+    color: #52bdff;
+}
+
+.modal {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, .75);
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    z-index: 1000;
+}
+
+.modal.activo {
+    display: flex;
+}
+
+.modal-contenido {
+    background: #192334;
+    border: 1px solid #34445b;
+    border-radius: 12px;
+    padding: 25px;
+    width: 100%;
+    max-width: 420px;
+}
+
+.modal-contenido h2 {
+    margin-bottom: 10px;
+}
+
+.modal-contenido p {
+    color: #aab7ca;
+    margin-bottom: 20px;
+}
+
+.modal-contenido label {
+    display: block;
+    margin: 14px 0 7px;
+    font-size: 13px;
+}
+
+.modal-contenido input {
+    width: 100%;
+    padding: 12px;
+    background: #111827;
+    color: white;
+    border: 1px solid #394b63;
+    border-radius: 7px;
+}
+
+.modal-acciones {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+    margin-top: 25px;
+}
+
+.btn-cancelar {
+    background: #303c50;
+    color: white;
+}
+
+.btn-guardar {
+    background: #008fd3;
+    color: white;
+}
+
+.mensaje {
+    margin-top: 15px;
+    color: #aab7ca;
+    font-size: 13px;
+}
+
+@media (max-width: 750px) {
+    .resumen {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .encabezado {
+        align-items: flex-start;
+        flex-direction: column;
+    }
+}
+
+
+.estado {
+    display: inline-block;
+    padding: 6px 10px;
+    border-radius: 6px;
+    font-size: 12px;
+    font-weight: 600;
+}
+
+.stock-bajo {
+    color: #ff6b6b;
+    background: rgba(255, 70, 70, 0.12);
+}
+
+.stock-normal {
+    color: #35d995;
+    background: rgba(53, 217, 149, 0.12);
+}
+
+.stock-excedido {
+    color: #ffbd4a;
+    background: rgba(255, 189, 74, 0.12);
+}
+
+.sin-configurar {
+    color: #aab4c5;
+    background: rgba(170, 180, 197, 0.12);
+}
+
+.btn-editar {
+    padding: 8px 13px;
+    border: 1px solid #00aaff;
+    border-radius: 6px;
+    background: transparent;
+    color: #00aaff;
+    cursor: pointer;
+}
+
+.btn-editar:hover {
+    background: #00aaff;
+    color: white;
+}
+
+.modal.activo {
+    display: flex;
+}
+
+/* Fondo del modal */
+.modal {
+    display: none;
+    position: fixed;
+    inset: 0;
+    z-index: 9999;
+
+    align-items: center;
+    justify-content: center;
+
+    padding: 16px;
+    background: rgba(0, 0, 0, 0.75);
+
+    overflow-y: auto;
+}
+
+/* Modal centrado */
+.modal-contenido {
+    width: 100%;
+    max-width: 450px;
+
+    max-height: calc(100vh - 32px);
+    overflow-y: auto;
+
+    margin: auto;
+    padding: 28px;
+
+    background: #1e293b;
+    border: 1px solid #334155;
+    border-radius: 16px;
+
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.45);
+}
+
+/* Evitar desplazamiento de la página con el modal abierto */
+body.modal-abierto {
+    overflow: hidden;
+}
+
+/* Mensajes dentro de la página */
+.mensaje {
+    display: none;
+    margin-top: 18px;
+    padding: 13px 16px;
+    border-radius: 9px;
+    font-size: 14px;
+}
+
+.mensaje.exito {
+    display: block;
+    color: #86efac;
+    background: rgba(34, 197, 94, 0.12);
+    border: 1px solid rgba(34, 197, 94, 0.35);
+}
+
+.mensaje.error {
+    display: block;
+    color: #fca5a5;
+    background: rgba(239, 68, 68, 0.12);
+    border: 1px solid rgba(239, 68, 68, 0.35);
+}
+
+.oferta-disponible {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    color: #00d68f;
+    font-size: 13px;
+}
+
+.oferta-disponible strong {
+    font-size: 14px;
+}
+
+.oferta-normal {
+    color: #aab4c5;
+    font-size: 13px;
+}
+
+.oferta-sin-configurar {
+    color: #f0b84b;
+    font-size: 12px;
+}
+
+.oferta-error {
+    color: #ff6b75;
+    font-size: 12px;
+}
+/* Producto sin existencias (no se muestra en la tienda) */
+.estado.stock-agotado {
+    background: rgba(239, 35, 60, 0.18);
+    color: #ff8a98;
+    border: 1px solid rgba(239, 35, 60, 0.45);
+}
+
+/* Secciones de movimientos, entradas y alertas */
+.inventario-extra {
+    margin-top: 26px;
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+}
+
+.inventario-extra .log-panel h2 {
+    font-size: 18px;
+}

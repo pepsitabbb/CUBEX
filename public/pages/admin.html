@@ -1,0 +1,621 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CUBEX | Panel de administrador</title>
+    <link rel="stylesheet" href="../css/admin.css">
+    <link rel="stylesheet" href="../css/comun.css">
+
+
+</head>
+
+<body>
+
+<div class="panel">
+
+    <!-- BARRA LATERAL -->
+    <aside class="sidebar">
+
+        <a href="#resumen" class="marca">
+            <span class="marca-nombre">CUBEX</span>
+            <span class="marca-eslogan">Gira, piensa y conquista</span>
+        </a>
+
+        <!-- PERFIL DEL ADMINISTRADOR -->
+        <button type="button" class="perfil-admin" id="abrirPerfil">
+
+            <div class="avatar-vacio" id="inicialAdmin">A</div>
+
+            <div class="datos-perfil">
+                <h3 id="nombreAdmin">Administrador</h3>
+                <p id="usuarioAdmin">Panel de control</p>
+            </div>
+
+        </button>
+
+        <!-- NAVEGACIÓN -->
+        <nav class="navegacion" aria-label="Menú principal">
+
+            <p class="nav-titulo">MENÚ PRINCIPAL</p>
+
+            <a href="#resumen" class="nav-enlace">
+                <span class="nav-icono">▦</span>Resumen
+            </a>
+
+            <a href="#productos" class="nav-enlace">
+                <span class="nav-icono">▣</span>Productos
+            </a>
+
+            <a href="#inventario" class="nav-enlace">
+                <span class="nav-icono">▤</span>Inventario
+            </a>
+
+            <a href="#usuarios" class="nav-enlace">
+                <span class="nav-icono">♙</span>Usuarios y roles
+            </a>
+
+             <a href="#proveedores" class="nav-enlace">
+                <span class="nav-icono">▣</span>Proveedores
+            </a>
+
+            <a href="#compras" class="nav-enlace">
+                <span class="nav-icono">▣</span>Compras a proveedores
+            </a>
+
+            <a href="#pedidos" class="nav-enlace">
+                <span class="nav-icono">▤</span>Pedidos de clientes
+            </a>
+
+            <a href="#envios" class="nav-enlace">
+                <span class="nav-icono">➜</span>Envíos y rastreo
+            </a>
+
+            <a href="#entregas" class="nav-enlace">
+                <span class="nav-icono">✓</span>Validación de entregas
+            </a>
+
+            <a href="#garantias" class="nav-enlace">
+                <span class="nav-icono">◇</span>Garantías
+            </a>
+
+            <a href="#devoluciones" class="nav-enlace">
+                <span class="nav-icono">↩</span>Devoluciones
+            </a>
+
+            <a href="#resenas" class="nav-enlace">
+            <span class="nav-icono">☆</span>Reseñas
+        </a>
+
+            <a href="#reportes" class="nav-enlace">
+    <span class="nav-icono">▥</span>Reportes
+</a>
+
+        </nav>
+
+        <div class="sidebar-pie">
+            <p>CUBEX © 2026</p>
+        </div>
+
+    </aside>
+
+
+    <!-- CONTENIDO PRINCIPAL -->
+    <main class="contenido">
+
+        <!-- ENCABEZADO -->
+        <header class="barra-superior">
+
+            <div>
+                <p class="sobrelinea">ADMINISTRACIÓN</p>
+                <h1>Panel de control</h1>
+                <p class="texto-secundario">
+                    Gestiona tu tienda CUBEX desde un solo lugar.
+                </p>
+            </div>
+
+            <div class="acciones-superiores">
+
+                <div class="estado-sistema">
+                    <span class="punto"></span>
+                    Vista administrativa
+                </div>
+
+                <button type="button" class="boton-cerrar-sesion" id="cerrarSesion">
+                    Cerrar sesión
+                </button>
+
+            </div>
+
+        </header>
+
+
+        <!-- RESUMEN -->
+        <section class="vista" id="resumen">
+
+            <div class="encabezado-seccion">
+                <div>
+                    <p class="sobrelinea">RESUMEN GENERAL</p>
+                    <h2>Estado de la tienda</h2>
+                </div>
+            </div>
+
+            <div class="estadisticas">
+
+                <article class="tarjeta-estadistica">
+                    <div class="estadistica-arriba">
+                        <span class="estadistica-icono azul">▣</span>
+                        <span class="etiqueta">Catálogo</span>
+                    </div>
+                    <p class="estadistica-numero" id="statProductos">--</p>
+                    <p class="estadistica-titulo">Productos registrados</p>
+                    <p class="estadistica-nota">Datos del inventario</p>
+                </article>
+
+                <article class="tarjeta-estadistica">
+                    <div class="estadistica-arriba">
+                        <span class="estadistica-icono amarillo">▤</span>
+                        <span class="etiqueta">Existencias</span>
+                    </div>
+                    <p class="estadistica-numero" id="statUnidades">--</p>
+                    <p class="estadistica-titulo">Unidades en stock</p>
+                    <p class="estadistica-nota">Cantidades disponibles</p>
+                </article>
+
+                <article class="tarjeta-estadistica">
+                    <div class="estadistica-arriba">
+                        <span class="estadistica-icono rojo">!</span>
+                        <span class="etiqueta">Atención</span>
+                    </div>
+                    <p class="estadistica-numero" id="statStockBajo">--</p>
+                    <p class="estadistica-titulo">Productos con stock bajo</p>
+                    <p class="estadistica-nota" id="notaStockBajo">Existencias de 5 unidades o menos (incluye agotados)</p>
+                </article>
+
+                <article class="tarjeta-estadistica">
+                    <div class="estadistica-arriba">
+                        <span class="estadistica-icono verde">♙</span>
+                        <span class="etiqueta">Accesos</span>
+                    </div>
+                    <p class="estadistica-numero" id="statUsuarios">--</p>
+                    <p class="estadistica-titulo">Usuarios registrados</p>
+                    <p class="estadistica-nota">Clientes y personal</p>
+                </article>
+
+            </div>
+
+            <div class="encabezado-seccion espacio-arriba">
+                <div>
+                    <p class="sobrelinea">GESTIÓN</p>
+                    <h2>Accesos rápidos</h2>
+                </div>
+            </div>
+
+            <div class="accesos-rapidos">
+
+                <a href="#productos" class="acceso">
+                    <span class="acceso-icono azul">＋</span>
+                    <span>
+                        <strong>Productos</strong>
+                        <small>Consultar catálogo</small>
+                    </span>
+                    <span class="flecha">→</span>
+                </a>
+
+                <a href="#inventario" class="acceso">
+                    <span class="acceso-icono amarillo">▤</span>
+                    <span>
+                        <strong>Inventario</strong>
+                        <small>Revisar existencias</small>
+                    </span>
+                    <span class="flecha">→</span>
+                </a>
+
+                <a href="#pedidos" class="acceso">
+                    <span class="acceso-icono rojo">▣</span>
+                    <span>
+                        <strong>Pedidos</strong>
+                        <small>Consultar pedidos de clientes</small>
+                    </span>
+                    <span class="flecha">→</span>
+                </a>
+
+                <a href="#envios" class="acceso">
+                    <span class="acceso-icono verde">➜</span>
+                    <span>
+                        <strong>Envíos y rastreo</strong>
+                        <small>Consultar guías y estados</small>
+                    </span>
+                    <span class="flecha">→</span>
+                </a>
+
+                <a href="#garantias" class="acceso">
+                    <span class="acceso-icono azul">◇</span>
+                    <span>
+                        <strong>Garantías</strong>
+                        <small>Revisar solicitudes</small>
+                    </span>
+                    <span class="flecha">→</span>
+                </a>
+
+                <a href="#devoluciones" class="acceso">
+                    <span class="acceso-icono rojo">↩</span>
+                    <span>
+                        <strong>Devoluciones</strong>
+                        <small>Consultar solicitudes</small>
+                    </span>
+                    <span class="flecha">→</span>
+                </a>
+
+            </div>
+
+        </section>
+
+
+        <!-- PRODUCTOS -->
+        <!-- PRODUCTOS -->
+        <section class="vista" id="productos">
+
+            <iframe
+                src="productos.html"
+                title="Gestión de productos CUBEX"
+                class="iframe-productos">
+            </iframe>
+
+        </section>
+
+
+        <!-- INVENTARIO -->
+        <!-- INVENTARIO -->
+<section class="vista" id="inventario">
+
+    <iframe
+        src="inventario.html"
+        title="Control de inventario CUBEX"
+        class="iframe-modulo">
+    </iframe>
+
+</section>
+
+
+        <!-- USUARIOS Y ROLES -->
+        <section class="vista" id="usuarios">
+
+            <div class="encabezado-seccion">
+                <div>
+                    <p class="sobrelinea">CONTROL DE ACCESO</p>
+                    <h2>Usuarios y roles</h2>
+                    <p class="texto-secundario">
+                        Administración de cuentas y permisos.
+                    </p>
+                </div>
+            </div>
+
+            <div class="tarjetas-roles">
+
+                <article class="tarjeta-rol">
+                    <div class="rol-icono rojo">A</div>
+                    <h3>Administrador</h3>
+                    <p>Control general de la tienda y sus módulos.</p>
+                </article>
+
+                <article class="tarjeta-rol">
+                    <div class="rol-icono azul">E</div>
+                    <h3>Empleado</h3>
+                    <p>Gestión de productos, inventario y pedidos según sus permisos.</p>
+                </article>
+
+                <article class="tarjeta-rol">
+                    <div class="rol-icono amarillo">C</div>
+                    <h3>Cliente</h3>
+                    <p>Compras, perfil, historial y reseñas.</p>
+                </article>
+
+            </div>
+
+            <div class="panel-contenido">
+
+                <h3 class="titulo-panel">Usuarios registrados</h3>
+
+                <div class="tabla-contenedor">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Nombre</th>
+                                <th>Correo</th>
+                                <th>Rol</th>
+                                <th>Estado</th>
+                            </tr>
+                        </thead>
+
+                        <tbody>
+                            <tr>
+                                <td>Los usuarios aparecerán aquí</td>
+                                <td>--</td>
+                                <td>--</td>
+                                <td><span class="estado pendiente">Sin conectar</span></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- PROVEEDORES -->
+       <!-- SECCIÓN DE PROVEEDORES -->
+<!-- PROVEEDORES -->
+        <section class="vista" id="proveedores">
+
+            <iframe
+                src="proveedores.html"
+                title="Gestión de proveedores"
+                class="iframe-productos"
+                scrolling="no">
+            </iframe>
+
+        </section>
+
+
+        <!-- COMPRAS -->
+       <section class="vista" id="compras">
+
+    <iframe
+        src="compras.html"
+        title="Compras a proveedores"
+        class="iframe-compras">
+    </iframe>
+
+</section>
+
+        <!-- PEDIDOS -->
+<!-- PEDIDOS -->
+ <section class="vista" id="pedidos">
+
+ <iframe
+
+src="pedidos.html"
+
+ class="iframe-pedidos"
+
+ title="Administración de pedidos">
+ </iframe>
+
+ </section>
+
+
+        <!-- ENVÍOS Y RASTREO -->
+        <section class="vista" id="envios">
+            <iframe
+                src="envios.html"
+                title="Envíos y rastreo"
+                class="iframe-modulo"
+                loading="lazy">
+            </iframe>
+        </section>
+
+
+        <!-- VALIDACIÓN DE ENTREGAS -->
+        <section class="vista" id="entregas">
+            <iframe
+                src="entregas.html"
+                title="Validación de entregas"
+                class="iframe-modulo"
+                loading="lazy">
+            </iframe>
+        </section>
+
+
+        <!-- GARANTÍAS -->
+        <section class="vista" id="garantias">
+            <iframe
+                src="garantias.html"
+                title="Garantías"
+                class="iframe-modulo"
+                loading="lazy">
+            </iframe>
+        </section>
+
+
+        <!-- DEVOLUCIONES -->
+        <section class="vista" id="devoluciones">
+            <iframe
+                src="devoluciones.html"
+                title="Devoluciones"
+                class="iframe-modulo"
+                loading="lazy">
+            </iframe>
+        </section>
+
+
+                <!-- RESEÑAS -->
+<!-- RESEÑAS -->
+<section class="vista" id="resenas">
+
+    <iframe
+        src="comentarios.html"
+        title="Gestión de reseñas CUBEX"
+        class="iframe-productos"
+        scrolling="no">
+    </iframe>
+
+</section>
+
+
+       <!-- REPORTES -->
+<section class="vista" id="reportes">
+
+    <iframe
+        src="reportes.html"
+        title="Reportes CUBEX"
+        class="iframe-productos"
+        scrolling="no">
+    </iframe>
+
+</section>
+
+        <!-- PIE -->
+        <footer class="pie-contenido">
+            <span>CUBEX · Gira, piensa y conquista</span>
+        </footer>
+
+    </main>
+
+</div>
+
+
+<!-- VENTANA DE INFORMACIÓN DEL PERFIL -->
+<div class="modal-perfil" id="modalPerfil">
+
+    <div class="contenido-modal-perfil">
+
+        <button type="button" class="cerrar-modal" id="cerrarModal" aria-label="Cerrar">
+            &times;
+        </button>
+
+        <div class="perfil-modal-avatar" id="inicialModal">A</div>
+
+        <h2 id="modalNombre">Administrador</h2>
+        <p class="subtitulo-modal">Información de la cuenta</p>
+
+        <div class="dato-modal">
+            <span>Nombre completo</span>
+            <strong id="modalNombreCompleto">--</strong>
+        </div>
+
+        <div class="dato-modal">
+            <span>Nombre de usuario</span>
+            <strong id="modalUsuario">--</strong>
+        </div>
+
+        <div class="dato-modal">
+            <span>Correo electrónico</span>
+            <strong id="modalCorreo">--</strong>
+        </div>
+
+        <div class="dato-modal">
+            <span>Rol de usuario</span>
+            <strong id="modalRol">ADMIN</strong>
+        </div>
+
+        <button type="button" class="boton-modal-cerrar" id="botonCerrarModal">
+            Cerrar
+        </button>
+
+    </div>
+
+</div>
+<!-- MODAL DE CONFIRMACIÓN PARA ELIMINAR RESEÑA -->
+<div id="modalEliminarResena">
+
+    <div class="modal-eliminar-contenido">
+
+        <div class="icono-eliminar">!</div>
+
+        <h2>Eliminar reseña</h2>
+
+        <p>
+            ¿Estás seguro de que deseas eliminar esta reseña?
+            Esta acción no se puede deshacer.
+        </p>
+
+        <div class="acciones-eliminar">
+
+            <button
+                type="button"
+                class="btn-cancelar"
+                id="cancelarEliminarResena">
+                Cancelar
+            </button>
+
+            <button
+                type="button"
+                class="btn-confirmar"
+                id="confirmarEliminarResena">
+                Sí, eliminar
+            </button>
+
+        </div>
+
+    </div>
+
+</div>
+<script src="../js/config.js"></script>
+<script>
+/* CONFIRMACIÓN DE ELIMINACIÓN PARA EL IFRAME */
+window.confirmarEliminacionResena = function () {
+
+    return new Promise((resolve) => {
+
+        const modal = document.getElementById("modalEliminarResena");
+        const confirmar = document.getElementById("confirmarEliminarResena");
+        const cancelar = document.getElementById("cancelarEliminarResena");
+
+        if (!modal || !confirmar || !cancelar) {
+            resolve(false);
+            return;
+        }
+
+        modal.classList.add("activo");
+
+        function cerrar(resultado) {
+
+            modal.classList.remove("activo");
+
+            confirmar.removeEventListener("click", aceptar);
+            cancelar.removeEventListener("click", rechazar);
+
+            resolve(resultado);
+        }
+
+        function aceptar() {
+            cerrar(true);
+        }
+
+        function rechazar() {
+            cerrar(false);
+        }
+
+        confirmar.addEventListener("click", aceptar);
+        cancelar.addEventListener("click", rechazar);
+
+    });
+
+};
+</script>
+<script src="../js/comun.js"></script>
+<script src="../js/admin.js"></script>
+<script src="../js/admin-resumen.js"></script>
+<script src="../js/comentarios.js"></script>
+<script>
+/* Altura automática de los módulos (iframes) que envían "cubex-altura". */
+window.addEventListener('message', function (event) {
+    if (event.origin !== window.location.origin || !event.data || event.data.tipo !== 'cubex-altura') {
+        return;
+    }
+
+    document.querySelectorAll('iframe').forEach(function (iframe) {
+        if (iframe.contentWindow === event.source && Number.isFinite(Number(event.data.altura))) {
+            iframe.style.setProperty('height', Math.max(600, Number(event.data.altura) + 24) + 'px', 'important');
+            iframe.style.setProperty('min-height', '0', 'important');
+        }
+    });
+});
+
+window.addEventListener('message', function(event) {
+
+    if (event.data && event.data.tipo === 'altura-productos') {
+
+        const iframe = document.querySelector('#productos .iframe-productos');
+
+        if (iframe && Number.isFinite(Number(event.data.altura))) {
+            iframe.style.height = (Number(event.data.altura) + 20) + 'px';
+        }
+    }
+
+});
+</script>
+</body>
+</html>

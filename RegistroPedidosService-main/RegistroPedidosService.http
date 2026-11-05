@@ -1,0 +1,6 @@
+@RegistroPedidosService_HostAddress = http://localhost:5274
+
+GET {{RegistroPedidosService_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###

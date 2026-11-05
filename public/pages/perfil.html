@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mi cuenta | CUBEX</title>
+    <link rel="stylesheet" href="../css/comun.css">
+    <link rel="stylesheet" href="../css/cuenta.css">
+</head>
+
+<body>
+
+    <header class="cuenta-encabezado">
+        <a href="index.html" class="cuenta-logo">
+            <span>CUBEX</span>
+            <small>Gira, piensa y conquista</small>
+        </a>
+
+        <div class="cuenta-encabezado-acciones">
+            <a href="index.html" class="cx-btn cx-btn-secundario">← Volver a la tienda</a>
+            <button type="button" class="cx-btn cx-btn-secundario" id="btnCerrarSesion">Cerrar sesión</button>
+        </div>
+    </header>
+
+    <main class="cuenta-contenedor">
+
+        <section class="cuenta-bienvenida">
+            <div class="cuenta-avatar" id="avatarCliente" aria-hidden="true">C</div>
+            <div>
+                <p class="cuenta-sobrelinea">MI CUENTA</p>
+                <h1 id="saludoCliente">Hola</h1>
+                <p class="cuenta-texto">Consulta tus pedidos, rastrea tus envíos y gestiona garantías y devoluciones.</p>
+            </div>
+        </section>
+
+        <nav class="cx-pestanas" role="tablist" aria-label="Secciones de mi cuenta">
+            <button type="button" class="cx-pestana" role="tab" id="tab-perfil" aria-controls="panel-perfil" data-panel="perfil">Mi perfil</button>
+            <button type="button" class="cx-pestana" role="tab" id="tab-pedidos" aria-controls="panel-pedidos" data-panel="pedidos">Mis pedidos</button>
+            <button type="button" class="cx-pestana" role="tab" id="tab-envios" aria-controls="panel-envios" data-panel="envios">Mis envíos</button>
+            <button type="button" class="cx-pestana" role="tab" id="tab-garantias" aria-controls="panel-garantias" data-panel="garantias">Mis garantías</button>
+            <button type="button" class="cx-pestana" role="tab" id="tab-devoluciones" aria-controls="panel-devoluciones" data-panel="devoluciones">Mis devoluciones</button>
+        </nav>
+
+        <!-- PERFIL -->
+        <section class="cuenta-panel" id="panel-perfil" role="tabpanel" aria-labelledby="tab-perfil">
+            <div class="cuenta-tarjeta">
+                <h2>Información del cliente</h2>
+
+                <dl class="cuenta-datos">
+                    <div>
+                        <dt>Nombre de usuario</dt>
+                        <dd id="nombreUsuario">Cargando...</dd>
+                    </div>
+                    <div>
+                        <dt>Nombre completo</dt>
+                        <dd id="nombreCompleto">Cargando...</dd>
+                    </div>
+                    <div>
+                        <dt>Correo electrónico</dt>
+                        <dd id="email">Cargando...</dd>
+                    </div>
+                    <div>
+                        <dt>Tipo de cuenta</dt>
+                        <dd id="rol">Cargando...</dd>
+                    </div>
+                </dl>
+
+                <p id="mensaje" class="cx-mensaje" role="status" aria-live="polite"></p>
+            </div>
+
+            <div class="cx-resumen cuenta-resumen" id="resumenCuenta">
+                <div class="cx-resumen-item"><strong id="resPedidos">—</strong><span>Pedidos realizados</span></div>
+                <div class="cx-resumen-item atencion"><strong id="resPendientes">—</strong><span>Pendientes de pago</span></div>
+                <div class="cx-resumen-item"><strong id="resEnCamino">—</strong><span>Envíos en camino</span></div>
+                <div class="cx-resumen-item ok"><strong id="resEntregados">—</strong><span>Pedidos entregados</span></div>
+            </div>
+        </section>
+
+        <!-- MIS PEDIDOS -->
+        <section class="cuenta-panel" id="panel-pedidos" role="tabpanel" aria-labelledby="tab-pedidos" hidden>
+            <div class="cuenta-barra">
+                <div>
+                    <h2>Mis pedidos</h2>
+                    <p class="cuenta-texto">Solo se muestran los pedidos de tu cuenta.</p>
+                </div>
+
+                <div class="cuenta-filtros">
+                    <label class="cx-oculto" for="filtroPedidos">Filtrar por estado</label>
+                    <select id="filtroPedidos" class="cx-filtro">
+                        <option value="">Todos los estados</option>
+                        <option value="pendiente">Pendientes de pago</option>
+                        <option value="confirmado">Confirmados</option>
+                        <option value="cancelado">Cancelados</option>
+                    </select>
+                    <button type="button" class="cx-btn cx-btn-secundario" data-recargar="pedidos">↻ Actualizar</button>
+                </div>
+            </div>
+
+            <div id="listaPedidos" class="cuenta-lista">
+                <div class="cx-cargando">Cargando tus pedidos...</div>
+            </div>
+        </section>
+
+        <!-- MIS ENVÍOS -->
+        <section class="cuenta-panel" id="panel-envios" role="tabpanel" aria-labelledby="tab-envios" hidden>
+            <div class="cuenta-barra">
+                <div>
+                    <h2>Mis envíos y rastreo</h2>
+                    <p class="cuenta-texto">El seguimiento muestra únicamente los movimientos registrados por CUBEX y tu paquetería.</p>
+                </div>
+                <button type="button" class="cx-btn cx-btn-secundario" data-recargar="envios">↻ Actualizar</button>
+            </div>
+
+            <div id="listaEnvios" class="cuenta-lista">
+                <div class="cx-cargando">Cargando tus envíos...</div>
+            </div>
+        </section>
+
+        <!-- MIS GARANTÍAS -->
+        <section class="cuenta-panel" id="panel-garantias" role="tabpanel" aria-labelledby="tab-garantias" hidden>
+            <div class="cuenta-tarjeta">
+                <h2>Solicitar garantía</h2>
+                <p class="cuenta-texto" id="textoPlazoGarantia">
+                    Puedes solicitar garantía de productos entregados.
+                </p>
+
+                <form id="formGarantia" class="cx-form" novalidate>
+                    <div class="cx-campo cx-campo-completo">
+                        <label for="garantiaProducto">Pedido y producto *</label>
+                        <select id="garantiaProducto" required>
+                            <option value="">Cargando tus productos...</option>
+                        </select>
+                        <span class="cx-ayuda" id="ayudaGarantiaProducto"></span>
+                    </div>
+
+                    <div class="cx-campo">
+                        <label for="garantiaMotivo">Motivo *</label>
+                        <select id="garantiaMotivo" required></select>
+                    </div>
+
+                    <div class="cx-campo">
+                        <label for="garantiaEvidencia">Fotografía (opcional)</label>
+                        <input type="file" id="garantiaEvidencia" accept="image/jpeg,image/png,image/webp">
+                        <span class="cx-ayuda">JPG, PNG o WEBP, máximo 5 MB.</span>
+                    </div>
+
+                    <div class="cx-campo cx-campo-completo">
+                        <label for="garantiaDescripcion">Describe el problema *</label>
+                        <textarea id="garantiaDescripcion" maxlength="2000" required placeholder="¿Qué le ocurre al producto? ¿Desde cuándo?"></textarea>
+                    </div>
+
+                    <div class="cx-form-acciones">
+                        <button type="submit" class="cx-btn cx-btn-primario" id="btnEnviarGarantia">Enviar solicitud</button>
+                    </div>
+                </form>
+            </div>
+
+            <div class="cuenta-barra">
+                <h2>Mis solicitudes de garantía</h2>
+                <button type="button" class="cx-btn cx-btn-secundario" data-recargar="garantias">↻ Actualizar</button>
+            </div>
+
+            <div id="listaGarantias" class="cuenta-lista">
+                <div class="cx-cargando">Cargando tus garantías...</div>
+            </div>
+        </section>
+
+        <!-- MIS DEVOLUCIONES -->
+        <section class="cuenta-panel" id="panel-devoluciones" role="tabpanel" aria-labelledby="tab-devoluciones" hidden>
+            <div class="cuenta-tarjeta">
+                <h2>Solicitar devolución</h2>
+                <p class="cuenta-texto" id="textoPlazoDevolucion">
+                    Puedes solicitar la devolución de productos entregados.
+                </p>
+
+                <form id="formDevolucion" class="cx-form" novalidate>
+                    <div class="cx-campo cx-campo-completo">
+                        <label for="devolucionProducto">Pedido y producto *</label>
+                        <select id="devolucionProducto" required>
+                            <option value="">Cargando tus productos...</option>
+                        </select>
+                        <span class="cx-ayuda" id="ayudaDevolucionProducto"></span>
+                    </div>
+
+                    <div class="cx-campo">
+                        <label for="devolucionCantidad">Cantidad *</label>
+                        <input type="number" id="devolucionCantidad" min="1" step="1" value="1" required>
+                    </div>
+
+                    <div class="cx-campo">
+                        <label for="devolucionMotivo">Motivo *</label>
+                        <select id="devolucionMotivo" required></select>
+                    </div>
+
+                    <div class="cx-campo">
+                        <label for="devolucionPreferencia">Prefiero *</label>
+                        <select id="devolucionPreferencia" required>
+                            <option value="reembolso">Reembolso</option>
+                            <option value="reemplazo">Reemplazo del producto</option>
+                        </select>
+                    </div>
+
+                    <div class="cx-campo">
+                        <label for="devolucionEvidencia">Evidencia (opcional)</label>
+                        <input type="file" id="devolucionEvidencia" accept="image/jpeg,image/png,image/webp">
+                        <span class="cx-ayuda">JPG, PNG o WEBP, máximo 5 MB.</span>
+                    </div>
+
+                    <div class="cx-campo cx-campo-completo">
+                        <label for="devolucionDescripcion">Descripción *</label>
+                        <textarea id="devolucionDescripcion" maxlength="2000" required placeholder="Explica por qué deseas devolver el producto."></textarea>
+                    </div>
+
+                    <div class="cx-form-acciones">
+                        <button type="submit" class="cx-btn cx-btn-primario" id="btnEnviarDevolucion">Enviar solicitud</button>
+                    </div>
+                </form>
+            </div>
+
+            <div class="cuenta-barra">
+                <h2>Mis solicitudes de devolución</h2>
+                <button type="button" class="cx-btn cx-btn-secundario" data-recargar="devoluciones">↻ Actualizar</button>
+            </div>
+
+            <div id="listaDevoluciones" class="cuenta-lista">
+                <div class="cx-cargando">Cargando tus devoluciones...</div>
+            </div>
+        </section>
+
+    </main>
+
+    <footer class="cuenta-pie">CUBEX © 2026 · Gira, piensa y conquista</footer>
+
+    <script src="../js/config.js"></script>
+    <script src="../js/comun.js"></script>
+    <script src="../js/perfil.js"></script>
+
+</body>
+</html>

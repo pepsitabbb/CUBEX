@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Pruebas API - Microservicio Login</title>
+<style>
+  :root {
+    --bg: #0f172a; --panel: #1e293b; --panel2: #273449; --border: #334155;
+    --txt: #e2e8f0; --muted: #94a3b8; --accent: #38bdf8; --ok: #4ade80;
+    --err: #f87171; --warn: #fbbf24;
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; font-family: "Segoe UI", system-ui, sans-serif; background: var(--bg); color: var(--txt); }
+  header { padding: 16px 24px; background: var(--panel); border-bottom: 1px solid var(--border); display: flex; align-items: center; gap: 16px; flex-wrap: wrap; }
+  header h1 { font-size: 18px; margin: 0; }
+  header h1 span { color: var(--accent); }
+  .config { display: flex; gap: 8px; align-items: center; margin-left: auto; flex-wrap: wrap; }
+  main { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; padding: 16px 24px; max-width: 1400px; margin: 0 auto; }
+  @media (max-width: 900px) { main { grid-template-columns: 1fr; } }
+  section { background: var(--panel); border: 1px solid var(--border); border-radius: 10px; padding: 16px; }
+  section h2 { font-size: 14px; text-transform: uppercase; letter-spacing: 1px; color: var(--accent); margin: 0 0 12px; border-bottom: 1px solid var(--border); padding-bottom: 8px; }
+  label { display: block; font-size: 12px; color: var(--muted); margin: 8px 0 4px; }
+  input, textarea, select { width: 100%; background: var(--panel2); border: 1px solid var(--border); color: var(--txt); border-radius: 6px; padding: 8px 10px; font-size: 13px; font-family: Consolas, monospace; }
+  input:focus, textarea:focus { outline: none; border-color: var(--accent); }
+  textarea { min-height: 90px; resize: vertical; }
+  .fila { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 10px; }
+  button { background: var(--accent); color: #082f49; border: none; border-radius: 6px; padding: 8px 14px; font-size: 13px; font-weight: 600; cursor: pointer; transition: filter .15s; }
+  button:hover { filter: brightness(1.15); }
+  button:disabled { opacity: .5; cursor: wait; }
+  button.sec { background: var(--panel2); color: var(--txt); border: 1px solid var(--border); }
+  button.peligro { background: var(--err); color: #450a0a; }
+  .metodo { font-size: 11px; font-weight: 700; padding: 2px 6px; border-radius: 4px; margin-right: 6px; }
+  .m-get { background: #14532d; color: var(--ok); }
+  .m-post { background: #1e3a8a; color: #93c5fd; }
+  .ruta { font-family: Consolas, monospace; font-size: 12px; color: var(--muted); }
+  .bloque-endpoint { padding: 8px 0; border-bottom: 1px dashed var(--border); }
+  .bloque-endpoint:last-child { border-bottom: none; }
+  #salida { background: #0b1120; border: 1px solid var(--border); border-radius: 8px; padding: 12px; font-family: Consolas, monospace; font-size: 12.5px; white-space: pre-wrap; word-break: break-word; min-height: 200px; max-height: 520px; overflow: auto; margin: 0; }
+  .meta { display: flex; gap: 14px; font-size: 12px; color: var(--muted); margin-bottom: 8px; flex-wrap: wrap; align-items: center; }
+  .badge { padding: 2px 8px; border-radius: 999px; font-weight: 700; font-size: 11px; }
+  .b-2 { background: #14532d; color: var(--ok); } .b-4 { background: #713f12; color: var(--warn); }
+  .b-5 { background: #7f1d1d; color: var(--err); } .b-o { background: #1e293b; color: var(--muted); }
+  .token-info { font-size: 12px; color: var(--muted); margin-top: 6px; }
+  .ok { color: var(--ok); } .err { color: var(--err); }
+  #historial { list-style: none; padding: 0; margin: 0; font-size: 12px; max-height: 180px; overflow: auto; }
+  #historial li { padding: 5px 6px; border-bottom: 1px solid var(--border); display: flex; gap: 8px; align-items: center; cursor: pointer; }
+  #historial li:hover { background: var(--panel2); }
+  .full { grid-column: 1 / -1; }
+</style>
+</head>
+<body>
+
+<header>
+  <h1>&#9889; Pruebas de API — <span>microservicio-login</span></h1>
+  <div class="config">
+    <label style="margin:0">URL base</label>
+    <input id="baseUrl" value="http://localhost:3000" style="width:230px">
+  </div>
+</header>
+
+<main>
+
+  <!-- IZQUIERDA: peticiones -->
+  <div>
+    <section>
+      <h2>Sin autenticación</h2>
+
+      <div class="bloque-endpoint">
+        <span class="metodo m-get">GET</span><span class="ruta">/</span>
+        <div class="fila"><button onclick="get('/')">Probar raíz</button></div>
+      </div>
+
+      <div class="bloque-endpoint">
+        <span class="metodo m-get">GET</span><span class="ruta">/api/v1/estado</span>
+        <div class="fila"><button onclick="get('/api/v1/estado')">Probar estado</button></div>
+      </div>
+
+      <div class="bloque-endpoint">
+        <span class="metodo m-get">GET</span><span class="ruta">/api/v1/salud</span>
+        <div class="fila"><button onclick="get('/api/v1/salud')">Probar salud (health)</button></div>
+      </div>
+    </section>
+
+    <section style="margin-top:16px">
+      <h2>Registro</h2>
+      <span class="metodo m-post">POST</span><span class="ruta">/api/v1/auth/registro</span>
+      <label>nombreUsuario (3-60)</label>
+      <input id="regUsuario" placeholder="nuevo_usuario">
+      <label>contrasena (min. 8)</label>
+      <input id="regPass" type="password" placeholder="ClaveNueva123">
+      <label>email (opcional)</label>
+      <input id="regEmail" placeholder="nuevo@prueba.com">
+      <label>nombreCompleto (opcional)</label>
+      <input id="regNombre" placeholder="Cliente de Registro">
+      <div class="fila"><button onclick="registrar()">Registrar</button></div>
+    </section>
+
+    <section style="margin-top:16px">
+      <h2>Login</h2>
+      <span class="metodo m-post">POST</span><span class="ruta">/api/v1/auth/login</span>
+      <label>nombreUsuario</label>
+      <input id="loginUsuario" value="cliente">
+      <label>contrasena</label>
+      <input id="loginPass" type="password" value="ClaveDemo123">
+      <div class="fila">
+        <button onclick="login()">Iniciar sesión</button>
+        <button class="sec" onclick="rellenar('admin')">admin</button>
+        <button class="sec" onclick="rellenar('vendedor')">vendedor</button>
+        <button class="sec" onclick="rellenar('cliente')">cliente</button>
+        <button class="sec" onclick="rellenar('inactivo')">inactivo</button>
+      </div>
+      <div class="token-info">Usuarios demo: <code>admin</code>, <code>vendedor</code>, <code>cliente</code>, <code>inactivo</code> — clave <code>ClaveDemo123</code> (requiere <code>npm run db:usuarios</code>).</div>
+    </section>
+
+    <section style="margin-top:16px">
+      <h2>Con token (Bearer)</h2>
+      <label>Token JWT</label>
+      <textarea id="token" style="min-height:70px" placeholder="Pega aquí el token o inicia sesión..."></textarea>
+      <div class="token-info" id="tokenInfo">Sin token cargado.</div>
+      <div class="fila">
+        <button class="sec" onclick="parseToken()">Decodificar payload</button>
+        <button class="peligro" onclick="document.getElementById('token').value='';tokenInfo.textContent='Sin token cargado.'">Limpiar</button>
+      </div>
+
+      <div class="bloque-endpoint" style="margin-top:10px">
+        <span class="metodo m-get">GET</span><span class="ruta">/api/v1/auth/verificar</span>
+        <div class="fila"><button onclick="get('/api/v1/auth/verificar', true)">Verificar token</button></div>
+      </div>
+      <div class="bloque-endpoint">
+        <span class="metodo m-get">GET</span><span class="ruta">/api/v1/auth/perfil</span>
+        <div class="fila"><button onclick="get('/api/v1/auth/perfil', true)">Obtener perfil</button></div>
+      </div>
+      <div class="bloque-endpoint">
+        <span class="metodo m-get">GET</span><span class="ruta">/api/v1/auth/admin/panel</span>
+        <div class="fila"><button onclick="get('/api/v1/auth/admin/panel', true)">Panel admin (rol ADMIN)</button></div>
+      </div>
+      <div class="bloque-endpoint">
+        <span class="metodo m-get">GET</span><span class="ruta">ruta inexistente</span>
+        <div class="fila"><button class="sec" onclick="get('/api/v1/noexiste', true)">Probar error 404</button></div>
+      </div>
+    </section>
+  </div>
+
+  <!-- DERECHA: salida -->
+  <div>
+    <section>
+      <h2>Respuesta</h2>
+      <div class="meta" id="meta">
+        <span>Sin peticiones aún.</span>
+      </div>
+      <pre id="salida">{ "esperando": "peticiones..." }</pre>
+    </section>
+
+    <section style="margin-top:16px">
+      <h2>Historial (clic para ver)</h2>
+      <ul id="historial"></ul>
+    </section>
+  </div>
+
+</main>
+
+<script>
+const $ = id => document.getElementById(id);
+const base = () => $('baseUrl').value.replace(/\/+$/, '');
+let ultimo = null;
+
+function guardarToken(t) {
+  $('token').value = t || '';
+  actualizarInfoToken();
+}
+function actualizarInfoToken() {
+  const t = $('token').value.trim();
+  if (!t) { $('tokenInfo').textContent = 'Sin token cargado.'; return; }
+  try {
+    const p = JSON.parse(atob(t.split('.')[1].replace(/-/g,'+').replace(/_/g,'/')));
+    const exp = p.exp ? new Date(p.exp * 1000) : null;
+    const vencido = exp && exp < new Date();
+    $('tokenInfo').innerHTML = 'Payload: <b>' + esc(p.nombreUsuario||'?') + '</b> | rol <b>' + esc(p.rol||'?') +
+      '</b>' + (exp ? ' | expira: <span class="' + (vencido?'err':'ok') + '">' + exp.toLocaleString() + (vencido?' (VENCIDO)':'') + '</span>' : '');
+  } catch { $('tokenInfo').textContent = 'Token no decodificable (formato JWT inválido).'; }
+}
+$('token').addEventListener('input', actualizarInfoToken);
+
+function parseToken() {
+  const t = $('token').value.trim();
+  if (!t) return mostrar({aviso:'No hay token'}, {}, 0, 0, '—');
+  try {
+    const [h,p,s] = t.split('.');
+    mostrar({
+      header: JSON.parse(atob(h.replace(/-/g,'+').replace(/_/g,'/'))),
+      payload: JSON.parse(atob(p.replace(/-/g,'+').replace(/_/g,'/'))),
+      firma: s
+    }, {metodo:'DECODE', ruta:'token local'}, 0, 0, '—');
+  } catch(e) { mostrar({error:'No se pudo decodificar: '+e.message}, {metodo:'DECODE', ruta:'token local'}, 0, 0, '—'); }
+}
+
+function esc(s){ return String(s).replace(/[<>&]/g, c => ({'<':'&lt;','>':'&gt;','&':'&amp;'}[c])); }
+
+function mostrar(datos, req, status, ms, metodo) {
+  ultimo = { datos, req, status, ms, metodo };
+  const badge = status ? (status<300?'b-2':status<500?'b-4':'b-5') : 'b-o';
+  $('meta').innerHTML =
+    '<span class="badge ' + badge + '">' + (status || '—') + '</span>' +
+    '<span>' + esc(metodo) + ' ' + esc(req.ruta || '') + '</span>' +
+    (ms ? '<span>' + ms + ' ms</span>' : '') +
+    '<span>' + new Date().toLocaleTimeString() + '</span>';
+  $('salida').textContent = typeof datos === 'string' ? datos : JSON.stringify(datos, null, 2);
+  agregarHistorial(metodo, req.ruta || '', status, ms);
+}
+
+function agregarHistorial(metodo, ruta, status, ms) {
+  const li = document.createElement('li');
+  const clase = status<300 ? 'ok' : 'err';
+  li.innerHTML = '<b>' + esc(metodo.split(' ')[0]) + '</b> <span>' + esc(ruta) + '</span> <span class="' + clase + '" style="margin-left:auto">' + status + '</span> <span style="color:var(--muted)">' + ms + 'ms</span>';
+  li.onclick = () => { if (ultimo) mostrar(ultimo.datos, ultimo.req, ultimo.status, ultimo.ms, ultimo.metodo); };
+  const ul = $('historial');
+  ul.prepend(li);
+  while (ul.children.length > 30) ul.removeChild(ul.lastChild);
+}
+
+async function peticion(metodo, ruta, cuerpo, conAuth) {
+  const btn = event && event.target; if (btn) btn.disabled = true;
+  const headers = {};
+  if (cuerpo) headers['Content-Type'] = 'application/json';
+  if (conAuth) {
+    const t = $('token').value.trim();
+    if (!t) {
+      mostrar({exito:false, codigo:'SIN_TOKEN', mensaje:'No hay token. Inicia sesión o pega uno.'}, {metodo, ruta}, 0, 0, metodo);
+      if (btn) btn.disabled = false;
+      return;
+    }
+    headers['Authorization'] = 'Bearer ' + t;
+  }
+  const t0 = performance.now();
+  try {
+    const res = await fetch(base() + ruta, {
+      method: metodo,
+      headers,
+      body: cuerpo ? JSON.stringify(cuerpo) : undefined
+    });
+    const ms = Math.round(performance.now() - t0);
+    let data;
+    try { data = await res.json(); } catch { data = { aviso: 'Respuesta no JSON', texto: (await res.text()).slice(0, 500) }; }
+    mostrar(data, { metodo, ruta, cuerpo: cuerpo || null, headers }, res.status, ms, metodo.split(' ')[0]);
+    return data;
+  } catch (e) {
+    const ms = Math.round(performance.now() - t0);
+    mostrar({ error: 'Fallo de red/CORS: ' + e.message, ayuda: '¿Está corriendo el servidor en ' + base() + '?' },
+      { metodo, ruta }, 0, ms, metodo.split(' ')[0]);
+  } finally { if (btn) btn.disabled = false; }
+}
+
+const get = (ruta, auth) => peticion('GET', ruta, null, auth);
+
+async function login() {
+  const d = await peticion('POST', '/api/v1/auth/login',
+    { nombreUsuario: $('loginUsuario').value.trim(), contrasena: $('loginPass').value }, false);
+  if (d && d.exito && d.datos && d.datos.token) { guardarToken(d.datos.token); }
+}
+
+async function registrar() {
+  const cuerpo = {
+    nombreUsuario: $('regUsuario').value.trim(),
+    contrasena: $('regPass').value,
+    email: $('regEmail').value.trim() || undefined,
+    nombreCompleto: $('regNombre').value.trim() || undefined
+  };
+  const d = await peticion('POST', '/api/v1/auth/registro', cuerpo, false);
+  if (d && d.exito && d.datos && d.datos.token) { guardarToken(d.datos.token); }
+}
+
+function rellenar(u) {
+  $('loginUsuario').value = u;
+  $('loginPass').value = 'ClaveDemo123';
+}
+
+actualizarInfoToken();
+</script>
+</body>
+</html>

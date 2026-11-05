@@ -1,0 +1,606 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>CUBEX | Gira, piensa y conquista</title>
+
+    <link rel="stylesheet" href="../css/styles.css">
+    <link rel="stylesheet" href="../css/carrito.css">
+    <link rel="stylesheet" href="../css/comun.css">
+</head>
+
+<body>
+
+    <!-- ENCABEZADO -->
+    <header class="encabezado">
+
+        <a href="index.html" class="logo">
+            <span class="logo-nombre">CUBEX</span>
+            <span class="eslogan">Gira, piensa y conquista</span>
+        </a>
+
+        <!-- BUSCADOR -->
+        <div class="buscador">
+            <input
+                type="text"
+                id="buscarProducto"
+                placeholder="Buscar cubos..."
+                aria-label="Buscar cubos"
+            >
+
+            <button type="button" id="btnBuscar" aria-label="Buscar">
+                ⌕
+            </button>
+        </div>
+
+        <!-- OPCIONES DE CUENTA -->
+        <div class="cuenta" id="cuentaUsuario">
+
+            <!-- VISITANTES -->
+            <div id="opcionesInvitado">
+                <a href="login.html" id="iniciarSesion">
+                    Iniciar sesión
+                </a>
+
+                <a href="registro.html" id="registrarse" class="btn-registro">
+                    Registrarse
+                </a>
+            </div>
+
+            <!-- USUARIOS AUTENTICADOS -->
+            <div id="opcionesUsuario" hidden>
+
+                <span class="nombre-usuario" id="nombreUsuario">
+                    Usuario
+                </span>
+
+                <a href="perfil.html" class="btn-mi-cuenta">
+                    Mi cuenta
+                </a>
+
+                <button type="button" id="cerrarSesion">
+                    Cerrar sesión
+                </button>
+
+            </div>
+
+            <!-- CARRITO -->
+            <button
+                class="btn-carrito"
+                id="abrirCarrito"
+                type="button"
+                aria-label="Abrir carrito"
+            >
+                🛒 <span id="contadorCarrito">0</span>
+            </button>
+
+        </div>
+
+    </header>
+
+
+    <!-- MENÚ DE NAVEGACIÓN -->
+    <nav class="menu" aria-label="Navegación principal">
+
+        <a href="index.html" class="activo">Inicio</a>
+        <a href="#productos">Cubos</a>
+        <a href="#contacto">Contacto</a>
+
+    </nav>
+
+
+    <!-- CONTENIDO PRINCIPAL -->
+    <main>
+
+        <!-- PRESENTACIÓN -->
+        <section class="hero" id="inicio">
+
+            <div class="hero-contenido">
+
+                <span class="etiqueta">DESAFÍA TU MENTE</span>
+
+                <h1>
+                    Gira, piensa y <span>conquista.</span>
+                </h1>
+
+                <p>
+                    Descubre nuestra colección de cubos y rompecabezas.
+                    Pon a prueba tu habilidad, mejora tu concentración
+                    y encuentra tu próximo desafío.
+                </p>
+
+                <a href="#productos" class="btn-principal">
+                    Explorar productos
+                </a>
+
+            </div>
+
+            <div class="hero-figura" aria-hidden="true">
+
+                <div class="cubo">
+                    <span></span><span></span><span></span>
+                    <span></span><span></span><span></span>
+                    <span></span><span></span><span></span>
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- CATÁLOGO DE PRODUCTOS -->
+        <section class="productos" id="productos">
+
+            <div class="titulo-seccion">
+
+                <span class="etiqueta">NUESTRA COLECCIÓN</span>
+
+                <h2>Encuentra tu próximo desafío</h2>
+
+                <p>
+                    Explora nuestros cubos disponibles.
+                </p>
+
+            </div>
+
+            <!-- PRODUCTOS CARGADOS DESDE EL INVENTARIO -->
+            <div class="productos-grid" id="catalogoProductos">
+
+                <p class="mensaje-catalogo">
+                    Cargando productos...
+                </p>
+
+            </div>
+
+        </section>
+
+
+        <!-- DETALLE DEL PRODUCTO -->
+        <section id="detalleProducto" class="detalle-producto" hidden>
+
+            <!-- BOTÓN PARA REGRESAR -->
+            <button
+                type="button"
+                id="btnRegresarCatalogo"
+                class="btn-regresar-catalogo"
+            >
+                ← Regresar al catálogo
+            </button>
+
+
+            <div class="detalle-contenido">
+
+                <!-- COLUMNA IZQUIERDA: PRODUCTO -->
+                <section class="detalle-producto-principal">
+
+                    <div class="detalle-producto-imagen">
+
+                        <img
+                            id="detalleImagen"
+                            src=""
+                            alt="Imagen del producto"
+                        >
+
+                    </div>
+
+                    <div class="detalle-producto-info">
+
+                        <span class="etiqueta">
+                            PRODUCTO CUBEX
+                        </span>
+
+                        <h2 id="detalleNombre"></h2>
+
+                        <p id="detalleDescripcion"></p>
+
+                        <strong
+                            id="detallePrecio"
+                            class="detalle-precio"
+                        ></strong>
+
+                        <div id="detalleExistencias" aria-live="polite"></div>
+
+                        <button
+                            type="button"
+                            id="btnAgregarDetalle"
+                        >
+                            Agregar al carrito
+                        </button>
+
+                        <p id="mensajeCarrito"></p>
+
+                    </div>
+
+                </section>
+
+
+                <!-- COLUMNA DERECHA: RESEÑAS -->
+                <section class="seccion-resenas">
+
+                    <div class="titulo-seccion">
+
+                        <span class="etiqueta">
+                            OPINIONES DE CLIENTES
+                        </span>
+
+                        <h2>Comentarios y reseñas</h2>
+
+                        <p>
+                            Conoce las experiencias de otros compradores.
+                        </p>
+
+                    </div>
+
+
+                    <!-- LISTA DE RESEÑAS -->
+                    <div
+                        id="listaResenas"
+                        class="contenedor-resenas"
+                    >
+
+                        <p class="mensaje-catalogo">
+                            Las reseñas de este producto aparecerán aquí.
+                        </p>
+
+                    </div>
+
+
+                    <!-- FORMULARIO DE RESEÑAS -->
+                    <form id="formularioResena">
+
+                        <h3>Escribe tu opinión</h3>
+
+                        <label for="calificacionResena">
+                            Calificación
+                        </label>
+
+                        <select id="calificacionResena" required>
+
+                            <option value="5">
+                                ★★★★★ - Excelente
+                            </option>
+
+                            <option value="4">
+                                ★★★★ - Muy bueno
+                            </option>
+
+                            <option value="3">
+                                ★★★ - Bueno
+                            </option>
+
+                            <option value="2">
+                                ★★ - Regular
+                            </option>
+
+                            <option value="1">
+                                ★ - Malo
+                            </option>
+
+                        </select>
+
+
+                        <label for="comentarioResena">
+                            Comentario
+                        </label>
+
+                        <textarea
+                            id="comentarioResena"
+                            placeholder="Comparte tu experiencia con este producto..."
+                            required
+                        ></textarea>
+
+
+                        <button
+                            type="submit"
+                            class="btn-enviar-resena"
+                        >
+                            Publicar comentario
+                        </button>
+
+                        <p
+                            id="mensajeResena"
+                            class="mensaje-resena"
+                            role="status"
+                            aria-live="polite"
+                        ></p>
+
+                    </form>
+
+                </section>
+
+            </div>
+
+        </section>
+
+    </main>
+
+
+
+    
+<!-- SECCIÓN DE CONTACTO -->
+
+<section id="contacto" class="contacto-section">
+    <div class="contacto-container">
+
+        <div class="contacto-encabezado">
+            <span class="contacto-etiqueta">ESTAMOS PARA AYUDARTE</span>
+            <h2>Contáctanos</h2>
+            <p>
+                ¿Tienes dudas sobre nuestros cubos?
+                Escríbenos y con gusto te atenderemos.
+            </p>
+        </div>
+
+        <div class="contacto-contenido">
+
+            <!-- Información de contacto -->
+            <div class="contacto-info">
+                <h3>Hablemos de tu próximo desafío</h3>
+
+                <p>
+                    En CUBEX queremos ofrecerte la mejor experiencia.
+                    Estamos disponibles para resolver tus preguntas,
+                    comentarios y solicitudes.
+                </p>
+
+                <div class="contacto-dato">
+                    <div class="contacto-icono">✉</div>
+                    <div>
+                        <h4>Correo electrónico</h4>
+                        <a href="mailto:cubexshop2@gmail.com">
+                            cubexshop2@gmail.com
+                        </a>
+                    </div>
+                </div>
+
+                <div class="contacto-dato">
+                    <div class="contacto-icono">💬</div>
+                    <div>
+                        <h4>Atención al cliente</h4>
+                        <p>Estamos para ayudarte con tus compras.</p>
+                    </div>
+                </div>
+
+                <div class="contacto-mensaje">
+                    <span>¿Listo para resolver tus dudas?</span>
+                    <p>Tu próximo desafío comienza con un mensaje.</p>
+                </div>
+            </div>
+
+            <!-- Formulario -->
+            <div class="contacto-formulario">
+                <h3>Envíanos un mensaje</h3>
+                <p>Completa los siguientes campos.</p>
+
+
+                <form id="formularioContacto">
+
+                    <div class="campo-contacto">
+                        <label for="contactoNombre">Nombre</label>
+                        <input
+                            type="text"
+                            id="contactoNombre"
+                            name="nombre"
+                            placeholder="Tu nombre"
+                            required
+                        >
+                    </div>
+
+                    <div class="campo-contacto">
+                        <label for="contactoAsunto">Asunto</label>
+                        <input
+                            type="text"
+                            id="contactoAsunto"
+                            name="asunto"
+                            placeholder="¿Sobre qué trata tu consulta?"
+                            required
+                        >
+                    </div>
+
+                    <div class="campo-contacto">
+                        <label for="contactoMensaje">Mensaje</label>
+                        <textarea
+                            id="contactoMensaje"
+                            name="mensaje"
+                            rows="5"
+                            placeholder="Escribe aquí tu mensaje..."
+                            required
+                        ></textarea>
+                    </div>
+
+                    <p id="estadoContacto" class="contacto-nota">
+                        Tu correo registrado se utilizará automáticamente.
+                    </p>
+
+                    <button type="submit" class="btn-contacto">
+                        Enviar mensaje <span>➜</span>
+                    </button>
+                    <div id="mensajeConfirmacion" class="mensaje-confirmacion"></div>
+
+                </form>
+
+            </div>
+
+        </div>
+    </div>
+</section>
+
+
+<!-- PIE DE PÁGINA -->
+    <footer class="footer">
+        <div>
+            <h2>CUBEX</h2>
+            <p>Gira, piensa y conquista.</p>
+        </div>
+
+        <div class="footer-info">
+            <p>Tu próximo desafío comienza aquí.</p>
+            <p>&copy; 2026 CUBEX. Todos los derechos reservados.</p>
+        </div>
+    </footer>
+
+
+
+
+
+
+<!-- CONTROL DE SESIÓN DEL CLIENTE -->
+<script src="../js/config.js"></script>
+<script src="../js/comun.js"></script>
+<script>
+    (() => {
+
+        const token = sessionStorage.getItem("cubex_token");
+
+        const usuarioGuardado =
+            sessionStorage.getItem("cubex_usuario");
+
+        const opcionesInvitado =
+            document.getElementById("opcionesInvitado");
+
+        const opcionesUsuario =
+            document.getElementById("opcionesUsuario");
+
+        const nombreUsuario =
+            document.getElementById("nombreUsuario");
+
+        const botonCerrarSesion =
+            document.getElementById("cerrarSesion");
+
+        let usuario = null;
+
+        try {
+            usuario = usuarioGuardado
+                ? JSON.parse(usuarioGuardado)
+                : null;
+        } catch {
+            sessionStorage.removeItem("cubex_usuario");
+        }
+
+        if (token && usuario) {
+
+            opcionesInvitado.hidden = true;
+            opcionesUsuario.hidden = false;
+
+            nombreUsuario.textContent =
+                usuario.nombreUsuario || "Cliente";
+
+        } else {
+
+            opcionesInvitado.hidden = false;
+            opcionesUsuario.hidden = true;
+
+        }
+
+        if (botonCerrarSesion) {
+
+            botonCerrarSesion.type = "button";
+
+            botonCerrarSesion.addEventListener("click", (evento) => {
+
+                evento.preventDefault();
+
+                const modal = document.createElement("div");
+
+                modal.className = "modal-cerrar-sesion";
+
+                modal.innerHTML = `
+                    <div class="contenido-cerrar-sesion">
+
+                        <div class="icono-cerrar-sesion">
+                            ↪
+                        </div>
+
+                        <h2>¿Cerrar sesión?</h2>
+
+                        <p>
+                            ¿Estás seguro de que deseas cerrar
+                            tu sesión en CUBEX?
+                        </p>
+
+                        <div class="acciones-cerrar-sesion">
+
+                            <button
+                                type="button"
+                                id="cancelarCerrarSesion">
+                                Cancelar
+                            </button>
+
+                            <button
+                                type="button"
+                                id="confirmarCerrarSesion">
+                                Sí, cerrar sesión
+                            </button>
+
+                        </div>
+
+                    </div>
+                `;
+
+                document.body.appendChild(modal);
+
+                document.getElementById("cancelarCerrarSesion")
+                    .addEventListener("click", () => {
+                        modal.remove();
+                    });
+
+                document.getElementById("confirmarCerrarSesion")
+                    .addEventListener("click", () => {
+
+                        sessionStorage.removeItem("cubex_token");
+                        sessionStorage.removeItem("cubex_usuario");
+
+                        window.location.href = "login.html";
+
+                    });
+
+            });
+
+        }
+
+    })();
+</script>
+
+
+<!-- CATÁLOGO DINÁMICO Y DETALLE -->
+<script src="../js/main.js"></script>
+
+<!-- CONTENEDOR DEL CARRITO -->
+<div id="contenedorCarrito"></div>
+
+<!-- CARGAR PRIMERO EL HTML DEL CARRITO -->
+<script>
+(async function cargarCarritoHTML() {
+    const contenedor = document.getElementById("contenedorCarrito");
+
+    try {
+        const respuesta = await fetch("carrito.html");
+
+        if (!respuesta.ok) {
+            throw new Error("No se encontró carrito.html: " + respuesta.status);
+        }
+
+        const html = await respuesta.text();
+        contenedor.innerHTML = html;
+
+        console.log("HTML del carrito cargado correctamente.");
+        console.log("Panel encontrado:", !!document.getElementById("panelCarrito"));
+
+        // Ejecutar carrito.js después de insertar el HTML
+        const scriptCarrito = document.createElement("script");
+        scriptCarrito.src = "../js/carrito.js";
+
+        document.body.appendChild(scriptCarrito);
+
+    } catch (error) {
+        console.error("Error al cargar el carrito:", error);
+    }
+})();
+</script>
+<!-- carrito.js se carga una sola vez, después de insertar carrito.html -->
+</body>
+
+</html>

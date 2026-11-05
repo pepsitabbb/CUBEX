@@ -1,0 +1,676 @@
+
+/* ========================================
+   CUBEX | ESTILOS DE PAGO
+   Tema oscuro + amarillo
+======================================== */
+
+:root {
+    --fondo: #121212;
+    --panel: #1e1e1e;
+    --panel-secundario: #252525;
+    --campo: #292929;
+    --amarillo: #f5c518;
+    --amarillo-hover: #dcae08;
+    --texto: #f1f1f1;
+    --texto-secundario: #a7a7a7;
+    --borde: #363636;
+    --verde: #35c98a;
+    --rojo: #ff5b5b;
+    --radio: 14px;
+    --sombra: 0 12px 35px rgba(0, 0, 0, .20);
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    min-height: 100vh;
+    background: var(--fondo);
+    color: var(--texto);
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+/* ========================================
+   ENCABEZADO
+======================================== */
+
+.encabezado-pago {
+    width: 100%;
+    min-height: 85px;
+    padding: 18px 6%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 25px;
+    background: #181818;
+    border-bottom: 1px solid var(--borde);
+}
+
+.logo-cubex {
+    color: var(--amarillo);
+    text-decoration: none;
+    font-size: 27px;
+    font-weight: 900;
+    letter-spacing: 3px;
+    transition: .2s ease;
+}
+
+.logo-cubex:hover {
+    color: var(--amarillo-hover);
+}
+
+.encabezado-pago > span {
+    color: var(--texto-secundario);
+    font-size: 13px;
+}
+
+/* ========================================
+   CONTENEDOR PRINCIPAL
+======================================== */
+
+.contenedor-pago {
+    width: 90%;
+    max-width: 1350px;
+    margin: 45px auto;
+    display: grid;
+    grid-template-columns: minmax(0, 1.7fr) minmax(300px, .8fr);
+    align-items: start;
+    gap: 26px;
+}
+
+/* ========================================
+   PANEL DE PAGO
+======================================== */
+
+.panel-pago {
+    min-width: 0;
+    padding: 30px;
+    background: var(--panel);
+    border: 1px solid var(--borde);
+    border-radius: 17px;
+    box-shadow: var(--sombra);
+}
+
+.encabezado-seccion {
+    margin-bottom: 28px;
+}
+
+.encabezado-seccion h1 {
+    font-size: 30px;
+    font-weight: 800;
+    margin-bottom: 9px;
+}
+
+.encabezado-seccion p {
+    color: var(--texto-secundario);
+    font-size: 14px;
+    line-height: 1.6;
+}
+
+#seccionTarjeta h2 {
+    font-size: 20px;
+    margin-bottom: 8px;
+}
+
+#seccionTarjeta > p {
+    color: var(--texto-secundario);
+    font-size: 13px;
+    margin-bottom: 25px;
+}
+
+/* ========================================
+   MENSAJES
+======================================== */
+
+.mensaje {
+    display: none;
+    padding: 14px 16px;
+    margin-bottom: 20px;
+    border-radius: 9px;
+    font-size: 13px;
+    line-height: 1.6;
+}
+
+.mensaje.exito {
+    display: block;
+    color: var(--verde);
+    background: rgba(53, 201, 138, .12);
+    border: 1px solid rgba(53, 201, 138, .35);
+}
+
+.mensaje.error {
+    display: block;
+    color: var(--rojo);
+    background: rgba(255, 91, 91, .12);
+    border: 1px solid rgba(255, 91, 91, .35);
+}
+
+/* ========================================
+   TARJETAS GUARDADAS
+======================================== */
+
+#contenedorTarjetas {
+    margin-bottom: 22px;
+}
+
+#contenedorTarjetas[hidden] {
+    display: none !important;
+}
+
+#contenedorTarjetas > label {
+    display: block;
+    margin-bottom: 10px;
+    font-size: 13px;
+    font-weight: bold;
+}
+
+.fila-tarjetas {
+    display: flex;
+    align-items: center;
+    gap: 11px;
+}
+
+.fila-tarjetas select {
+    flex: 1;
+    min-width: 0;
+    height: 49px;
+    padding: 0 14px;
+    color: var(--texto);
+    background: var(--campo);
+    border: 1px solid var(--borde);
+    border-radius: 9px;
+    outline: none;
+    font-size: 13px;
+}
+
+#btnNuevaTarjeta {
+    min-height: 49px;
+    padding: 0 17px;
+    color: var(--amarillo);
+    background: transparent;
+    border: 1px solid var(--amarillo);
+    border-radius: 9px;
+    cursor: pointer;
+    font-size: 12px;
+    font-weight: bold;
+    transition: .2s ease;
+}
+
+#btnNuevaTarjeta:hover {
+    background: rgba(245, 197, 24, .10);
+}
+
+/* ========================================
+   FORMULARIO DE TARJETA
+======================================== */
+
+#formTarjeta {
+    width: 100%;
+}
+
+.campo {
+    display: flex;
+    flex-direction: column;
+    gap: 9px;
+    margin-bottom: 20px;
+    min-width: 0;
+}
+
+.campo label {
+    color: var(--texto);
+    font-size: 13px;
+    font-weight: bold;
+}
+
+.campo input,
+.campo select {
+    width: 100%;
+    height: 51px;
+    padding: 0 14px;
+    color: var(--texto);
+    background: var(--campo);
+    border: 1px solid var(--borde);
+    border-radius: 9px;
+    outline: none;
+    font-family: inherit;
+    font-size: 14px;
+    transition: .2s ease;
+}
+
+.campo input::placeholder {
+    color: #777;
+}
+
+.campo input:focus,
+.campo select:focus {
+    border-color: var(--amarillo);
+    box-shadow: 0 0 0 3px rgba(245, 197, 24, .10);
+}
+
+.campo select option {
+    background: var(--campo);
+    color: var(--texto);
+}
+
+/* ========================================
+   FILA DE CAMPOS
+======================================== */
+
+.fila-campos {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 14px;
+}
+
+.fila-campos .campo {
+    min-width: 0;
+}
+
+/* ========================================
+   AVISO DE SEGURIDAD
+======================================== */
+
+.aviso-seguridad {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    margin: 5px 0 20px;
+    color: var(--texto-secundario);
+    font-size: 12px;
+    line-height: 1.7;
+}
+
+.aviso-seguridad i {
+    color: var(--verde);
+    font-size: 16px;
+    margin-top: 2px;
+}
+
+/* ========================================
+   GUARDAR TARJETA
+======================================== */
+
+.opcion-guardar {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 22px;
+    color: var(--texto-secundario);
+    font-size: 13px;
+    cursor: pointer;
+}
+
+.opcion-guardar input {
+    width: 17px;
+    height: 17px;
+    accent-color: var(--amarillo);
+    cursor: pointer;
+}
+
+/* ========================================
+   BOTÓN PAGAR
+======================================== */
+
+.btn-pagar {
+    width: 100%;
+    min-height: 53px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 11px;
+    padding: 12px 20px;
+    background: var(--amarillo);
+    border: none;
+    border-radius: 10px;
+    color: #171717;
+    font-size: 15px;
+    font-weight: 800;
+    cursor: pointer;
+    transition: .25s ease;
+}
+
+.btn-pagar:hover {
+    background: var(--amarillo-hover);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 18px rgba(245, 197, 24, .15);
+}
+
+.btn-pagar:disabled {
+    opacity: .6;
+    cursor: not-allowed;
+    transform: none;
+    box-shadow: none;
+}
+
+.btn-pagar i {
+    font-size: 14px;
+}
+
+/* ========================================
+   RESUMEN DE COMPRA
+======================================== */
+
+.resumen-compra {
+    position: sticky;
+    top: 25px;
+    padding: 27px;
+    background: var(--panel);
+    border: 1px solid var(--borde);
+    border-radius: 17px;
+    box-shadow: var(--sombra);
+}
+
+.resumen-compra h2 {
+    margin-bottom: 25px;
+    font-size: 20px;
+}
+
+.fila-resumen {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 15px;
+    margin-bottom: 20px;
+    color: var(--texto-secundario);
+    font-size: 13px;
+}
+
+.fila-resumen strong {
+    color: var(--texto);
+    font-size: 13px;
+    text-align: right;
+}
+
+.resumen-compra hr {
+    height: 1px;
+    margin: 23px 0;
+    background: var(--borde);
+    border: none;
+}
+
+.fila-resumen.total {
+    margin-bottom: 22px;
+}
+
+.fila-resumen.total > strong:first-child {
+    font-size: 16px;
+}
+
+.fila-resumen.total > strong:last-child {
+    color: var(--amarillo);
+    font-size: 25px;
+}
+
+.nota-resumen {
+    display: flex;
+    align-items: flex-start;
+    gap: 9px;
+    color: var(--texto-secundario);
+    font-size: 12px;
+    line-height: 1.7;
+}
+
+.nota-resumen i {
+    color: var(--amarillo);
+    margin-top: 3px;
+}
+
+/* ========================================
+   AYUDA
+======================================== */
+
+.ayuda-pago {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    margin-top: 30px;
+    padding: 17px;
+    background: var(--panel-secundario);
+    border-radius: 10px;
+}
+
+.ayuda-pago > i {
+    color: var(--amarillo);
+    font-size: 24px;
+}
+
+.ayuda-pago div {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.ayuda-pago strong {
+    font-size: 13px;
+}
+
+.ayuda-pago p {
+    color: var(--texto-secundario);
+    font-size: 11px;
+}
+
+/* ========================================
+   RESULTADO DEL PAGO
+======================================== */
+
+.resultado-pago {
+    padding: 35px 20px;
+    text-align: center;
+    background: rgba(53, 201, 138, .06);
+    border: 1px solid rgba(53, 201, 138, .25);
+    border-radius: 13px;
+}
+
+.resultado-pago[hidden] {
+    display: none !important;
+}
+
+.icono-exito {
+    width: 75px;
+    height: 75px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0 auto 22px;
+    background: rgba(53, 201, 138, .12);
+    border-radius: 50%;
+}
+
+.icono-exito i {
+    color: var(--verde);
+    font-size: 39px;
+}
+
+.resultado-pago h2 {
+    margin-bottom: 12px;
+    color: var(--verde);
+    font-size: 23px;
+}
+
+.resultado-pago p {
+    margin-bottom: 12px;
+    color: var(--texto-secundario);
+    font-size: 14px;
+    line-height: 1.7;
+}
+
+#folioPedido {
+    color: var(--texto);
+    font-weight: bold;
+    font-size: 15px;
+    margin: 20px 0;
+}
+
+#btnDescargarTicket {
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    min-height: 48px;
+    padding: 0 23px;
+    margin-top: 10px;
+    color: #171717;
+    background: var(--amarillo);
+    border: none;
+    border-radius: 9px;
+    font-size: 13px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: .2s ease;
+}
+
+#btnDescargarTicket:hover {
+    background: var(--amarillo-hover);
+    transform: translateY(-2px);
+}
+
+/* ========================================
+   ELEMENTOS OCULTOS
+======================================== */
+
+[hidden] {
+    display: none !important;
+}
+
+/* ========================================
+   RESPONSIVE
+======================================== */
+
+@media (max-width: 950px) {
+    .contenedor-pago {
+        grid-template-columns: 1fr;
+        max-width: 750px;
+    }
+
+    .resumen-compra {
+        position: static;
+    }
+}
+
+@media (max-width: 650px) {
+    .encabezado-pago {
+        padding: 17px 5%;
+    }
+
+    .logo-cubex {
+        font-size: 23px;
+    }
+
+    .contenedor-pago {
+        width: 92%;
+        margin: 28px auto;
+        gap: 18px;
+    }
+
+    .panel-pago,
+    .resumen-compra {
+        padding: 20px;
+    }
+
+    .encabezado-seccion h1 {
+        font-size: 25px;
+    }
+
+    .fila-campos {
+        grid-template-columns: 1fr 1fr;
+        gap: 12px;
+    }
+
+    .fila-campos .campo:last-child {
+        grid-column: 1 / -1;
+    }
+
+    .fila-tarjetas {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    #btnNuevaTarjeta {
+        width: 100%;
+    }
+
+    .resultado-pago {
+        padding: 27px 15px;
+    }
+}
+
+@media (max-width: 380px) {
+    .encabezado-pago > span {
+        font-size: 11px;
+    }
+
+    .fila-campos {
+        grid-template-columns: 1fr;
+    }
+
+    .fila-campos .campo:last-child {
+        grid-column: auto;
+    }
+
+    .fila-resumen.total > strong:last-child {
+        font-size: 21px;
+    }
+}
+/* BOTÓN PARA DESCARGAR TICKET */
+
+.contenedor-ticket {
+    margin-top: 22px;
+    padding-top: 20px;
+    border-top: 1px solid #383838;
+}
+
+.contenedor-ticket[hidden] {
+    display: none;
+}
+
+.btn-descargar-ticket {
+    width: 100%;
+    min-height: 50px;
+    padding: 13px 18px;
+    border: none;
+    border-radius: 10px;
+    background: #ffca05;
+    color: #171717;
+    font-size: 15px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: .2s ease;
+}
+
+.btn-descargar-ticket:hover {
+    background: #eab900;
+    transform: translateY(-2px);
+}
+
+.contenedor-ticket p {
+    margin-top: 10px;
+    color: #aaa;
+    font-size: 12px;
+    text-align: center;
+}
+
+/* Botón para regresar al inicio */
+.btn-regresar {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    margin-top: 15px;
+    padding: 13px 24px;
+    background: transparent;
+    color: #E6B800;
+    border: 1px solid #E6B800;
+    border-radius: 10px;
+    font-weight: 600;
+    text-decoration: none;
+    transition: all 0.3s ease;
+}
+
+.btn-regresar:hover {
+    background: #E6B800;
+    color: #111;
+    transform: translateY(-2px);
+}

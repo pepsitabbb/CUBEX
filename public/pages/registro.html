@@ -1,0 +1,168 @@
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Crear cuenta | CUBEX</title>
+    <link rel="stylesheet" href="../css/registro.css">
+</head>
+<body>
+    <main class="contenedor">
+        <a href="index.html" class="logo">CUBEX</a>
+        <p class="eslogan">El reto está en tus manos</p>
+
+        <section class="tarjeta">
+            <h1>Crea tu cuenta</h1>
+
+            <p class="descripcion">
+                Regístrate para disfrutar de CUBEX.
+            </p>
+
+            <form id="formulario-registro">
+
+                <!-- Nombre de usuario -->
+                <div class="campo">
+                    <label for="nombreUsuario">Nombre de usuario</label>
+                    <input
+                        type="text"
+                        id="nombreUsuario"
+                        name="nombreUsuario"
+                        placeholder="Elige un nombre de usuario"
+                        minlength="3"
+                        maxlength="60"
+                        required
+                    >
+                </div>
+
+                <!-- Nombre completo -->
+                <div class="campo">
+                    <label for="nombre">Nombre completo</label>
+                    <input
+                        type="text"
+                        id="nombre"
+                        name="nombreCompleto"
+                        placeholder="Tu nombre completo"
+                        minlength="2"
+                        maxlength="150"
+                        required
+                    >
+                </div>
+
+                <!-- Correo electrónico -->
+                <div class="campo">
+                    <label for="correo">Correo electrónico</label>
+                    <input
+                        type="email"
+                        id="correo"
+                        name="email"
+                        placeholder="tucorreo@ejemplo.com"
+                        maxlength="120"
+                        required
+                    >
+                </div>
+
+                <!-- Contraseña -->
+                <div class="campo">
+                    <label for="contrasena">Contraseña</label>
+                    <input
+                        type="password"
+                        id="contrasena"
+                        name="contrasena"
+                        placeholder="Crea una contraseña"
+                        minlength="8"
+                        maxlength="200"
+                        required
+                    >
+                </div>
+
+                <!-- Confirmar contraseña -->
+                <div class="campo">
+                    <label for="confirmar">Confirmar contraseña</label>
+                    <input
+                        type="password"
+                        id="confirmar"
+                        name="confirmar"
+                        placeholder="Repite tu contraseña"
+                        minlength="8"
+                        maxlength="200"
+                        required
+                    >
+                </div>
+
+                <!-- Token de verificación -->
+                <input
+                    type="hidden"
+                    id="tokenVerificacion"
+                >
+
+                <!-- Campo oculto para detectar bots -->
+                <div class="campo campo-trampa" aria-hidden="true">
+                    <label for="sitioWeb">No llenar este campo</label>
+                    <input
+                        type="text"
+                        id="sitioWeb"
+                        name="sitioWeb"
+                        tabindex="-1"
+                        autocomplete="off"
+                    >
+                </div>
+
+                <!-- Verificación de seguridad -->
+                <div class="verificacion-seguridad">
+
+                    <div class="verificacion-icono">
+                        <span id="icono-verificacion">🛡️</span>
+                    </div>
+
+                    <div class="verificacion-texto">
+                        <strong>Verificación de seguridad</strong>
+
+                        <p
+                            id="estado-verificacion"
+                            role="status"
+                            aria-live="polite"
+                        >
+                            Preparando verificación...
+                        </p>
+                    </div>
+
+                    <div class="verificacion-indicador">
+                        <span
+                            id="indicador-verificacion"
+                            class="indicador-pendiente"
+                        ></span>
+                    </div>
+
+                </div>
+
+                <!-- Mensajes del formulario -->
+                <p id="mensaje" role="status" aria-live="polite"></p>
+
+                <!-- Botón de registro -->
+                <button
+                    type="submit"
+                    id="btnRegistro"
+                    disabled
+                >
+                    Crear cuenta
+                </button>
+
+            </form>
+
+            <p class="alternativa">
+                ¿Ya tienes cuenta?
+                <a href="login.html">Inicia sesión</a>
+            </p>
+
+            <a href="index.html" class="volver">
+                ← Volver a la tienda
+            </a>
+
+        </section>
+    </main>
+
+    <script src="../js/config.js"></script>
+    <script src="../js/registro.js"></script>
+</body>
+</html>

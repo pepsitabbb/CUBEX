@@ -1,0 +1,174 @@
+// Servicio de Verificación de Tarjeta - subconjunto de BD02 (MySQL)
+// Solo las 12 tablas que usa el servicio, con las MISMAS columnas que en la
+// base completa de la repostería. Al integrarlo al proyecto grande, este
+// schema queda contenido en el schema completo.
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model Rol {
+  id          Int       @id @default(autoincrement())
+  nombreRol   String    @unique @map("nombre_rol") @db.VarChar(50)
+  descripcion String?   @db.VarChar(150)
+  usuarios    Usuario[]
+
+  @@map("ROLES")
+}
+
+model Usuario {
+  id               Int                 @id @default(autoincrement())
+  nombre           String              @db.VarChar(100)
+  correo           String              @unique @db.VarChar(150)
+  telefono         String?             @db.VarChar(20)
+  passwordHash     String              @map("password_hash") @db.VarChar(255)
+  idRol            Int                 @map("id_rol")
+  rol              Rol                 @relation(fields: [idRol], references: [id])
+  estado           String              @default("activo") @db.VarChar(20)
+  intentosFallidos Int                 @default(0) @map("intentos_fallidos")
+  fechaRegistro    DateTime            @default(now()) @map("fecha_registro")
+  cliente          Cliente?
+
+  @@map("USUARIOS")
+}
+
+model Cliente {
+  id          Int           @id @default(autoincrement())
+  idUsuario   Int           @unique @map("id_usuario")
+  usuario     Usuario       @relation(fields: [idUsuario], references: [id])
+  rfc         String?       @db.VarChar(13)
+  direcciones Direccion[]
+  tarjetas    Tarjeta[]
+  carritos    Carrito[]
+  pedidos     Pedido[]
+
+  @@map("CLIENTES")
+}
+
+model Direccion {
+  id           Int      @id @default(autoincrement())
+  idCliente    Int      @map("id_cliente")
+  cliente      Cliente  @relation(fields: [idCliente], references: [id])
+  calleNumero  String   @map("calle_numero") @db.VarChar(150)
+  colonia      String?  @db.VarChar(100)
+  ciudad       String?  @db.VarChar(100)
+  codigoPostal String?  @map("codigo_postal") @db.VarChar(10)
+  referencias  String?  @db.VarChar(200)
+  pedidos      Pedido[]
+
+  @@map("DIRECCIONES")
+}
+
+model Categoria {
+  id          Int        @id @default(autoincrement())
+  nombre      String     @unique @db.VarChar(80)
+  descripcion String?    @db.VarChar(150)
+  productos   Producto[]
+
+  @@map("CATEGORIAS")
+}
+
+model Producto {
+  id               Int                @id @default(autoincrement())
+  idCategoria      Int                @map("id_categoria")
+  categoria        Categoria          @relation(fields: [idCategoria], references: [id])
+  nombre           String             @db.VarChar(120)
+  descripcion      String?            @db.Text
+  sabor            String?            @db.VarChar(60)
+  porciones        Int?
+  lote             String?            @db.VarChar(50)
+  caducidad        DateTime?          @db.Date
+  costo            Decimal            @db.Decimal(10, 2)
+  precio           Decimal            @db.Decimal(10, 2)
+  esPersonalizable Boolean            @default(false) @map("es_personalizable")
+  activo           Boolean            @default(true)
+  imagenUrl        String?            @map("imagen_url") @db.VarChar(255)
+  stock            Stock?
+  detalleCarrito   DetalleCarrito[]
+
+  @@map("PRODUCTOS")
+}
+
+model Stock {
+  idProducto  Int      @id @map("id_producto")
+  producto    Producto @relation(fields: [idProducto], references: [id])
+  stockActual Int      @default(0) @map("stock_actual")
+  stockMinimo Int      @default(0) @map("stock_minimo")
+  stockMaximo Int      @default(0) @map("stock_maximo")
+
+  @@map("STOCK")
+}
+
+model TipoPago {
+  id      Int      @id @default(autoincrement())
+  nombre  String   @unique @db.VarChar(50)
+  pedidos Pedido[]
+
+  @@map("TIPOS_PAGO")
+}
+
+// Nunca se guarda el número completo ni el CVV: solo token del procesador,
+// últimos 4 dígitos, marca y vencimiento (necesario para revalidar al pagar).
+model Tarjeta {
+  id              Int      @id @default(autoincrement())
+  idCliente       Int      @map("id_cliente")
+  cliente         Cliente  @relation(fields: [idCliente], references: [id])
+  tokenPago       String   @unique @map("token_pago") @db.VarChar(255)
+  ultimosDigitos  String   @map("ultimos_digitos") @db.Char(4)
+  marca           String   @db.VarChar(20) // VISA | MASTERCARD | AMEX
+  mesExpiracion   Int      @map("mes_expiracion") @db.TinyInt
+  anioExpiracion  Int      @map("anio_expiracion") @db.SmallInt
+  verificada      Boolean  @default(false)
+  pedidos         Pedido[]
+
+  @@map("TARJETAS")
+}
+
+model Carrito {
+  id            Int              @id @default(autoincrement())
+  idCliente     Int              @map("id_cliente")
+  cliente       Cliente          @relation(fields: [idCliente], references: [id])
+  fechaCreacion DateTime         @default(now()) @map("fecha_creacion")
+  estado        String           @default("abierto") @db.VarChar(20)
+  detalle       DetalleCarrito[]
+  pedido        Pedido?
+
+  @@map("CARRITO")
+}
+
+model DetalleCarrito {
+  id               Int               @id @default(autoincrement())
+  idCarrito        Int               @map("id_carrito")
+  carrito          Carrito           @relation(fields: [idCarrito], references: [id])
+  idProducto       Int               @map("id_producto")
+  producto         Producto          @relation(fields: [idProducto], references: [id])
+  cantidad         Int
+
+  @@map("DETALLE_CARRITO")
+}
+
+model Pedido {
+  id                     Int        @id @default(autoincrement())
+  idCarrito              Int        @unique @map("id_carrito")
+  carrito                Carrito    @relation(fields: [idCarrito], references: [id])
+  idCliente              Int        @map("id_cliente")
+  cliente                Cliente    @relation(fields: [idCliente], references: [id])
+  idDireccion            Int?       @map("id_direccion")
+  direccion              Direccion? @relation(fields: [idDireccion], references: [id])
+  idTipoPago             Int        @map("id_tipo_pago")
+  tipoPago               TipoPago   @relation(fields: [idTipoPago], references: [id])
+  idTarjeta              Int?       @map("id_tarjeta")
+  tarjeta                Tarjeta?   @relation(fields: [idTarjeta], references: [id])
+  tipoEntrega            String     @default("DOMICILIO") @map("tipo_entrega") @db.VarChar(20) // DOMICILIO | RECOGER
+  fechaPedido            DateTime   @default(now()) @map("fecha_pedido")
+  fechaEntregaProgramada DateTime?  @map("fecha_entrega_programada")
+  anticipo               Decimal    @default(0) @db.Decimal(10, 2)
+  estado                 String     @default("pendiente") @db.VarChar(20)
+
+  @@map("PEDIDOS")
+}

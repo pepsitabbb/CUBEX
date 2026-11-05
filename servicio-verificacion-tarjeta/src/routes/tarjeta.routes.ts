@@ -1,0 +1,13 @@
+import { Router } from "express";
+import { verificarAutenticacion } from "../middleware/auth.middleware";
+import { verificarRol } from "../middleware/role.middleware";
+import { limitarIntentosTarjeta } from "../middleware/limiteIntentos.middleware";
+import { asyncHandler } from "../utils/asyncHandler";
+import { verificarTarjeta,registrarTarjeta,listarTarjetas,eliminarTarjeta } from "../controllers/tarjeta.controller";
+const router=Router();
+router.use(verificarAutenticacion,verificarRol("CLIENTE"));
+router.post("/verificar",limitarIntentosTarjeta,asyncHandler(verificarTarjeta));
+router.post("/",limitarIntentosTarjeta,asyncHandler(registrarTarjeta));
+router.get("/",asyncHandler(listarTarjetas));
+router.delete("/:id",asyncHandler(eliminarTarjeta));
+export default router;

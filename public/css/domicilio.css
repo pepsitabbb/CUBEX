@@ -1,0 +1,430 @@
+
+/* ========================================
+   CUBEX | MIS DOMICILIOS
+   Diseño moderno - Tema oscuro
+======================================== */
+
+:root {
+    --fondo: #101214;
+    --panel: #1b1f22;
+    --panel-hover: #22282c;
+    --campo: #141719;
+    --turquesa: #00c4d7;
+    --turquesa-hover: #00aabb;
+    --texto: #f1f5f6;
+    --texto-secundario: #9ba8ad;
+    --borde: #303a3e;
+    --rojo: #ff646b;
+    --radio: 14px;
+    --sombra: 0 12px 35px rgba(0, 0, 0, .22);
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    min-height: 100vh;
+    padding: 55px 24px;
+    background:
+        radial-gradient(ellipse at 50% 0%, rgba(0, 196, 215, .09), transparent 42%),
+        var(--fondo);
+    color: var(--texto);
+    font-family: "Segoe UI", Arial, sans-serif;
+}
+
+/* CONTENEDOR */
+
+.container {
+    width: 100%;
+    max-width: 1050px;
+    margin: 0 auto;
+}
+
+/* ENCABEZADO */
+
+.intro {
+    margin-bottom: 42px;
+    padding-bottom: 25px;
+    border-bottom: 1px solid var(--borde);
+}
+
+.intro h1 {
+    font-size: 34px;
+    font-weight: 750;
+    letter-spacing: -.8px;
+    margin-bottom: 10px;
+}
+
+.intro p {
+    color: var(--texto-secundario);
+    font-size: 15px;
+}
+
+/* LISTA DE DOMICILIOS */
+
+.lista-section {
+    margin-bottom: 30px;
+}
+
+.lista-heading {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 20px;
+    margin-bottom: 22px;
+}
+
+.lista-heading h2,
+.panel-heading h2 {
+    font-size: 21px;
+    font-weight: 700;
+    margin-bottom: 7px;
+}
+
+.lista-heading p,
+.panel-heading p {
+    color: var(--texto-secundario);
+    font-size: 14px;
+}
+
+/* TARJETAS */
+
+.lista-domicilios {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 16px;
+}
+
+.domicilio-card,
+.tarjeta-domicilio {
+    position: relative;
+    padding: 23px;
+    background: linear-gradient(145deg, #202629, #191e21);
+    border: 1px solid var(--borde);
+    border-radius: var(--radio);
+    transition: .25s ease;
+}
+
+.domicilio-card:hover,
+.tarjeta-domicilio:hover {
+    border-color: rgba(0, 196, 215, .55);
+    transform: translateY(-3px);
+    box-shadow: var(--sombra);
+}
+
+.domicilio-card.seleccionado,
+.tarjeta-domicilio.seleccionado {
+    border: 1px solid var(--turquesa);
+    background: linear-gradient(145deg, #1c3034, #1a2326);
+    box-shadow: 0 0 0 2px rgba(0, 196, 215, .10);
+}
+
+.domicilio-card input[type="radio"],
+.tarjeta-domicilio input[type="radio"] {
+    accent-color: var(--turquesa);
+    width: 17px;
+    height: 17px;
+    margin-right: 8px;
+    cursor: pointer;
+}
+
+.domicilio-card h3,
+.tarjeta-domicilio h3 {
+    display: inline-block;
+    font-size: 17px;
+    margin-bottom: 15px;
+}
+
+.domicilio-card p,
+.tarjeta-domicilio p {
+    color: #b9c3c7;
+    font-size: 13px;
+    line-height: 1.8;
+}
+
+.domicilio-card p strong,
+.tarjeta-domicilio p strong {
+    color: var(--texto);
+}
+
+/* BOTONES DE TARJETA */
+
+.domicilio-card button,
+.tarjeta-domicilio button {
+    margin-top: 14px;
+    margin-right: 7px;
+}
+
+/* FORMULARIO */
+
+.formulario-panel {
+    padding: 30px;
+    background: linear-gradient(145deg, #1d2225, #191d20);
+    border: 1px solid var(--borde);
+    border-radius: 18px;
+    box-shadow: var(--sombra);
+}
+
+.panel-heading {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 30px;
+}
+
+.icono-direccion {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 48px;
+    height: 48px;
+    border: 1px solid rgba(0, 196, 215, .25);
+    background: rgba(0, 196, 215, .09);
+    border-radius: 13px;
+    font-size: 21px;
+}
+
+/* CAMPOS */
+
+.form-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 23px;
+}
+
+.campo {
+    display: flex;
+    flex-direction: column;
+    gap: 9px;
+}
+
+.campo-completo {
+    grid-column: 1 / -1;
+}
+
+.campo label {
+    font-size: 13px;
+    font-weight: 650;
+    color: #e4eaec;
+}
+
+.requerido {
+    color: var(--turquesa);
+}
+
+.opcional {
+    color: var(--texto-secundario);
+    font-weight: 400;
+}
+
+.campo input,
+.campo textarea {
+    width: 100%;
+    padding: 14px 16px;
+    color: var(--texto);
+    background: var(--campo);
+    border: 1px solid var(--borde);
+    border-radius: 10px;
+    outline: none;
+    font-family: inherit;
+    font-size: 14px;
+    transition: .2s ease;
+}
+
+.campo input {
+    height: 49px;
+}
+
+.campo textarea {
+    min-height: 115px;
+    resize: vertical;
+}
+
+.campo input::placeholder,
+.campo textarea::placeholder {
+    color: #718087;
+}
+
+.campo input:focus,
+.campo textarea:focus {
+    border-color: var(--turquesa);
+    box-shadow: 0 0 0 3px rgba(0, 196, 215, .12);
+}
+
+/* BOTONES GENERALES */
+
+.btn {
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+    min-height: 44px;
+    padding: 0 20px;
+    border: 1px solid transparent;
+    border-radius: 9px;
+    font-size: 13px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: .2s ease;
+}
+
+.btn:hover {
+    transform: translateY(-2px);
+}
+
+.btn-primary {
+    color: #061619;
+    background: var(--turquesa);
+}
+
+.btn-primary:hover {
+    background: var(--turquesa-hover);
+    box-shadow: 0 5px 18px rgba(0, 196, 215, .18);
+}
+
+.btn-secondary {
+    color: var(--texto);
+    background: #303639;
+    border-color: #414a4e;
+}
+
+.btn-secondary:hover {
+    background: #3a4448;
+}
+
+.btn-danger,
+.btn-eliminar {
+    color: #ff777d;
+    background: rgba(255, 85, 95, .10);
+    border-color: rgba(255, 85, 95, .18);
+}
+
+.btn-danger:hover,
+.btn-eliminar:hover {
+    background: rgba(255, 85, 95, .19);
+}
+
+.btn-editar {
+    color: var(--turquesa);
+    background: rgba(0, 196, 215, .10);
+    border-color: rgba(0, 196, 215, .18);
+}
+
+.btn-editar:hover {
+    background: rgba(0, 196, 215, .18);
+}
+
+/* ACCIONES DEL FORMULARIO */
+
+.acciones-formulario {
+    display: flex;
+    gap: 12px;
+    margin-top: 25px;
+}
+
+.nota-formulario {
+    margin-top: 17px;
+    color: #849197;
+    font-size: 12px;
+}
+
+/* ACCIONES DE COMPRA */
+
+.acciones-compra {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 15px;
+    margin-top: 24px;
+    padding-bottom: 25px;
+}
+
+.acciones-compra .btn {
+    min-height: 49px;
+    padding: 0 23px;
+}
+
+/* MENSAJES */
+
+.mensaje {
+    display: none;
+    margin-bottom: 20px;
+    padding: 14px 17px;
+    border-radius: 10px;
+    font-size: 14px;
+}
+
+.mensaje.exito {
+    display: block;
+    color: #7de2bd;
+    background: rgba(35, 190, 135, .10);
+    border: 1px solid rgba(35, 190, 135, .25);
+}
+
+.mensaje.error {
+    display: block;
+    color: #ff858b;
+    background: rgba(255, 85, 95, .10);
+    border: 1px solid rgba(255, 85, 95, .25);
+}
+
+/* CARGANDO / SIN DOMICILIOS */
+
+.estado-cargando,
+.estado-vacio {
+    grid-column: 1 / -1;
+    padding: 35px;
+    text-align: center;
+    color: var(--texto-secundario);
+    background: var(--panel);
+    border: 1px dashed var(--borde);
+    border-radius: var(--radio);
+}
+
+/* RESPONSIVE */
+
+@media (max-width: 700px) {
+    body {
+        padding: 30px 15px;
+    }
+
+    .intro h1 {
+        font-size: 28px;
+    }
+
+    .lista-domicilios {
+        grid-template-columns: 1fr;
+    }
+
+    .form-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .campo-completo {
+        grid-column: auto;
+    }
+
+    .formulario-panel {
+        padding: 21px;
+    }
+
+    .lista-heading {
+        align-items: flex-start;
+    }
+
+    .acciones-compra {
+        flex-direction: column-reverse;
+        align-items: stretch;
+    }
+
+    .acciones-compra .btn {
+        width: 100%;
+    }
+
+    .acciones-formulario {
+        flex-wrap: wrap;
+    }
+}

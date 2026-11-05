@@ -1,0 +1,380 @@
+
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Proveedores | CUBEX</title>
+
+    <!-- Hoja de estilos general del administrador -->
+    <link rel="stylesheet" href="../css/admin.css">
+</head>
+
+<body>
+
+    <div class="admin-layout">
+
+        <!-- =====================================
+             MENÚ LATERAL
+        ====================================== -->
+       
+
+
+        <!-- =====================================
+             CONTENIDO PRINCIPAL
+        ====================================== -->
+        <main class="main-content">
+
+            <!-- Encabezado -->
+            <header class="page-header">
+
+                <div>
+                   
+
+                    <h1>Gestión de proveedores</h1>
+
+                    <p>
+                        Administra los proveedores de productos de tu tienda CUBEX.
+                    </p>
+                </div>
+
+               
+
+            </header>
+
+
+            <!-- =====================================
+                 MENSAJES DEL SISTEMA
+            ====================================== -->
+            <div id="mensajeProveedores" role="alert"></div>
+
+
+            <!-- =====================================
+                 TARJETAS DE RESUMEN
+            ====================================== -->
+            <section class="stats-container">
+
+                <article class="stat-card">
+                    <h3>Total de proveedores</h3>
+
+                    <div class="stat-number" id="totalProveedores">
+                        0
+                    </div>
+                </article>
+
+                <article class="stat-card">
+                    <h3>Proveedores registrados</h3>
+
+                    <div class="stat-number" id="proveedoresRegistrados">
+                        0
+                    </div>
+                </article>
+
+            </section>
+
+
+            <!-- =====================================
+                 LISTADO DE PROVEEDORES
+            ====================================== -->
+            <section class="content-card">
+
+                <div class="page-header">
+
+                    <div>
+                        <h2>Listado de proveedores</h2>
+
+                        <p>
+                            Consulta y administra la información de tus proveedores.
+                        </p>
+                    </div>
+
+                    <button
+                        type="button"
+                        id="btnMostrarFormulario"
+                        class="btn btn-primary">
+
+                        + Registrar proveedor
+
+                    </button>
+
+                </div>
+
+
+                <!-- Buscador -->
+                <div class="search-container">
+
+                    <input
+                        type="text"
+                        id="buscarProveedor"
+                        placeholder="Buscar por nombre, razón social o RFC..."
+                        autocomplete="off">
+
+                    <button
+                        type="button"
+                        class="btn btn-secondary"
+                        aria-label="Buscar proveedor">
+
+                        Buscar
+
+                    </button>
+
+                </div>
+
+
+                <!-- Tabla -->
+                <div class="table-container">
+
+                    <table id="tablaListadoProveedores">
+
+                        <thead>
+                            <tr>
+                                <th>Nombre</th>
+                                <th>Razón social</th>
+                                <th>RFC</th>
+                                <th>Correo</th>
+                                <th>Teléfono</th>
+                                <th>Acciones</th>
+                            </tr>
+                        </thead>
+
+                        <tbody id="tablaProveedores">
+
+                            <tr>
+                                <td colspan="6">
+                                    Cargando proveedores...
+                                </td>
+                            </tr>
+
+                        </tbody>
+
+                    </table>
+
+                </div>
+
+
+                <div class="contador-proveedores">
+                    Mostrando
+                    <span id="contadorProveedores">0</span>
+                    proveedores
+                </div>
+
+            </section>
+
+
+            <!-- =====================================
+                 FORMULARIO DE REGISTRO Y EDICIÓN
+            ====================================== -->
+            <section
+                id="formularioProveedor"
+                class="formulario-proveedor"
+                style="display: none;">
+
+                <div class="page-header">
+
+                    <div>
+                        <h2 id="tituloFormulario">
+                            Registrar proveedor
+                        </h2>
+
+                        <p>
+                            Completa los datos fiscales y de contacto del proveedor.
+                        </p>
+                    </div>
+
+                    <button
+                        type="button"
+                        id="btnCerrarFormulario"
+                        class="btn btn-secondary">
+
+                        ✕
+
+                    </button>
+
+                </div>
+
+
+                <form id="formProveedor">
+
+                    <!-- Identificador para edición -->
+                    <input
+                        type="hidden"
+                        id="idProveedor"
+                        name="id">
+
+
+                    <div class="form-grid">
+
+                        <!-- Nombre -->
+                        <div class="form-group">
+
+                            <label for="nombreProveedor">
+                                Nombre del proveedor *
+                            </label>
+
+                            <input
+                                type="text"
+                                id="nombreProveedor"
+                                name="nombre"
+                                placeholder="Ej. Distribuidora Rubik"
+                                maxlength="150"
+                                required>
+
+                        </div>
+
+
+                        <!-- Razón social -->
+                        <div class="form-group">
+
+                            <label for="razonSocial">
+                                Razón social *
+                            </label>
+
+                            <input
+                                type="text"
+                                id="razonSocial"
+                                name="razon_social"
+                                placeholder="Ej. Distribuidora Rubik S.A. de C.V."
+                                maxlength="200"
+                                required>
+
+                        </div>
+
+
+                        <!-- RFC -->
+                        <div class="form-group">
+
+                            <label for="rfcProveedor">
+                                RFC *
+                            </label>
+
+                            <input
+                                type="text"
+                                id="rfcProveedor"
+                                name="rfc"
+                                placeholder="Ej. DRU260101ABC"
+                                maxlength="13"
+                                required>
+
+                        </div>
+
+
+                        <!-- Correo -->
+                        <div class="form-group">
+
+                            <label for="correoProveedor">
+                                Correo electrónico *
+                            </label>
+
+                            <input
+                                type="email"
+                                id="correoProveedor"
+                                name="correo"
+                                placeholder="ventas@proveedor.com"
+                                maxlength="150"
+                                required>
+
+                        </div>
+
+
+                        <!-- Teléfono -->
+                        <div class="form-group">
+
+                            <label for="telefonoProveedor">
+                                Teléfono *
+                            </label>
+
+                            <input
+                                type="tel"
+                                id="telefonoProveedor"
+                                name="telefono"
+                                placeholder="Ej. 6681234567"
+                                maxlength="20"
+                                required>
+
+                        </div>
+
+
+                        <!-- Dirección -->
+                        <div class="form-group">
+
+                            <label for="direccionProveedor">
+                                Dirección *
+                            </label>
+
+                            <textarea
+                                id="direccionProveedor"
+                                name="direccion"
+                                placeholder="Calle, número, ciudad, estado..."
+                                required></textarea>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- Botones del formulario -->
+                    <div class="form-actions">
+
+                        <button
+                            type="button"
+                            id="btnCancelarProveedor"
+                            class="btn btn-secondary">
+
+                            Cancelar
+
+                        </button>
+
+                        <button
+                            type="submit"
+                            id="btnGuardarProveedor"
+                            class="btn btn-primary">
+
+                            Guardar proveedor
+
+                        </button>
+
+                    </div>
+
+                </form>
+
+            </section>
+
+        </main>
+
+    </div>
+
+    <!-- MODAL DE CONFIRMACIÓN -->
+<div id="modalConfirmarEliminar" class="modal-confirmacion">
+    <div class="modal-confirmacion-contenido">
+        <div class="modal-icono">
+            <i class="fas fa-trash-alt"></i>
+        </div>
+
+        <h2>Eliminar proveedor</h2>
+
+        <p id="textoConfirmacion">
+            ¿Estás seguro de que deseas eliminar este proveedor?
+        </p>
+
+        <div class="modal-confirmacion-acciones">
+            <button type="button" id="btnCancelarEliminar">
+                Cancelar
+            </button>
+
+            <button type="button" id="btnConfirmarEliminar">
+                Sí, eliminar
+            </button>
+        </div>
+    </div>
+</div>
+
+    <!-- =====================================
+         JAVASCRIPT DEL MÓDULO
+    ====================================== -->
+    <script src="../js/config.js"></script>
+    <script src="../js/proveedores.js"></script>
+
+</body>
+</html>

@@ -1,0 +1,17 @@
+services:
+  db:
+    image: mysql:8.4
+    container_name: bd02_mysql
+    restart: unless-stopped
+    environment:
+      MYSQL_ROOT_PASSWORD: root_password
+      MYSQL_DATABASE: bd02
+      MYSQL_USER: usuario
+      MYSQL_PASSWORD: password
+    ports:
+      - "3306:3306"
+    volumes:
+      - bd02_data:/var/lib/mysql
+
+volumes:
+  bd02_data:

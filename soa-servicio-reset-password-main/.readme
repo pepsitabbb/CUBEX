@@ -1,0 +1,83 @@
+# Documentación de ejecución del proyecto
+
+## 1. Requisitos previos
+
+Antes de ejecutar el proyecto, asegúrate de tener instalado:
+
+- **Node.js:** entorno de ejecución de JavaScript.
+- **npm:** administrador de paquetes de Node.js.
+- **Visual Studio Code** (opcional): editor de código recomendado.
+
+También debes contar con las dependencias del proyecto instaladas.
+
+## 2. Ejecutar la API (Backend)
+
+La API se debe iniciar primero para que el frontend pueda comunicarse con el backend.
+
+1. Abre una terminal en la carpeta raíz del proyecto.
+2. Ejecuta el siguiente comando para acceder a la carpeta de la API:
+
+   ```bash
+   cd api
+   ```
+
+3. Inicia el servidor de desarrollo:
+
+   ```bash
+   npm run dev
+   ```
+
+4. Mantén esta terminal abierta mientras utilizas la aplicación.
+
+La API quedará ejecutándose en el puerto configurado en el proyecto. Revisa los mensajes de la terminal para conocer la URL local y confirmar que el servidor inició correctamente.
+
+## 3. Ejecutar el frontend
+
+Con la API en ejecución, abre una **segunda terminal**. No cierres la terminal del backend.
+
+1. Desde la carpeta raíz del proyecto, accede a la carpeta del frontend:
+
+   ```bash
+   cd frontend
+   ```
+
+2. Inicia el servidor de desarrollo:
+
+   ```bash
+   npm run dev
+   ```
+
+3. Espera a que el servidor termine de iniciar y muestra la URL local proporcionada en la terminal.
+
+Normalmente, si utilizas la configuración predeterminada de Next.js, podrás acceder desde `http://localhost:3000`.
+
+## 4. Verificar el funcionamiento
+
+- **Backend:** comprueba que la API se encuentre activa y sin errores en la primera terminal.
+- **Frontend:** abre en el navegador la URL indicada por la segunda terminal.
+- **Comunicación:** verifica que el frontend pueda realizar solicitudes a la API correctamente.
+
+## 5. Consideraciones importantes
+
+- Mantén ambas terminales abiertas mientras trabajas con el proyecto.
+- Si es la primera vez que ejecutas la aplicación, instala las dependencias con `npm install` dentro de las carpetas `api` y `frontend`, respectivamente.
+- Si un puerto está ocupado, el servidor podría utilizar otro puerto o mostrar un error.
+- Si modificas el código, los servidores de desarrollo normalmente aplicarán los cambios automáticamente.
+
+## Resumen de comandos
+
+**Terminal 1 — API**
+
+```bash
+cd api
+npm run dev
+```
+
+**Terminal 2 — Frontend**
+
+```bash
+cd frontend
+npm run dev
+```
+
+Con ambos servidores activos, la aplicación estará lista para probarse en el entorno local.

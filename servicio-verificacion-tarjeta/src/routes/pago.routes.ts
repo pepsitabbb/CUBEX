@@ -1,0 +1,11 @@
+import { Router } from "express";
+import { verificarAutenticacion } from "../middleware/auth.middleware";
+import { verificarRol } from "../middleware/role.middleware";
+import { limitarIntentosTarjeta } from "../middleware/limiteIntentos.middleware";
+import { asyncHandler } from "../utils/asyncHandler";
+import { pedidosPendientes,verificarTarjetaPago } from "../controllers/pago.controller";
+const router=Router();
+router.use(verificarAutenticacion,verificarRol("CLIENTE"));
+router.get("/pedidos-pendientes",asyncHandler(pedidosPendientes));
+router.post("/verificar-tarjeta",limitarIntentosTarjeta,asyncHandler(verificarTarjetaPago));
+export default router;

@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CUBEX | Validación de entregas</title>
+    <link rel="stylesheet" href="../css/comun.css">
+    <link rel="stylesheet" href="../css/logistica.css">
+</head>
+<body data-module="entregas">
+<main class="log-wrap">
+    <header class="log-head">
+        <div>
+            <p class="log-kicker">LOGÍSTICA CUBEX</p>
+            <h1>Validación de entregas</h1>
+            <p class="log-sub">Registra quién recibió el paquete, la fecha y hora de recepción y las observaciones.</p>
+        </div>
+        <button type="button" class="cx-btn cx-btn-secundario" id="btnRecargar">↻ Actualizar</button>
+    </header>
+
+    <section class="log-panel">
+        <div class="log-toolbar">
+            <div class="log-titulo">
+                <h2>Entregas</h2>
+                <p class="log-sub">Envíos en reparto o entregados. Cada envío solo puede validarse una vez.</p>
+            </div>
+            <label class="cx-oculto" for="filtroEntregas">Filtro</label>
+            <select id="filtroEntregas" class="cx-filtro">
+                <option value="pendientes">Pendientes de validar</option>
+                <option value="validadas">Historial de entregas validadas</option>
+                <option value="">Todas</option>
+            </select>
+        </div>
+        <div id="tablaEntregas"><div class="cx-cargando">Cargando entregas...</div></div>
+    </section>
+</main>
+
+<script src="../js/config.js"></script>
+<script src="../js/comun.js"></script>
+<script src="../js/logistica.js"></script>
+</body>
+</html>

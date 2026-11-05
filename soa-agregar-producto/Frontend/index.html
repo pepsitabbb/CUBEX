@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8" />
+<title>Prueba - Agregar Producto</title>
+<link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <header>
+    <h1>Tienda de Componentes de PC</h1>
+    <p>Página de prueba para la función <strong>Agregar Producto</strong> (proyecto SOA)</p>
+  </header>
+
+  <main>
+    <section class="panel">
+      <h2>Nuevo producto</h2>
+      <form id="form-producto">
+        <label>Nombre *
+          <input type="text" id="nombre" required />
+        </label>
+
+        <label>Descripción
+          <input type="text" id="descripcion" />
+        </label>
+
+        <label>Lote
+          <input type="text" id="lote" />
+        </label>
+
+        <label>Serie
+          <input type="text" id="serie" />
+        </label>
+
+        <label>Caducidad
+          <input type="date" id="caducidad" />
+        </label>
+
+        <label>Id Proveedor *
+          <input type="number" id="idProveedor" required min="1" />
+        </label>
+
+        <label>Costo *
+          <input type="number" id="costo" required min="0" step="0.01" />
+        </label>
+
+        <label>Precio *
+          <input type="number" id="precio" required min="0" step="0.01" />
+        </label>
+
+        <label>Stock actual
+          <input type="number" id="stockActual" min="0" value="0" />
+        </label>
+
+        <label>Stock mínimo
+          <input type="number" id="stockMinimo" min="0" value="0" />
+        </label>
+
+        <label>Stock máximo
+          <input type="number" id="stockMaximo" min="0" value="0" />
+        </label>
+
+        <button type="submit">Agregar producto</button>
+      </form>
+
+      <div id="mensaje"></div>
+    </section>
+
+    <section class="panel">
+      <h2>Productos registrados</h2>
+      <button id="btn-refrescar">Refrescar lista</button>
+      <table id="tabla-productos">
+        <thead>
+          <tr>
+            <th>ID</th><th>Nombre</th><th>Proveedor</th>
+            <th>Costo</th><th>Precio</th><th>Stock</th>
+          </tr>
+        </thead>
+        <tbody></tbody>
+      </table>
+    </section>
+  </main>
+
+  <script src="script.js"></script>
+</body>
+</html>

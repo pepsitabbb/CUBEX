@@ -1,0 +1,70 @@
+{
+  "info": {
+    "name": "API Proveedores",
+    "_postman_id": "proveedores-api-python-mysql",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    {
+      "key": "base_url",
+      "value": "http://localhost:5000"
+    }
+  ],
+  "item": [
+    {
+      "name": "Listar proveedores",
+      "request": {
+        "method": "GET",
+        "url": "{{base_url}}/api/proveedores"
+      }
+    },
+    {
+      "name": "Obtener proveedor",
+      "request": {
+        "method": "GET",
+        "url": "{{base_url}}/api/proveedores/1"
+      }
+    },
+    {
+      "name": "Crear proveedor",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"nombre\": \"Distribuidora Fitness\",\n  \"razon_social\": \"Distribuidora Fitness S.A. de C.V.\",\n  \"rfc\": \"DFI260101ABC\",\n  \"direccion\": \"Av. Insurgentes #120\",\n  \"correo\": \"ventas@distribuidorafitness.com\",\n  \"telefono\": \"6671234567\"\n}"
+        },
+        "url": "{{base_url}}/api/proveedores"
+      }
+    },
+    {
+      "name": "Actualizar proveedor",
+      "request": {
+        "method": "PUT",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"telefono\": \"6679999999\"\n}"
+        },
+        "url": "{{base_url}}/api/proveedores/1"
+      }
+    },
+    {
+      "name": "Eliminar proveedor",
+      "request": {
+        "method": "DELETE",
+        "url": "{{base_url}}/api/proveedores/1"
+      }
+    }
+  ]
+}

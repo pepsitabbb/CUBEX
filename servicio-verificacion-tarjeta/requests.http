@@ -1,0 +1,87 @@
+# Probador para la extensión REST Client de VS Code (humao.rest-client)
+# Solo tarjetas de prueba: 4242 4242 4242 4242 (Visa), 5555 5555 5555 4444 (Mastercard)
+
+### Health check
+GET http://localhost:3000/health
+
+### Login como CLIENTE (guarda el token para las peticiones siguientes)
+# @name loginCliente
+POST http://localhost:3000/auth/login
+Content-Type: application/json
+
+{
+  "correo": "cliente@tienda.com",
+  "password": "cliente123"
+}
+
+### Solo verificar datos (Luhn, marca, vencimiento, CVV) - no guarda nada
+POST http://localhost:3000/tarjetas/verificar
+Authorization: Bearer {{loginCliente.response.body.token}}
+Content-Type: application/json
+
+{
+  "numero": "4242 4242 4242 4242",
+  "mes": 12,
+  "anio": 2030,
+  "cvv": "123"
+}
+
+### Verificar y registrar la tarjeta del cliente
+POST http://localhost:3000/tarjetas
+Authorization: Bearer {{loginCliente.response.body.token}}
+Content-Type: application/json
+
+{
+  "numero": "4242 4242 4242 4242",
+  "mes": 12,
+  "anio": 2030,
+  "cvv": "123"
+}
+
+### Listar mis tarjetas
+GET http://localhost:3000/tarjetas
+Authorization: Bearer {{loginCliente.response.body.token}}
+
+### Pedidos pendientes de pago con tarjeta
+GET http://localhost:3000/pagos/pedidos-pendientes
+Authorization: Bearer {{loginCliente.response.body.token}}
+
+### Verificar la tarjeta al pagar el pedido 1 (ajusta idTarjeta e idPedido)
+POST http://localhost:3000/pagos/verificar-tarjeta
+Authorization: Bearer {{loginCliente.response.body.token}}
+Content-Type: application/json
+
+{
+  "idTarjeta": 1,
+  "cvv": "123",
+  "idPedido": 1
+}
+
+### Tarjeta rechazada por el banco -> 402 esperado
+POST http://localhost:3000/tarjetas
+Authorization: Bearer {{loginCliente.response.body.token}}
+Content-Type: application/json
+
+{
+  "numero": "4000 0000 0000 0002",
+  "mes": 12,
+  "anio": 2030,
+  "cvv": "123"
+}
+
+### Login como ADMIN
+# @name loginAdmin
+POST http://localhost:3000/auth/login
+Content-Type: application/json
+
+{
+  "correo": "admin@tienda.com",
+  "password": "admin123"
+}
+
+### El ADMIN no puede usar este servicio -> 403 esperado
+POST http://localhost:3000/tarjetas/verificar
+Authorization: Bearer {{loginAdmin.response.body.token}}
+Content-Type: application/json
+
+{ "numero": "4242 4242 4242 4242", "mes": 12, "anio": 2030, "cvv": "123" }

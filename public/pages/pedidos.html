@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pedidos | CUBEX</title>
+
+    <link rel="stylesheet" href="../css/admin.css">
+    <link rel="stylesheet" href="../css/comun.css">
+
+    <style>
+        .pedidos-modulo {
+            width: 100%;
+            color: var(--blanco);
+        }
+
+        .pedidos-encabezado {
+            margin-bottom: 25px;
+        }
+
+        .pedidos-encabezado h2 {
+            font-size: 23px;
+            margin-bottom: 8px;
+        }
+
+        .pedidos-encabezado p {
+            color: var(--gris);
+            font-size: 12px;
+            line-height: 1.6;
+        }
+
+        .pedidos-estadisticas {
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+            gap: 15px;
+            margin-bottom: 22px;
+        }
+
+        .pedido-stat {
+            padding: 19px;
+            border: 1px solid var(--borde);
+            border-radius: 10px;
+            background: var(--tarjeta);
+        }
+
+        .pedido-stat span {
+            display: block;
+            color: var(--gris);
+            font-size: 11px;
+            margin-bottom: 12px;
+        }
+
+        .pedido-stat strong {
+            font-size: 27px;
+        }
+
+        .pedidos-panel {
+            padding: 20px;
+            border: 1px solid var(--borde);
+            border-radius: 11px;
+            background: var(--tarjeta);
+        }
+
+        .pedidos-barra {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 12px;
+            margin-bottom: 20px;
+        }
+
+        .pedidos-barra h3 {
+            font-size: 15px;
+        }
+
+        .pedidos-filtros {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .pedidos-filtros input,
+        .pedidos-filtros select {
+            padding: 10px 12px;
+            border: 1px solid var(--borde);
+            border-radius: 7px;
+            outline: none;
+            background: var(--fondo-oscuro);
+            color: var(--blanco);
+            font-size: 12px;
+        }
+
+        .pedidos-filtros input:focus,
+        .pedidos-filtros select:focus {
+            border-color: var(--azul);
+        }
+
+        .pedidos-tabla {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .pedidos-tabla th {
+            padding: 13px 11px;
+            background: var(--fondo-oscuro);
+            color: var(--gris);
+            text-align: left;
+            font-size: 10px;
+            white-space: nowrap;
+        }
+
+        .pedidos-tabla td {
+            padding: 13px 11px;
+            border-bottom: 1px solid var(--borde);
+            font-size: 12px;
+            white-space: nowrap;
+        }
+
+        .pedidos-tabla tbody tr:hover {
+            background: #ffffff08;
+        }
+
+        .pedido-estado {
+            display: inline-block;
+            padding: 6px 9px;
+            border-radius: 5px;
+            font-size: 10px;
+            font-weight: bold;
+        }
+
+        .pedido-estado.pendiente {
+            color: var(--amarillo);
+            background: #ffd21f18;
+        }
+
+        .pedido-estado.confirmado {
+            color: var(--verde);
+            background: #22c55e18;
+        }
+
+        .pedido-estado.cancelado {
+            color: var(--rojo);
+            background: #ef233c18;
+        }
+
+        .pedido-acciones {
+            display: flex;
+            gap: 7px;
+            align-items: center;
+        }
+
+        .pedido-boton {
+            padding: 7px 10px;
+            border: 1px solid var(--borde);
+            border-radius: 6px;
+            background: transparent;
+            color: var(--blanco);
+            font-size: 11px;
+            cursor: pointer;
+        }
+
+        .pedido-boton:hover {
+            border-color: var(--azul);
+            color: var(--azul);
+        }
+
+        .pedido-estado-select {
+            max-width: 125px;
+            padding: 7px;
+            border: 1px solid var(--borde);
+            border-radius: 6px;
+            background: var(--fondo-oscuro);
+            color: var(--blanco);
+            font-size: 10px;
+        }
+
+        .pedidos-vacio {
+            padding: 35px 15px !important;
+            color: var(--gris);
+            text-align: center;
+            white-space: normal !important;
+        }
+
+        .pedidos-mensaje {
+            margin-bottom: 15px;
+            padding: 12px;
+            border-radius: 7px;
+            font-size: 12px;
+            display: none;
+        }
+
+        .pedidos-mensaje.error {
+            display: block;
+            color: #ff8b98;
+            background: #ef233c18;
+        }
+
+        .pedidos-mensaje.exito {
+            display: block;
+            color: var(--verde);
+            background: #22c55e18;
+        }
+
+        .pedido-modal {
+            position: fixed;
+            inset: 0;
+            z-index: 9999;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            background: rgba(0, 0, 0, .75);
+        }
+
+        .pedido-modal.mostrar {
+            display: flex;
+        }
+
+        .pedido-modal-contenido {
+            width: 100%;
+            max-width: 470px;
+            padding: 25px;
+            border: 1px solid var(--borde);
+            border-radius: 12px;
+            background: var(--tarjeta);
+        }
+
+        .pedido-modal-contenido h3 {
+            margin-bottom: 18px;
+        }
+
+        .pedido-detalle {
+            padding: 11px 0;
+            border-bottom: 1px solid var(--borde);
+            font-size: 12px;
+        }
+
+        .pedido-detalle span {
+            display: block;
+            margin-bottom: 5px;
+            color: var(--gris);
+        }
+
+        .pedido-modal-cerrar {
+            display: block;
+            margin: 20px 0 0 auto;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 6px;
+            background: var(--azul);
+            color: white;
+            cursor: pointer;
+        }
+
+        @media (max-width: 750px) {
+            .pedidos-estadisticas {
+                grid-template-columns: 1fr;
+            }
+
+            .pedidos-barra {
+                align-items: flex-start;
+                flex-direction: column;
+            }
+
+            .pedidos-filtros {
+                width: 100%;
+            }
+
+            .pedidos-filtros input,
+            .pedidos-filtros select {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<main class="pedidos-modulo">
+
+    <header class="pedidos-encabezado">
+        <p class="sobrelinea">VENTAS / ADMINISTRACIÓN</p>
+        <h2>Pedidos de clientes</h2>
+        <p>
+            Consulta los pedidos registrados y administra su estado
+            desde el panel de CUBEX.
+        </p>
+    </header>
+
+    <section class="pedidos-estadisticas">
+
+        <article class="pedido-stat">
+            <span>Total de pedidos</span>
+            <strong id="totalPedidos">0</strong>
+        </article>
+
+        <article class="pedido-stat">
+            <span>Pendientes</span>
+            <strong id="pedidosPendientes">0</strong>
+        </article>
+
+        <article class="pedido-stat">
+            <span>Confirmados</span>
+            <strong id="pedidosConfirmados">0</strong>
+        </article>
+
+    </section>
+
+    <section class="pedidos-panel">
+
+        <div class="pedidos-barra">
+            <h3>Listado de pedidos</h3>
+
+            <div class="pedidos-filtros">
+                <input
+                    type="search"
+                    id="buscarPedido"
+                    placeholder="Buscar por ID o cliente...">
+
+                <select id="filtroEstado">
+                    <option value="">Todos los estados</option>
+                    <option value="Pendiente">Pendientes</option>
+                    <option value="Confirmado">Confirmados</option>
+                    <option value="Cancelado">Cancelados</option>
+                </select>
+            </div>
+        </div>
+
+        <div id="mensajePedidos" class="pedidos-mensaje"></div>
+
+        <div class="tabla-contenedor">
+            <table class="pedidos-tabla">
+                <thead>
+                    <tr>
+                        <th>PEDIDO</th>
+                        <th>CLIENTE</th>
+                        <th>FECHA</th>
+                        <th>ESTADO</th>
+                        <th>ACCIONES</th>
+                    </tr>
+                </thead>
+
+                <tbody id="tablaPedidos">
+                    <tr>
+                        <td colspan="5" class="pedidos-vacio">
+                            Cargando pedidos...
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+    </section>
+
+</main>
+
+<div class="pedido-modal" id="modalPedido" aria-hidden="true">
+    <div class="pedido-modal-contenido">
+        <h3>Detalles del pedido</h3>
+
+        <div id="contenidoDetallePedido"></div>
+
+        <button
+            type="button"
+            class="pedido-modal-cerrar"
+            onclick="cerrarDetallePedido()">
+            Cerrar
+        </button>
+    </div>
+</div>
+
+<script src="../js/config.js"></script>
+<script src="../js/comun.js"></script>
+<script src="../js/pedidos.js"></script>
+
+</body>
+</html>

@@ -1,0 +1,211 @@
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Inventario | CUBEX</title>
+    <link rel="stylesheet" href="../css/comun.css">
+    <link rel="stylesheet" href="../css/logistica.css">
+    <link rel="stylesheet" href="../css/inventario.css">
+</head>
+<body>
+
+    <main class="inventario-container">
+
+        <header class="encabezado">
+            <div>
+                <span class="subtitulo">CONTROL DE EXISTENCIAS</span>
+                <h1>Inventario</h1>
+                <p>Consulta y administra los niveles de stock de tus productos.</p>
+            </div>
+            <button id="btnActualizar" class="btn-actualizar">
+                ↻ Actualizar
+            </button>
+        </header>
+
+        <section class="resumen">
+            <article class="tarjeta">
+                <span>Total de productos</span>
+                <strong id="totalProductos">0</strong>
+            </article>
+
+            <article class="tarjeta">
+                <span>Stock bajo</span>
+                <strong id="totalBajo">0</strong>
+            </article>
+
+            <article class="tarjeta">
+                <span>Stock normal</span>
+                <strong id="totalNormal">0</strong>
+            </article>
+
+            <article class="tarjeta">
+                <span>Stock excedido</span>
+                <strong id="totalExceso">0</strong>
+            </article>
+        </section>
+
+        <section class="panel-inventario">
+            <div class="panel-titulo">
+                <div>
+                    <h2>Control de stock mínimo y máximo</h2>
+                    <p>Los productos se obtendrán del inventario registrado en CUBEX.</p>
+                </div>
+            </div>
+
+            <div class="tabla-contenedor">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Producto</th>
+                            <th>Existencias</th>
+                            <th>Stock mínimo</th>
+                            <th>Stock máximo</th>
+                            <th>Estado</th>
+                            <th>Oferta sugerida</th>
+                            <th>Acciones</th>
+                        </tr>
+                    </thead>
+
+                    <tbody id="tablaInventario">
+                        <tr>
+                            <td colspan="7" class="mensaje-tabla">
+                                Cargando productos...
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <p id="mensajeInventario" class="mensaje"></p>
+
+        <!-- INVENTARIO AUTOMÁTICO: alertas, entradas, ajustes y movimientos -->
+        <div class="inventario-extra">
+
+            <section class="log-panel" aria-labelledby="tituloAlertas">
+                <div class="log-toolbar">
+                    <div class="log-titulo">
+                        <h2 id="tituloAlertas">Alertas de inventario</h2>
+                        <p class="log-sub">Productos agotados, en stock mínimo o con pocas unidades, y las últimas entradas y salidas.</p>
+                    </div>
+                    <button type="button" class="cx-btn cx-btn-secundario cx-btn-chico" id="btnMarcarLeidas">Marcar alertas como leídas</button>
+                </div>
+                <div id="productosRiesgo"><div class="cx-cargando">Cargando alertas...</div></div>
+                <div id="listaAlertas"></div>
+            </section>
+
+            <section class="log-panel" aria-labelledby="tituloEntrada">
+                <h2 id="tituloEntrada">Registrar entrada de mercancía</h2>
+                <p class="log-sub">Aumenta las existencias y queda registrado en el historial de movimientos. Para compras a proveedores usa el módulo de Compras.</p>
+                <form id="formEntrada" class="cx-form" novalidate>
+                    <div class="cx-campo">
+                        <label for="entradaProducto">Producto *</label>
+                        <select id="entradaProducto" required></select>
+                    </div>
+                    <div class="cx-campo">
+                        <label for="entradaCantidad">Cantidad *</label>
+                        <input type="number" id="entradaCantidad" min="1" step="1" required>
+                    </div>
+                    <div class="cx-campo cx-campo-completo">
+                        <label for="entradaMotivo">Motivo</label>
+                        <input id="entradaMotivo" maxlength="255" placeholder="Ej. Reposición de mercancía">
+                    </div>
+                    <div class="cx-form-acciones">
+                        <button type="submit" class="cx-btn cx-btn-primario">Registrar entrada</button>
+                    </div>
+                </form>
+            </section>
+
+            <section class="log-panel" id="panelAjuste" aria-labelledby="tituloAjuste" hidden>
+                <h2 id="tituloAjuste">Ajuste de inventario (solo administrador)</h2>
+                <p class="log-sub">Corrige las existencias tras un conteo físico. El ajuste exige un motivo y queda auditado.</p>
+                <form id="formAjuste" class="cx-form" novalidate>
+                    <div class="cx-campo">
+                        <label for="ajusteProducto">Producto *</label>
+                        <select id="ajusteProducto" required></select>
+                    </div>
+                    <div class="cx-campo">
+                        <label for="ajusteStock">Existencias reales *</label>
+                        <input type="number" id="ajusteStock" min="0" step="1" required>
+                    </div>
+                    <div class="cx-campo cx-campo-completo">
+                        <label for="ajusteMotivo">Motivo del ajuste *</label>
+                        <input id="ajusteMotivo" maxlength="255" required placeholder="Ej. Conteo físico del 4 de noviembre">
+                    </div>
+                    <div class="cx-form-acciones">
+                        <button type="submit" class="cx-btn cx-btn-peligro">Registrar ajuste</button>
+                    </div>
+                </form>
+            </section>
+
+            <section class="log-panel" aria-labelledby="tituloMovimientos">
+                <div class="log-toolbar">
+                    <div class="log-titulo">
+                        <h2 id="tituloMovimientos">Movimientos de inventario</h2>
+                        <p class="log-sub">Entradas, ventas, devoluciones, cancelaciones y ajustes con stock anterior y resultante.</p>
+                    </div>
+                    <label class="cx-oculto" for="movProducto">Producto</label>
+                    <select id="movProducto" class="cx-filtro"><option value="">Todos los productos</option></select>
+                    <label class="cx-oculto" for="movTipo">Tipo</label>
+                    <select id="movTipo" class="cx-filtro">
+                        <option value="">Todos los tipos</option>
+                        <option value="entrada">Entradas</option>
+                        <option value="venta">Ventas</option>
+                        <option value="devolucion">Devoluciones</option>
+                        <option value="cancelacion">Cancelaciones</option>
+                        <option value="ajuste">Ajustes</option>
+                    </select>
+                    <label class="cx-oculto" for="movPedido">Pedido</label>
+                    <input type="number" id="movPedido" class="cx-filtro" min="1" placeholder="N.º de pedido">
+                </div>
+                <div id="tablaMovimientos"><div class="cx-cargando">Cargando movimientos...</div></div>
+            </section>
+
+            <section class="log-panel" aria-labelledby="tituloVendidas">
+                <h2 id="tituloVendidas">Unidades vendidas por producto</h2>
+                <p class="log-sub">Calculado a partir de los movimientos (ventas confirmadas, cancelaciones y devoluciones).</p>
+                <div id="tablaVendidas"><div class="cx-cargando">Cargando...</div></div>
+            </section>
+
+        </div>
+    </main>
+
+    <!-- Modal para modificar límites -->
+    <div id="modalStock" class="modal">
+        <div class="modal-contenido">
+
+            <h2>Configurar límites de stock</h2>
+            <p id="nombreProducto"></p>
+
+            <form id="formStock">
+
+                <input type="hidden" id="idProducto">
+
+                <label for="stockMinimo">Stock mínimo</label>
+                <input type="number" id="stockMinimo" min="0" required>
+
+                <label for="stockMaximo">Stock máximo</label>
+                <input type="number" id="stockMaximo" min="0" required>
+
+                <div class="modal-acciones">
+                    <button type="button" id="btnCancelar" class="btn-cancelar">
+                        Cancelar
+                    </button>
+
+                    <button type="submit" class="btn-guardar">
+                        Guardar cambios
+                    </button>
+                </div>
+
+            </form>
+        </div>
+    </div>
+
+    <script src="../js/config.js"></script>
+    <script src="../js/comun.js"></script>
+    <script src="../js/inventario.js"></script>
+    <script src="../js/inventario-movimientos.js"></script>
+</body>
+</html>

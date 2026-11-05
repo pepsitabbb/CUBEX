@@ -1,0 +1,472 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>Registro de Domicilios</title>
+<style>
+  * { box-sizing: border-box; font-family: 'Segoe UI', Arial, sans-serif; }
+  body {
+    margin: 0;
+    background: #f0f4f8;
+    padding: 30px 15px;
+    color: #1e293b;
+  }
+  h1 {
+    text-align: center;
+    color: #0f766e;
+    margin-bottom: 25px;
+  }
+  .contenedor {
+    max-width: 700px;
+    margin: 0 auto;
+    background: #fff;
+    padding: 25px 30px;
+    border-radius: 12px;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+  }
+  .grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px 20px;
+  }
+  .grid .full { grid-column: span 2; }
+  label {
+    display: block;
+    font-weight: 600;
+    margin-bottom: 4px;
+    font-size: 0.9rem;
+  }
+  input, textarea {
+    width: 100%;
+    padding: 9px 11px;
+    border: 1px solid #cbd5e1;
+    border-radius: 6px;
+    font-size: 0.95rem;
+    transition: border 0.2s;
+  }
+  input:focus, textarea:focus {
+    outline: none;
+    border-color: #0f766e;
+    box-shadow: 0 0 0 3px rgba(15,118,110,0.15);
+  }
+  input.invalido {
+    border-color: #dc2626;
+    box-shadow: 0 0 0 3px rgba(220,38,38,0.15);
+  }
+  .error-campo {
+    color: #dc2626;
+    font-size: 0.78rem;
+    margin-top: 3px;
+    display: none;
+  }
+  .error-campo.visible { display: block; }
+
+  .acciones {
+    margin-top: 18px;
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+    justify-content: space-between;
+  }
+  .acciones-izq { display: flex; gap: 10px; flex-wrap: wrap; }
+
+  button {
+    padding: 10px 18px;
+    border: none;
+    border-radius: 6px;
+    font-size: 0.95rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: transform 0.1s, background 0.2s;
+  }
+  button:active { transform: scale(0.97); }
+  .btn-guardar   { background: #0f766e; color: #fff; }
+  .btn-guardar:hover { background: #115e59; }
+  .btn-limpiar   { background: #e2e8f0; color: #334155; }
+  .btn-limpiar:hover { background: #cbd5e1; }
+  .btn-ver       { background: #2563eb; color: #fff; }
+  .btn-ver:hover { background: #1d4ed8; }
+  .btn-editar    { background: #2563eb; color: #fff; padding: 6px 12px; font-size: 0.85rem; }
+  .btn-eliminar  { background: #dc2626; color: #fff; padding: 6px 12px; font-size: 0.85rem; }
+  .btn-aceptar   { background: #0f766e; color: #fff; padding: 10px 30px; }
+
+  /* ===================== MODALES ===================== */
+  .modal-overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(15, 23, 42, 0.55);
+    backdrop-filter: blur(2px);
+    z-index: 1000;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+  }
+  .modal-overlay.activo { display: flex; animation: fadeIn 0.2s ease; }
+
+  @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+  @keyframes slideUp {
+    from { transform: translateY(20px); opacity: 0; }
+    to   { transform: translateY(0);    opacity: 1; }
+  }
+
+  .modal {
+    background: #fff;
+    border-radius: 12px;
+    box-shadow: 0 20px 50px rgba(0,0,0,0.25);
+    padding: 25px;
+    animation: slideUp 0.25s ease;
+    max-width: 95vw;
+    max-height: 90vh;
+    overflow: auto;
+  }
+  .modal-pequeno { width: 400px; text-align: center; }
+  .modal-grande  { width: 1000px; }
+
+  .modal h2 {
+    margin-top: 0;
+    color: #0f766e;
+  }
+  .modal-pequeno h2 { color: #065f46; }
+
+  .icono-ok {
+    font-size: 3.5rem;
+    margin-bottom: 10px;
+    line-height: 1;
+  }
+
+  .modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+  }
+  .cerrar {
+    background: transparent;
+    color: #64748b;
+    font-size: 1.6rem;
+    padding: 0 8px;
+    line-height: 1;
+  }
+  .cerrar:hover { color: #0f172a; }
+
+  /* ===================== TABLA ===================== */
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.9rem;
+  }
+  th, td {
+    padding: 10px 8px;
+    border-bottom: 1px solid #e2e8f0;
+    text-align: left;
+  }
+  th {
+    background: #0f766e;
+    color: #fff;
+    font-weight: 600;
+    position: sticky;
+    top: 0;
+  }
+  tr:hover td { background: #f8fafc; }
+
+  .vacio {
+    text-align: center;
+    padding: 30px;
+    color: #64748b;
+    font-style: italic;
+  }
+</style>
+</head>
+<body>
+
+<div class="contenedor">
+  <h1>📋 Registro de Domicilios</h1>
+
+  <form id="formulario" onsubmit="guardarDomicilio(event)" novalidate>
+    <input type="hidden" id="idEditar">
+
+    <div class="grid">
+      <div>
+        <label for="calle">Calle *</label>
+        <input type="text" id="calle" required>
+      </div>
+      <div>
+        <label for="numero_casa">Número de casa * (solo números)</label>
+        <input type="text" id="numero_casa" inputmode="numeric" required>
+        <div class="error-campo" id="errorNumero">Solo se permiten números.</div>
+      </div>
+      <div>
+        <label for="colonia">Colonia *</label>
+        <input type="text" id="colonia" required>
+      </div>
+      <div>
+        <label for="ciudad">Ciudad *</label>
+        <input type="text" id="ciudad" required>
+      </div>
+      <div>
+        <label for="codigo_postal">Código Postal *</label>
+        <input type="text" id="codigo_postal" inputmode="numeric" required>
+      </div>
+      <div class="full">
+        <label for="referencias">Referencias</label>
+        <textarea id="referencias" rows="2" placeholder="Opcional..."></textarea>
+      </div>
+    </div>
+
+    <div class="acciones">
+      <div class="acciones-izq">
+        <button type="submit" class="btn-guardar" id="btnGuardar">💾 Guardar</button>
+        <button type="button" class="btn-limpiar" onclick="limpiarFormulario()">🧹 Limpiar</button>
+      </div>
+      <button type="button" class="btn-ver" onclick="abrirModalTabla()">👁️ Ver domicilios guardados</button>
+    </div>
+  </form>
+</div>
+
+<!-- ============================================== -->
+<!-- MODAL: Confirmación de guardado                -->
+<!-- ============================================== -->
+<div class="modal-overlay" id="modalExito">
+  <div class="modal modal-pequeno">
+    <div class="icono-ok">✅</div>
+    <h2>¡Domicilio guardado correctamente!</h2>
+    <p id="textoExito" style="color:#475569; margin: 8px 0 20px;"></p>
+    <button class="btn-aceptar" onclick="cerrarModalExito()">Aceptar</button>
+  </div>
+</div>
+
+<!-- ============================================== -->
+<!-- MODAL: Tabla de domicilios                     -->
+<!-- ============================================== -->
+<div class="modal-overlay" id="modalTabla">
+  <div class="modal modal-grande">
+    <div class="modal-header">
+      <h2>📁 Domicilios guardados</h2>
+      <button class="cerrar" onclick="cerrarModalTabla()" aria-label="Cerrar">✕</button>
+    </div>
+
+    <div id="sinDatos" class="vacio">No hay domicilios registrados aún.</div>
+
+    <table id="tablaDomiciliosContenedor" style="display:none;">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Calle</th>
+          <th>#</th>
+          <th>Colonia</th>
+          <th>Ciudad</th>
+          <th>CP</th>
+          <th>Referencias</th>
+          <th>Acciones</th>
+        </tr>
+      </thead>
+      <tbody id="tablaDomicilios"></tbody>
+    </table>
+  </div>
+</div>
+
+<script>
+/* ============================================================
+   "Base de datos" con localStorage
+   ============================================================ */
+const CLAVE_DB = "domicilios_db";
+
+function obtenerDatos() {
+  const datos = localStorage.getItem(CLAVE_DB);
+  return datos ? JSON.parse(datos) : [];
+}
+function guardarDatos(lista) {
+  localStorage.setItem(CLAVE_DB, JSON.stringify(lista));
+}
+function generarId(lista) {
+  if (lista.length === 0) return 1;
+  return Math.max(...lista.map(d => d.id)) + 1;
+}
+
+/* ============================================================
+   Validación: solo números
+   ============================================================ */
+const inputNumero = document.getElementById("numero_casa");
+const errorNumero = document.getElementById("errorNumero");
+
+inputNumero.addEventListener("input", () => {
+  // Reemplaza cualquier carácter que no sea dígito
+  inputNumero.value = inputNumero.value.replace(/\D/g, "");
+  validarNumero();
+});
+
+function validarNumero() {
+  const valor = inputNumero.value.trim();
+  if (valor === "") {
+    inputNumero.classList.remove("invalido");
+    errorNumero.classList.remove("visible");
+    return false;
+  }
+  const esValido = /^\d+$/.test(valor);
+  inputNumero.classList.toggle("invalido", !esValido);
+  errorNumero.classList.toggle("visible", !esValido);
+  return esValido;
+}
+
+/* ============================================================
+   MODAL: Éxito al guardar
+   ============================================================ */
+function mostrarModalExito(mensajeExtra = "") {
+  document.getElementById("textoExito").textContent = mensajeExtra;
+  document.getElementById("modalExito").classList.add("activo");
+}
+function cerrarModalExito() {
+  document.getElementById("modalExito").classList.remove("activo");
+}
+
+/* ============================================================
+   MODAL: Tabla de domicilios
+   ============================================================ */
+function abrirModalTabla() {
+  renderizarTabla();
+  document.getElementById("modalTabla").classList.add("activo");
+}
+function cerrarModalTabla() {
+  document.getElementById("modalTabla").classList.remove("activo");
+}
+
+// Cierra modales al hacer clic fuera o presionar ESC
+document.querySelectorAll(".modal-overlay").forEach(overlay => {
+  overlay.addEventListener("click", (e) => {
+    if (e.target === overlay) overlay.classList.remove("activo");
+  });
+});
+document.addEventListener("keydown", (e) => {
+  if (e.key === "Escape") {
+    document.querySelectorAll(".modal-overlay.activo")
+      .forEach(m => m.classList.remove("activo"));
+  }
+});
+
+/* ============================================================
+   Guardar / Actualizar
+   ============================================================ */
+function guardarDomicilio(event) {
+  event.preventDefault();
+
+  // Validación del número de casa
+  if (!validarNumero() || inputNumero.value.trim() === "") {
+    inputNumero.focus();
+    alert("⚠️ El número de casa debe contener solo números.");
+    return;
+  }
+
+  const idEditar = document.getElementById("idEditar").value;
+  const nuevo = {
+    calle:         document.getElementById("calle").value.trim(),
+    numero_casa:   inputNumero.value.trim(),
+    colonia:       document.getElementById("colonia").value.trim(),
+    ciudad:        document.getElementById("ciudad").value.trim(),
+    codigo_postal: document.getElementById("codigo_postal").value.trim(),
+    referencias:   document.getElementById("referencias").value.trim()
+  };
+
+  if (!nuevo.calle || !nuevo.colonia || !nuevo.ciudad || !nuevo.codigo_postal) {
+    alert("⚠️ Por favor, completa todos los campos obligatorios.");
+    return;
+  }
+
+  let lista = obtenerDatos();
+
+  if (idEditar) {
+    lista = lista.map(d => d.id === Number(idEditar) ? { ...d, ...nuevo } : d);
+    guardarDatos(lista);
+    limpiarFormulario();
+    mostrarModalExito(`Domicilio con ID ${idEditar} actualizado.`);
+  } else {
+    nuevo.id = generarId(lista);
+    lista.push(nuevo);
+    guardarDatos(lista);
+    limpiarFormulario();
+    mostrarModalExito(`Domicilio registrado con ID ${nuevo.id}.`);
+  }
+}
+
+/* ============================================================
+   Editar / Eliminar
+   ============================================================ */
+function editarDomicilio(id) {
+  const lista = obtenerDatos();
+  const d = lista.find(x => x.id === id);
+  if (!d) return;
+
+  document.getElementById("idEditar").value      = d.id;
+  document.getElementById("calle").value          = d.calle;
+  inputNumero.value                               = d.numero_casa;
+  document.getElementById("colonia").value        = d.colonia;
+  document.getElementById("ciudad").value         = d.ciudad;
+  document.getElementById("codigo_postal").value  = d.codigo_postal;
+  document.getElementById("referencias").value    = d.referencias || "";
+  document.getElementById("btnGuardar").textContent = "✏️ Actualizar";
+
+  cerrarModalTabla();
+  window.scrollTo({ top: 0, behavior: "smooth" });
+}
+
+function eliminarDomicilio(id) {
+  if (!confirm(`¿Seguro que quieres eliminar el domicilio con ID ${id}?`)) return;
+  const lista = obtenerDatos().filter(d => d.id !== id);
+  guardarDatos(lista);
+  renderizarTabla();
+}
+
+/* ============================================================
+   Utilidades
+   ============================================================ */
+function limpiarFormulario() {
+  document.getElementById("formulario").reset();
+  document.getElementById("idEditar").value = "";
+  document.getElementById("btnGuardar").textContent = "💾 Guardar";
+  inputNumero.classList.remove("invalido");
+  errorNumero.classList.remove("visible");
+}
+
+function renderizarTabla() {
+  const lista = obtenerDatos();
+  const tbody = document.getElementById("tablaDomicilios");
+  const sinDatos = document.getElementById("sinDatos");
+  const tabla = document.getElementById("tablaDomiciliosContenedor");
+  tbody.innerHTML = "";
+
+  if (lista.length === 0) {
+    sinDatos.style.display = "block";
+    tabla.style.display = "none";
+    return;
+  }
+  sinDatos.style.display = "none";
+  tabla.style.display = "table";
+
+  lista.forEach(d => {
+    const fila = document.createElement("tr");
+    fila.innerHTML = `
+      <td>${d.id}</td>
+      <td>${escaparHTML(d.calle)}</td>
+      <td>${escaparHTML(d.numero_casa)}</td>
+      <td>${escaparHTML(d.colonia)}</td>
+      <td>${escaparHTML(d.ciudad)}</td>
+      <td>${escaparHTML(d.codigo_postal)}</td>
+      <td>${escaparHTML(d.referencias || "—")}</td>
+      <td>
+        <button class="btn-editar"   onclick="editarDomicilio(${d.id})">Editar</button>
+        <button class="btn-eliminar" onclick="eliminarDomicilio(${d.id})">Eliminar</button>
+      </td>
+    `;
+    tbody.appendChild(fila);
+  });
+}
+
+function escaparHTML(texto) {
+  const div = document.createElement("div");
+  div.textContent = texto ?? "";
+  return div.innerHTML;
+}
+</script>
+
+</body>
+</html>

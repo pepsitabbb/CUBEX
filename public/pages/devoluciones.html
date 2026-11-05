@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CUBEX | Devoluciones</title>
+    <link rel="stylesheet" href="../css/comun.css">
+    <link rel="stylesheet" href="../css/logistica.css">
+</head>
+<body data-module="devoluciones">
+<main class="log-wrap">
+    <header class="log-head">
+        <div>
+            <p class="log-kicker">POSTVENTA CUBEX</p>
+            <h1>Devoluciones</h1>
+            <p class="log-sub">Autoriza devoluciones, registra la recepción del producto y el reembolso o reemplazo.</p>
+        </div>
+        <button type="button" class="cx-btn cx-btn-secundario" id="btnRecargar">↻ Actualizar</button>
+    </header>
+
+    <section class="cx-resumen" aria-label="Resumen de devoluciones">
+        <div class="cx-resumen-item atencion"><strong id="statPorRevisar">—</strong><span>Por revisar</span></div>
+        <div class="cx-resumen-item"><strong id="statEnCurso">—</strong><span>Aprobadas / en proceso</span></div>
+        <div class="cx-resumen-item"><strong id="statRecibidas">—</strong><span>Recibidas / por resolver</span></div>
+        <div class="cx-resumen-item ok"><strong id="statCompletadas">—</strong><span>Completadas</span></div>
+        <div class="cx-resumen-item alerta"><strong id="statRechazadas">—</strong><span>Rechazadas</span></div>
+    </section>
+
+    <section class="log-panel">
+        <div class="log-toolbar">
+            <div class="log-titulo">
+                <h2>Solicitudes de devolución</h2>
+                <p class="log-sub">Solo la mercancía recibida en buen estado regresa al inventario.</p>
+            </div>
+            <label class="cx-oculto" for="buscar">Buscar</label>
+            <input type="search" id="buscar" class="cx-filtro" placeholder="Folio, pedido, cliente...">
+            <label class="cx-oculto" for="filtroEstado">Estado</label>
+            <select id="filtroEstado" class="cx-filtro">
+                <option value="">Todos los estados</option>
+                <option value="pendiente">Pendiente</option>
+                <option value="en_revision">En revisión</option>
+                <option value="aprobada">Aprobada</option>
+                <option value="en_proceso">En proceso de devolución</option>
+                <option value="producto_recibido">Producto recibido</option>
+                <option value="reembolso_en_proceso">Reembolso/reemplazo en proceso</option>
+                <option value="completada">Completada</option>
+                <option value="rechazada">Rechazada</option>
+            </select>
+        </div>
+        <div id="tablaSolicitudes"><div class="cx-cargando">Cargando solicitudes...</div></div>
+    </section>
+</main>
+
+<script src="../js/config.js"></script>
+<script src="../js/comun.js"></script>
+<script src="../js/logistica.js"></script>
+</body>
+</html>

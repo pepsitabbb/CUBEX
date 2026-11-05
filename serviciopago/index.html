@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Pago de prueba</title>
+<style>
+  /* ---- Colores y base ---- */
+  :root {
+    --fondo: #f5f6f8; --papel: #fff; --tinta: #161a22; --suave: #6b7280;
+    --linea: #d9dde4; --rojo: #d92d20; --rojo-bg: #fdecea;
+    --verde: #12805c; --verde-bg: #e6f5ee; --azul: #1f4fd8;
+    font-family: system-ui, -apple-system, "Segoe UI", sans-serif;
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; padding: 32px 16px; background: var(--fondo); color: var(--tinta); }
+  main { max-width: 460px; margin: auto; }
+  h1 { font-size: 1.25rem; font-weight: 650; margin: 0 0 4px; }
+  p.nota { margin: 0 0 20px; color: var(--suave); font-size: .9rem; line-height: 1.45; }
+  form, .panel { background: var(--papel); border: 1px solid var(--linea); border-radius: 10px; padding: 20px; }
+  .panel { margin-top: 16px; }
+  h2 { font-size: .95rem; margin: 0 0 12px; }
+
+  /* ---- Campos ---- */
+  .fila { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+  .campo { margin-bottom: 14px; }
+  label { display: block; font-size: .82rem; font-weight: 600; margin-bottom: 5px; }
+  input {
+    width: 100%; padding: 10px 11px; font: inherit; color: inherit;
+    border: 1px solid var(--linea); border-radius: 7px; background: var(--papel);
+  }
+  input:focus { outline: 2px solid var(--azul); outline-offset: 1px; border-color: var(--azul); }
+  /* Campo inválido: borde rojo + mensaje debajo */
+  .campo.error input { border-color: var(--rojo); background: var(--rojo-bg); }
+  .campo.error input:focus { outline-color: var(--rojo); }
+  .msg { display: none; margin-top: 4px; font-size: .78rem; color: var(--rojo); }
+  .campo.error .msg { display: block; }
+
+  /* ---- Número de tarjeta: lo más importante del formulario ---- */
+  #card { font-family: ui-monospace, "SF Mono", Menlo, Consolas, monospace; font-size: 1.15rem; letter-spacing: .08em; padding: 13px 11px; }
+  .cabecera-tarjeta { display: flex; justify-content: space-between; align-items: baseline; }
+  #contador { font-size: .78rem; color: var(--suave); font-variant-numeric: tabular-nums; }
+  .campo.error #contador { color: var(--rojo); font-weight: 600; }
+  #contador.ok { color: var(--verde); font-weight: 600; }
+
+  /* ---- Botones ---- */
+  button { padding: 11px 16px; border: 0; border-radius: 7px; background: var(--tinta); color: #fff; font: inherit; font-weight: 600; cursor: pointer; }
+  button.principal { width: 100%; margin-top: 4px; }
+  button.claro { background: #e8ebf0; color: var(--tinta); }
+  button:disabled { opacity: .55; cursor: wait; }
+  button:focus-visible { outline: 2px solid var(--azul); outline-offset: 2px; }
+  .acciones { display: flex; gap: 8px; margin-top: 10px; }
+  .acciones button { flex: 1; }
+
+  /* ---- Resultado ---- */
+  #resultado { display: none; margin-top: 16px; padding: 16px; border-radius: 10px; border: 1px solid; }
+  #resultado.aprobado { display: block; background: var(--verde-bg); border-color: var(--verde); color: #0b5a40; }
+  #resultado.rechazado { display: block; background: var(--rojo-bg); border-color: var(--rojo); color: #9b1c12; }
+  #resultado strong { display: block; font-size: 1.05rem; margin-bottom: 4px; }
+  #resultado dl { margin: 10px 0 0; display: grid; grid-template-columns: auto 1fr; gap: 3px 12px; font-size: .84rem; }
+  #resultado dt { opacity: .75; } #resultado dd { margin: 0; overflow-wrap: anywhere; }
+
+  .pruebas { font-size: .8rem; color: var(--suave); line-height: 1.6; margin: 0; }
+  .pruebas code { font-family: ui-monospace, Menlo, Consolas, monospace; color: var(--tinta); }
+  @media (max-width: 480px) { .fila { grid-template-columns: 1fr; gap: 0; } }
+</style>
+</head>
+<body>
+<main>
+  <h1>Pago de prueba</h1>
+  <p class="nota">Simulación: no se realiza ningún cobro. Usa solo números ficticios.</p>
+
+  <!-- novalidate: la validación la hacemos nosotros para dar mensajes claros -->
+  <form id="form" novalidate>
+    <div class="fila">
+      <div class="campo" data-campo="nombre">
+        <label for="nombre">Nombre(s)</label>
+        <input id="nombre" autocomplete="given-name">
+        <span class="msg"></span>
+      </div>
+      <div class="campo" data-campo="apellidos">
+        <label for="apellidos">Apellidos</label>
+        <input id="apellidos" autocomplete="family-name">
+        <span class="msg"></span>
+      </div>
+    </div>
+
+    <div class="campo" data-campo="email">
+      <label for="email">Correo</label>
+      <input id="email" type="email" autocomplete="email">
+      <span class="msg"></span>
+    </div>
+
+    <div class="campo" data-campo="card">
+      <div class="cabecera-tarjeta">
+        <label for="card">Número de tarjeta <span id="marca" style="font-weight:400;color:var(--suave)"></span></label>
+        <span id="contador">0/16</span>
+      </div>
+      <input id="card" inputmode="numeric" placeholder="0000 0000 0000 0000" maxlength="19" autocomplete="cc-number">
+      <span class="msg"></span>
+    </div>
+
+    <div class="fila">
+      <div class="campo" data-campo="expiry">
+        <label for="expiry">Vence (MM/AA)</label>
+        <input id="expiry" inputmode="numeric" placeholder="MM/AA" maxlength="5" autocomplete="cc-exp">
+        <span class="msg"></span>
+      </div>
+      <div class="campo" data-campo="cvv">
+        <label for="cvv">CVV</label>
+        <input id="cvv" inputmode="numeric" placeholder="123" maxlength="3" autocomplete="cc-csc">
+        <span class="msg"></span>
+      </div>
+    </div>
+
+    <div class="fila">
+      <div class="campo" data-campo="amount">
+        <label for="amount">Monto</label>
+        <input id="amount" type="number" value="1000" min="0.01" step="0.01">
+        <span class="msg"></span>
+      </div>
+      <div class="campo" data-campo="currency">
+        <label for="currency">Moneda</label>
+        <input id="currency" value="MXN" maxlength="3">
+        <span class="msg"></span>
+      </div>
+    </div>
+
+    <button class="principal" id="pagar" type="submit">Pagar</button>
+  </form>
+
+  <!-- Aquí aparece "Pago aceptado" o "Pago rechazado" -->
+  <div id="resultado" role="status" aria-live="polite"></div>
+
+  <section class="panel">
+    <h2>Consultar o reembolsar</h2>
+    <div class="campo" style="margin-bottom:0">
+      <label for="paymentId">ID de transacción</label>
+      <input id="paymentId" placeholder="Se llena solo al crear un pago">
+    </div>
+    <div class="acciones">
+      <button class="claro" id="consultar" type="button">Consultar</button>
+      <button class="claro" id="reembolsar" type="button">Reembolsar</button>
+    </div>
+  </section>
+
+  <section class="panel">
+    <h2>Tarjetas de prueba</h2>
+    <p class="pruebas">
+      Aprobada Visa: <code>4242 4242 4242 4242</code><br>
+      Aprobada Mastercard: <code>5555 5555 5555 4444</code><br>
+      Fondos insuficientes: <code>4000 0000 0000 0002</code><br>
+      Falla Luhn: <code>4242 4242 4242 4241</code>
+    </p>
+  </section>
+</main>
+
+<script>
+/* =====================================================================
+   Interfaz del simulador de pagos.
+   1) Reglas de validación por campo (REGLAS).
+   2) Formato automático de tarjeta (0000 0000 0000 0000) y fecha (MM/AA).
+   3) Envío a la API y presentación del resultado.
+   ===================================================================== */
+const $ = (id) => document.getElementById(id);
+
+/* ---------- 1. Reglas de validación ----------
+   etiqueta: nombre que se muestra en el mensaje "Faltan campos".
+   valida:   devuelve un texto de error, o '' si el valor es correcto.
+   Los campos vacíos se detectan aparte (mensaje "Obligatorio"). */
+const REGLAS = {
+  nombre:    { etiqueta: 'Nombre(s)',  valida: () => '' },
+  apellidos: { etiqueta: 'Apellidos',  valida: () => '' },
+  email:     { etiqueta: 'Correo',     valida: (v) => /^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(v) ? '' : 'Correo no válido' },
+  card:      { etiqueta: 'Tarjeta',    valida: (v) => {
+    const n = soloDigitos(v).length;
+    return n === 16 ? '' : `Faltan ${16 - n} dígitos (deben ser exactamente 16)`;
+  } },
+  expiry:    { etiqueta: 'Vencimiento', valida: (v) => {
+    const m = /^(0[1-9]|1[0-2])\/(\d{2})$/.exec(v);
+    if (!m) return 'Usa el formato MM/AA';
+    const hoy = new Date();
+    const vencida = 2000 + Number(m[2]) < hoy.getFullYear() ||
+      (2000 + Number(m[2]) === hoy.getFullYear() && Number(m[1]) < hoy.getMonth() + 1);
+    return vencida ? 'La tarjeta está vencida' : '';
+  } },
+  cvv:       { etiqueta: 'CVV',        valida: (v) => /^\d{3}$/.test(v) ? '' : 'Debe tener 3 dígitos' },
+  amount:    { etiqueta: 'Monto',      valida: (v) => Number(v) > 0 ? '' : 'Debe ser mayor a 0' },
+  currency:  { etiqueta: 'Moneda',     valida: (v) => /^[A-Za-z]{3}$/.test(v) ? '' : 'Usa 3 letras (ej. MXN)' },
+};
+
+const soloDigitos = (t) => t.replace(/\D/g, '');
+
+/** Marca/desmarca un campo en rojo y muestra su mensaje. Devuelve el error ('' si OK). */
+function validarCampo(id, mostrar = true) {
+  const valor = $(id).value.trim();
+  const error = valor ? REGLAS[id].valida(valor) : 'Obligatorio';
+  const contenedor = document.querySelector(`[data-campo="${id}"]`);
+  contenedor.classList.toggle('error', mostrar && !!error);
+  contenedor.querySelector('.msg').textContent = mostrar ? error : '';
+  return error;
+}
+
+/* ---------- 2. Formato automático ---------- */
+
+/* Tarjeta: solo dígitos, máximo 16, agrupados de 4 en 4. */
+$('card').addEventListener('input', (e) => {
+  const d = soloDigitos(e.target.value).slice(0, 16);
+  e.target.value = d.replace(/(\d{4})(?=\d)/g, '$1 ');
+  const c = $('contador');
+  c.textContent = `${d.length}/16`;
+  c.classList.toggle('ok', d.length === 16);
+  $('marca').textContent = d[0] === '4' ? '· Visa' : /^(5[1-5]|2)/.test(d) ? '· Mastercard' : '';
+  // En rojo en cuanto se escribe algo y aún no hay 16 dígitos
+  validarCampo('card', d.length > 0);
+});
+
+/* Fecha: inserta "/" sola después del mes. */
+$('expiry').addEventListener('input', (e) => {
+  const d = soloDigitos(e.target.value).slice(0, 4);
+  e.target.value = d.length > 2 ? `${d.slice(0, 2)}/${d.slice(2)}` : d;
+});
+
+/* CVV: solo dígitos. */
+$('cvv').addEventListener('input', (e) => { e.target.value = soloDigitos(e.target.value).slice(0, 3); });
+
+/* Al salir de un campo se valida; al corregirlo, el error se quita. */
+for (const id of Object.keys(REGLAS)) {
+  $(id).addEventListener('blur', () => validarCampo(id));
+  $(id).addEventListener('input', () => {
+    if (document.querySelector(`[data-campo="${id}"]`).classList.contains('error')) validarCampo(id);
+  });
+}
+
+/* ---------- 3. Envío y resultado ---------- */
+
+/** Llama a la API y lanza Error con el mensaje del servidor si algo falla. */
+async function api(url, opciones) {
+  const r = await fetch(url, opciones);
+  const datos = await r.json().catch(() => ({}));
+  if (!r.ok) throw new Error(datos.detail || `Error HTTP ${r.status}`);
+  return datos;
+}
+
+/** Muestra el cuadro verde/rojo. tipo: 'aprobado' | 'rechazado'. */
+function mostrar(tipo, titulo, detalle, datos = null) {
+  const caja = $('resultado');
+  caja.className = tipo;
+  caja.replaceChildren();
+  const t = document.createElement('strong'); t.textContent = titulo;
+  const d = document.createElement('span');   d.textContent = detalle;
+  caja.append(t, d);
+  if (datos) {
+    const dl = document.createElement('dl');
+    for (const [k, v] of Object.entries(datos)) {
+      const dt = document.createElement('dt'); dt.textContent = k;
+      const dd = document.createElement('dd'); dd.textContent = v;
+      dl.append(dt, dd);
+    }
+    caja.append(dl);
+  }
+}
+
+/** Traduce la respuesta de la API a un resultado visible. */
+function mostrarPago(p) {
+  const titulos = { APPROVED: 'Pago aceptado', REJECTED: 'Pago rechazado', REFUNDED: 'Pago reembolsado' };
+  mostrar(p.status === 'REJECTED' ? 'rechazado' : 'aprobado', titulos[p.status], p.motivo, {
+    Titular: p.titular,
+    Tarjeta: `${p.marca} •••• ${p.ultimos4}`,
+    Monto: `${p.amount.toFixed(2)} ${p.currency}`,
+    ID: p.providerPaymentId,
+  });
+}
+
+$('form').addEventListener('submit', async (e) => {
+  e.preventDefault();
+
+  // Validar todos los campos y separar vacíos de incorrectos
+  const vacios = [], incorrectos = [];
+  for (const [id, regla] of Object.entries(REGLAS)) {
+    const error = validarCampo(id);
+    if (error === 'Obligatorio') vacios.push(regla.etiqueta);
+    else if (error) incorrectos.push(regla.etiqueta);
+  }
+  if (vacios.length || incorrectos.length) {
+    const partes = [];
+    if (vacios.length) partes.push(`Faltan campos por llenar: ${vacios.join(', ')}.`);
+    if (incorrectos.length) partes.push(`Revisa: ${incorrectos.join(', ')}.`);
+    mostrar('rechazado', 'Formulario incompleto', partes.join(' '));
+    document.querySelector('.error input')?.focus();
+    return;
+  }
+
+  $('pagar').disabled = true;
+  try {
+    const pago = await api('/api/pagos', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        nombre: $('nombre').value.trim(),
+        apellidos: $('apellidos').value.trim(),
+        payerEmail: $('email').value.trim(),
+        cardNumber: soloDigitos($('card').value),
+        expiry: $('expiry').value,
+        cvv: $('cvv').value,
+        amount: Number($('amount').value),
+        currency: $('currency').value.trim().toUpperCase(),
+      }),
+    });
+    $('paymentId').value = pago.providerPaymentId;
+    mostrarPago(pago);
+  } catch (err) {
+    mostrar('rechazado', 'No se pudo procesar', err.message);
+  } finally {
+    $('pagar').disabled = false;
+  }
+});
+
+/* Consultar y reembolsar usan el ID escrito o el último pago creado. */
+async function conId(accion) {
+  const id = $('paymentId').value.trim();
+  if (!id) return mostrar('rechazado', 'Falta el ID', 'Crea un pago o pega un ID de transacción.');
+  try { mostrarPago(await accion(encodeURIComponent(id))); }
+  catch (err) { mostrar('rechazado', 'No se pudo completar', err.message); }
+}
+$('consultar').addEventListener('click', () => conId((id) => api(`/api/pagos/${id}`)));
+$('reembolsar').addEventListener('click', () => conId((id) => api(`/api/pagos/${id}/reembolso`, { method: 'POST' })));
+</script>
+</body>
+</html>

@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+{% block content %}
+<h1 class="mb-4">Registrar nuevo envío</h1>
+
+<div class="card shadow-sm">
+    <div class="card-body">
+        <form method="post">
+            <div class="mb-3">
+                <label for="id_venta" class="form-label">ID de venta</label>
+                <input id="id_venta" type="number" name="id_venta" class="form-control"
+                       min="1" step="1" required value="{{ request.form.get('id_venta', '') }}">
+            </div>
+
+            <div class="mb-3">
+                <label for="id_direccion" class="form-label">ID de dirección</label>
+                <input id="id_direccion" type="number" name="id_direccion" class="form-control"
+                       min="1" step="1" required value="{{ request.form.get('id_direccion', '') }}">
+            </div>
+
+            <div class="mb-3">
+                <label for="num_guia" class="form-label">Número de guía</label>
+                <input id="num_guia" type="text" name="num_guia" class="form-control"
+                       maxlength="100" required value="{{ request.form.get('num_guia', '') }}">
+            </div>
+
+            <div class="mb-3">
+                <label for="estado" class="form-label">Estado inicial</label>
+                <select id="estado" name="estado" class="form-select" required>
+                    {% for estado in create_states %}
+                        <option value="{{ estado }}" {% if request.form.get('estado', 'pendiente') == estado %}selected{% endif %}>
+                            {{ estado }}
+                        </option>
+                    {% endfor %}
+                </select>
+            </div>
+
+            <div>
+                <button type="submit" class="btn btn-primary">Guardar envío</button>
+                <a href="{{ url_for('envios') }}" class="btn btn-secondary">Cancelar</a>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}

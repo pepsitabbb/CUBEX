@@ -1,0 +1,207 @@
+:root {
+  --navy: #1f3864;
+  --accent: #2e74b5;
+  --bg: #f4f6fa;
+  --card: #ffffff;
+  --border: #dbe2ea;
+  --ok: #1c7c3f;
+  --error: #c0392b;
+}
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  font-family: -apple-system, "Segoe UI", Roboto, sans-serif;
+  background: var(--bg);
+  color: #1c2833;
+}
+
+.contenedor {
+  max-width: 640px;
+  margin: 0 auto;
+  padding: 32px 20px 60px;
+}
+
+header h1 {
+  color: var(--navy);
+  font-size: 1.5rem;
+  margin-bottom: 4px;
+}
+
+.subtitulo {
+  color: #6b7785;
+  margin-top: 0;
+}
+
+.tarjeta {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 20px 24px;
+  margin-top: 20px;
+}
+
+.tarjeta h2 {
+  margin-top: 0;
+  font-size: 1.05rem;
+  color: var(--navy);
+}
+
+form label {
+  display: block;
+  font-size: 0.85rem;
+  font-weight: 600;
+  margin-bottom: 12px;
+  color: #40505f;
+}
+
+form input {
+  width: 100%;
+  margin-top: 4px;
+  padding: 8px 10px;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  font-size: 0.95rem;
+}
+
+button {
+  background: var(--accent);
+  color: white;
+  border: none;
+  border-radius: 6px;
+  padding: 9px 16px;
+  font-size: 0.9rem;
+  cursor: pointer;
+}
+
+button:hover { opacity: 0.9; }
+
+#btn-limpiar {
+  background: #94a3b8;
+}
+
+.botones {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.tag {
+  font-size: 0.7rem;
+  padding: 2px 6px;
+  border-radius: 4px;
+  margin-left: 8px;
+  vertical-align: middle;
+}
+
+.tag-libre { background: #dce9f9; color: var(--accent); }
+.tag-admin { background: #fbe3d4; color: #a3520b; }
+
+.ayuda {
+  font-size: 0.8rem;
+  color: #6b7785;
+}
+
+.ayuda code {
+  background: #eef3fa;
+  padding: 1px 5px;
+  border-radius: 4px;
+}
+
+.resultado {
+  margin-top: 14px;
+  font-family: Consolas, monospace;
+  font-size: 0.82rem;
+  white-space: pre-wrap;
+  background: #f7f9fc;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 10px 12px;
+  min-height: 20px;
+}
+
+.resultado.ok { border-color: var(--ok); }
+.resultado.error { border-color: var(--error); color: var(--error); }
+
+.estado {
+  font-family: Consolas, monospace;
+  font-size: 0.82rem;
+  word-break: break-all;
+  background: #f7f9fc;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 10px 12px;
+}
+
+/* ===== Probador de tarjetas ===== */
+.aviso {
+  background: #fff6e0;
+  border: 1px solid #f0d58a;
+  color: #6b4e00;
+  border-radius: 8px;
+  padding: 10px 14px;
+  font-size: 0.85rem;
+  margin-top: 16px;
+}
+
+.subtitulo a { color: var(--accent); text-decoration: none; }
+.subtitulo a:hover { text-decoration: underline; }
+
+.fila-botones { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 10px; }
+
+button.secundario { background: var(--navy); }
+button.gris { background: #94a3b8; }
+
+.presets { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 14px; }
+.presets button {
+  background: #eef3fa;
+  color: var(--navy);
+  border: 1px solid var(--border);
+  font-size: 0.78rem;
+  padding: 5px 9px;
+}
+
+.grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; }
+@media (max-width: 520px) { .grid-3 { grid-template-columns: 1fr; } }
+
+select {
+  width: 100%;
+  margin-top: 4px;
+  padding: 8px 10px;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  font-size: 0.95rem;
+  background: white;
+}
+
+.checklist { margin-top: 12px; display: grid; gap: 4px; font-size: 0.85rem; }
+.checklist .item { padding: 4px 8px; border-radius: 4px; }
+.checklist .ok { background: #e6f4ea; color: var(--ok); }
+.checklist .mal { background: #fdecea; color: var(--error); }
+
+.lista { margin-top: 12px; display: grid; gap: 8px; }
+.item-lista {
+  display: flex; justify-content: space-between; align-items: center; gap: 8px;
+  border: 1px solid var(--border); border-radius: 8px; padding: 8px 12px;
+  font-size: 0.85rem; background: #f7f9fc;
+}
+.item-lista small { color: #6b7785; display: block; }
+.item-lista .acciones { display: flex; gap: 6px; flex-shrink: 0; }
+.item-lista button { padding: 5px 9px; font-size: 0.78rem; }
+.item-lista .peligro { background: var(--error); }
+.insignia { font-size: 0.7rem; padding: 2px 6px; border-radius: 4px; background: #fbe3d4; color: #a3520b; margin-left: 6px; }
+
+/* ===== Qué esperar de cada prueba ===== */
+.esperado { display: none; margin: 0 0 14px; border: 1px solid var(--border); border-radius: 8px; background: #f7f9fc; font-size: 0.82rem; }
+.esperado.visible { display: block; }
+.esperado .titulo { padding: 8px 12px; font-weight: 600; color: var(--navy); border-bottom: 1px solid var(--border); }
+.esperado .fila { display: grid; grid-template-columns: 150px 1fr; gap: 8px; padding: 6px 12px; border-bottom: 1px solid #eef1f5; }
+.esperado .fila:last-child { border-bottom: none; }
+.esperado .fila .donde { color: #6b7785; }
+.esperado .fila.banco { background: #fff6e0; }
+.esperado .fila.banco .donde { color: #8a6100; font-weight: 600; }
+@media (max-width: 520px) { .esperado .fila { grid-template-columns: 1fr; gap: 2px; } }
+
+.nota-banco { display: none; margin-top: 10px; padding: 8px 12px; border-radius: 6px; background: #eef3fa; border: 1px solid #c9d8ec; color: var(--navy); font-size: 0.82rem; }
+.nota-banco.visible { display: block; }

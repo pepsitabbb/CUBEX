@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CUBEX | Envíos y rastreo</title>
+    <link rel="stylesheet" href="../css/comun.css">
+    <link rel="stylesheet" href="../css/logistica.css">
+</head>
+<body data-module="envios">
+<main class="log-wrap">
+    <header class="log-head">
+        <div>
+            <p class="log-kicker">LOGÍSTICA CUBEX</p>
+            <h1>Envíos y rastreo</h1>
+            <p class="log-sub">Registra paquetería y guía, actualiza estados y consulta el seguimiento de cada pedido.</p>
+        </div>
+        <button type="button" class="cx-btn cx-btn-secundario" id="btnRecargar">↻ Actualizar</button>
+    </header>
+
+    <section class="cx-resumen" id="resumen" aria-label="Resumen de envíos">
+        <div class="cx-resumen-item"><strong id="statTotal">—</strong><span>Envíos registrados</span></div>
+        <div class="cx-resumen-item atencion"><strong id="statPendientes">—</strong><span>Pendientes / preparando</span></div>
+        <div class="cx-resumen-item"><strong id="statCamino">—</strong><span>En tránsito / reparto</span></div>
+        <div class="cx-resumen-item ok"><strong id="statEntregados">—</strong><span>Entregados</span></div>
+        <div class="cx-resumen-item alerta"><strong id="statIncidencias">—</strong><span>Incidencias</span></div>
+        <div class="cx-resumen-item alerta"><strong id="statRetrasados">—</strong><span>Retrasados</span></div>
+    </section>
+
+    <section class="log-panel">
+        <div class="log-toolbar">
+            <div class="log-titulo">
+                <h2>Pedidos listos para enviar</h2>
+                <p class="log-sub">Pedidos pagados (confirmados) que todavía no tienen envío.</p>
+            </div>
+        </div>
+        <div id="tablaPorEnviar"><div class="cx-cargando">Cargando pedidos...</div></div>
+    </section>
+
+    <section class="log-panel">
+        <div class="log-toolbar">
+            <div class="log-titulo">
+                <h2>Seguimiento de envíos</h2>
+                <p class="log-sub">Busca por número de pedido, guía o cliente.</p>
+            </div>
+            <label class="cx-oculto" for="buscar">Buscar</label>
+            <input type="search" id="buscar" class="cx-filtro" placeholder="Pedido, guía o cliente...">
+            <label class="cx-oculto" for="filtroEstado">Estado</label>
+            <select id="filtroEstado" class="cx-filtro">
+                <option value="">Todos los estados</option>
+                <option value="pendiente">Pendiente</option>
+                <option value="preparando">Preparando envío</option>
+                <option value="en_transito">En tránsito</option>
+                <option value="en_reparto">En reparto</option>
+                <option value="entregado">Entregado</option>
+                <option value="incidencia">Incidencia</option>
+                <option value="cancelado">Cancelado</option>
+            </select>
+            <label class="log-check"><input type="checkbox" id="soloRetrasados"> Solo retrasados</label>
+        </div>
+        <div id="tablaEnvios"><div class="cx-cargando">Cargando envíos...</div></div>
+    </section>
+</main>
+
+<script src="../js/config.js"></script>
+<script src="../js/comun.js"></script>
+<script src="../js/logistica.js"></script>
+</body>
+</html>
