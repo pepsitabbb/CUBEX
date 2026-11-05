@@ -22,7 +22,7 @@
         PEDIDOS: "http://localhost:3011/api/Pedidos",
         PAGOS: "http://localhost:3012/api/pagos",
         DOMICILIOS: "http://localhost:3019/api/domicilios",
-        LOGIN: "http://localhost:3020/api/v1",
+        LOGIN: "https://cubex-production.up.railway.app/api/v1",
         REPORTES_COMPRAS: "http://localhost:3021/api/v1/reportes/compras",
         TARJETAS: "http://localhost:3024",
         TICKETS: "http://localhost:3025",
